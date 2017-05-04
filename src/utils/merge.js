@@ -1,7 +1,5 @@
 export default function(target) {
-  let i = 1;
-  let j = arguments.length;
-  for (; i < j; i++) {
+  for (let i = 1; i < arguments.length; i++) {
     let source = arguments[i] || {};
     for (let prop in source) {
       if (source.hasOwnProperty(prop)) {
