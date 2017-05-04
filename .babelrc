@@ -5,9 +5,9 @@
     "utils": {
       "plugins": [
         ["module-resolver", {
-          "root": ["element-ui"],
+          "root": ["setaria-ui"],
           "alias": {
-            "element-ui/src": "element-ui/lib"
+            "setaria-ui/src": "setaria-ui/lib"
           }
         }]
       ]
