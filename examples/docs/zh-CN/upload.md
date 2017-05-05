@@ -112,6 +112,16 @@
       },
       handleChange(file, fileList) {
         this.fileList3 = fileList.slice(-3);
+      },
+      handleFilesChange(file, fileList) {
+        console.log(file, fileList);
+      },
+      handleAfterSelect(file) {
+        const isLt500KB = file.size / 1024 < 500;
+        if (!isLt500KB) {
+          this.$message.error('上传头像图片大小不能超过 500KB!');
+        }
+        return isLt500KB;
       }
     }
   }
@@ -391,10 +401,63 @@
 ```
 :::
 
+### 手动上传 - 只获取文件内容
+
+在只获取文件内容，不上传文件的场合，可以使用`after-select`钩子来对用户上传的文件大小或格式进行控制。
+
+::: demo
+```html
+<el-upload
+  class="upload-demo"
+  ref="upload"
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :on-change="handleFilesChange"
+  :file-list="fileList"
+  :auto-upload="false"
+  :after-select="handleAfterSelect"
+  :multiple="true">
+  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+</el-upload>
+<script>
+  export default {
+    data() {
+      return {
+        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+      };
+    },
+    methods: {
+      submitUpload() {
+        this.$refs.upload.submit();
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleFilesChange(file, fileList) {
+        console.log(file, fileList);
+      },
+      handleAfterSelect(file) {
+        const isLt500KB = file.size / 1024 < 500;
+        if (!isLt500KB) {
+          this.$message.error('上传头像图片大小不能超过 500KB!');
+        }
+        return isLt500KB;
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| action | 必选参数, 上传的地址 | string | — | — |
+| action | 可选参数, 上传的地址 | string | — | — |
 | headers | 可选参数, 设置上传的请求头部 | object | — | — |
 | multiple | 可选参数, 是否支持多选文件 | boolean | — | — |
 | data | 可选参数, 上传时附带的额外参数 | object | — | — |
@@ -414,6 +477,8 @@
 | auto-upload | 是否在选取文件后立即进行上传 | boolean | — | true |
 | file-list | 上传的文件列表, 例如: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}] | array | — | [] |
 | http-request | 覆盖默认的上传行为，可以自定义上传的实现 | function | — | — |
+| file-output-type | [FileReader](https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader)支持的类型 | string | DataUrl, ArrayBuffer, BinaryString, Text | DataUrl |
+| after-select | 可选参数, 用户选择文件后的钩子 | function | - | - |
 
 ### Methods
 | 方法名      | 说明          | 参数 |

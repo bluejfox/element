@@ -21,8 +21,7 @@ export default {
 
   props: {
     action: {
-      type: String,
-      required: true
+      type: String
     },
     headers: {
       type: Object,
@@ -86,7 +85,12 @@ export default {
       type: String,
       default: 'text'   // text,picture,picture-card
     },
-    httpRequest: Function
+    httpRequest: Function,
+    fileOutputType: {
+      type: String,
+      default: 'DataUrl'
+    },
+    afterSelect: Function
   },
 
   data() {
@@ -112,7 +116,7 @@ export default {
   },
 
   methods: {
-    handleStart(rawFile) {
+    handleStart(rawFile, data) {
       rawFile.uid = Date.now() + this.tempIndex++;
       let file = {
         status: 'ready',
@@ -122,6 +126,9 @@ export default {
         uid: rawFile.uid,
         raw: rawFile
       };
+      if (data) {
+        file.data = data;
+      }
 
       try {
         file.url = URL.createObjectURL(rawFile);
@@ -131,6 +138,10 @@ export default {
       }
 
       this.uploadFiles.push(file);
+      if (!this.action && this.autoUpload === false) {
+        this.handleSuccess(null, file);
+        this.$emit('input', this.uploadFiles);
+      }
     },
     handleProgress(ev, rawFile) {
       var file = this.getFile(rawFile);
@@ -233,7 +244,9 @@ export default {
         'on-error': this.handleError,
         'on-preview': this.onPreview,
         'on-remove': this.handleRemove,
-        'http-request': this.httpRequest
+        'http-request': this.httpRequest,
+        'file-output-type': this.fileOutputType,
+        'after-select': this.afterSelect
       },
       ref: 'upload-inner'
     };
