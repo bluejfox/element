@@ -68,6 +68,11 @@
         value15: '',
         value16: ''
       };
+    },
+    methods: {
+      handleChange(val) {
+        console.log(val);
+      }
     }
   };
 </script>
@@ -180,7 +185,8 @@
       type="datetimerange"
       :picker-options="pickerOptions2"
       placeholder="选择时间范围"
-      align="right">
+      align="right"
+      format="yyyy-MM-dd HH:mm">
     </el-date-picker>
   </div>
 </template>
@@ -219,6 +225,66 @@
         value3: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
         value4: ''
       };
+    }
+  };
+</script>
+```
+:::
+
+### 定制化显示
+
+通过设置format属性为`yyyy-MM-dd HH:mm`可对显示的panel进行定制化显示
+目前只支持控制是否显示秒
+
+:::demo
+```html
+<template>
+  <div class="block">
+    <span class="demonstration">不显示秒</span>
+    <el-date-picker
+      v-model="value1"
+      type="datetime"
+      placeholder="选择日期时间"
+      format="yyyy-MM-dd HH:mm"
+      @change="handleChange">
+    </el-date-picker>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        pickerOptions1: {
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        value1: '',
+        value2: ''
+      };
+    },
+    methods: {
+      handleChange(val) {
+        console.log(val);
+      }
     }
   };
 </script>

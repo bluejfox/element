@@ -48,7 +48,11 @@
           return new Date();
         }
       },
-      visible: Boolean
+      visible: Boolean,
+      format: {
+        type: String,
+        default: 'HH:mm:ss'
+      }
     },
 
     watch: {
@@ -84,7 +88,6 @@
     data() {
       return {
         popperClass: '',
-        format: 'HH:mm:ss',
         value: '',
         hours: 0,
         minutes: 0,

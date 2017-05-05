@@ -4,6 +4,27 @@
       margin-left: 10px;
     }
   }
+
+  .demo-box .source {
+    display: flex;
+  }
+
+  .demo-box .block {
+    flex: 1;
+    padding: 30px 0;
+    text-align: center;
+    border-right: solid 1px #EFF2F6;
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .demo-box .demonstration {
+    display: block;
+    color: #8492a6;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 </style>
 
 ## TimePicker 时间选择器
@@ -45,13 +66,27 @@
 :::demo 使用 el-time-picker 标签，通过`selectableRange`限制可选时间范围
 ```html
 <template>
-  <el-time-picker
-    v-model="value2"
-    :picker-options="{
-      selectableRange: '18:30:00 - 20:30:00'
-    }"
-    placeholder="任意时间点">
-  </el-time-picker>
+  <div class="block">
+    <span class="demonstration">默认</span>
+    <el-time-picker
+      v-model="value2"
+      :picker-options="{
+        selectableRange: '18:30:00 - 20:30:00'
+      }"
+      placeholder="任意时间点">
+    </el-time-picker>
+  </div>
+  <div class="block">
+    <span class="demonstration">指定时间格式</span>
+    <el-time-picker
+      v-model="value2"
+      :picker-options="{
+        selectableRange: '18:30:00 - 20:30:00'
+      }"
+      format="HH:mm">
+    </el-time-picker>
+  </div>
+
 </template>
 
 <script>

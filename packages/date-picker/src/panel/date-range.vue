@@ -43,7 +43,8 @@
                   ref="minTimePicker"
                   :date="minDate"
                   @pick="handleMinTimePick"
-                  :visible="minTimePickerVisible">
+                  :visible="minTimePickerVisible"
+                  :format="timeFormat">
                 </time-picker>
               </span>
             </span>
@@ -74,7 +75,8 @@
                   ref="maxTimePicker"
                   :date="maxDate"
                   @pick="handleMaxTimePick"
-                  :visible="maxTimePickerVisible"></time-picker>
+                  :visible="maxTimePickerVisible"
+                  :format="timeFormat"></time-picker>
               </span>
             </span>
           </div>
@@ -194,11 +196,12 @@
       },
 
       minVisibleTime() {
-        return this.minDate ? formatDate(this.minDate, 'HH:mm:ss') : '';
+        return this.minDate ? formatDate(this.minDate, this.timeFormat) : '';
       },
 
       maxVisibleTime() {
-        return (this.maxDate || this.minDate) ? formatDate(this.maxDate || this.minDate, 'HH:mm:ss') : '';
+        return (this.maxDate || this.minDate)
+          ? formatDate(this.maxDate || this.minDate, this.timeFormat) : '';
       },
 
       rightDate() {
@@ -213,6 +216,14 @@
           newDate.setMonth(month + 1);
         }
         return newDate;
+      },
+
+      timeFormat() {
+        let ret = 'HH:mm:ss';
+        if (this.format !== '' && this.format.indexOf('ss') === -1) {
+          ret = 'HH:mm';
+        }
+        return ret;
       }
     },
 
@@ -238,7 +249,8 @@
         firstDayOfWeek: 7,
         minTimePickerVisible: false,
         maxTimePickerVisible: false,
-        width: 0
+        width: 0,
+        format: ''
       };
     },
 
