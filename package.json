@@ -16,8 +16,8 @@
     "build:utils": "cross-env BABEL_ENV=utils babel src --out-dir lib --ignore src/index.js",
     "build:umd": "node build/bin/build-locale.js",
     "clean": "rimraf lib && rimraf packages/*/lib && rimraf test/**/coverage && lerna clean --yes",
-    "deploy": "npm run deploy:build && gh-pages -d examples/setaria-ui --remote eleme && del examples/setaria-ui",
-    "deploy:build": "npm run build:file && cooking build -c build/cooking.demo.js -p && echo setaria.eleme.io>>examples/setaria-ui/CNAME",
+    "deploy": "npm run deploy:build && gh-pages -d examples/setaria-ui && rm -rf examples/setaria-ui",
+    "deploy:build": "npm run build:file && cooking build -c build/cooking.demo.js -p",
     "dev": "npm run bootstrap && npm run build:file && cooking watch -c build/cooking.demo.js -p",
     "dev:play": "npm run build:file && cross-env PLAY_ENV=true cooking watch -c build/cooking.demo.js -p",
     "dist": "npm run clean && npm run build:file && npm run lint && cooking build -c build/cooking.conf.js,build/cooking.common.js,build/cooking.component.js -p && npm run build:utils && npm run build:umd && npm run build:theme",
@@ -33,7 +33,7 @@
     "type": "git",
     "url": "git@github.com:bluejfox/setaria-ui.git"
   },
-  "homepage": "http://element.eleme.io",
+  "homepage": "",
   "keywords": [
     "eleme",
     "vue",
@@ -41,7 +41,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ElemeFE/element/issues"
+    "url": "https://github.com/bluejfox/setaria-ui/issues"
   },
   "unpkg": "lib/index.js",
   "style": "lib/theme-default/index.css",
