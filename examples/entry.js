@@ -33,7 +33,7 @@ router.afterEach(route => {
       return;
     }
   }
-  document.title = 'Element';
+  document.title = 'SetariaUI';
 });
 
 new Vue({ // eslint-disable-line

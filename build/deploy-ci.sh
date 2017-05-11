@@ -1,7 +1,7 @@
 #! /bin/sh
 mkdir temp_web
 git config --global user.name "bluejfox"
-git config --global user.email "bluefox@gmail.com"
+git config --global user.email "bluejfox@gmail.com"
 
 if [ "$ROT_TOKEN" = "" ]; then
   echo "Bye~"
@@ -13,7 +13,7 @@ if [ "$TRAVIS_TAG" ]; then
   # build lib
   npm run dist
   cd temp_web
-  git clone https://$ROT_TOKEN@github.com/ElementUI/lib.git && cd lib
+  git clone https://$ROT_TOKEN@github.com/bluejfox/setaria-ui-lib.git && cd lib
   rm -rf `find * ! -name README.md`
   cp -rf ../../lib/** .
   git add -A .
@@ -22,32 +22,32 @@ if [ "$TRAVIS_TAG" ]; then
   git push origin master --tags
   cd ../..
 
-  # build theme-default
-  cd temp_web
-  git clone https://$ROT_TOKEN@github.com/ElementUI/theme-default.git && cd theme-default
-  rm -rf *
-  cp -rf ../../packages/theme-default/** .
-  git add -A .
-  git commit -m "[build] $TRAVIS_TAG"
-  git tag $TRAVIS_TAG
-  git push origin master --tags
-  cd ../..
+  # # build theme-default
+  # cd temp_web
+  # git clone https://$ROT_TOKEN@github.com/bluejfox/setaria-ui-theme-default.git && cd setaria-ui-theme-default
+  # rm -rf *
+  # cp -rf ../../packages/theme-default/** .
+  # git add -A .
+  # git commit -m "[build] $TRAVIS_TAG"
+  # git tag $TRAVIS_TAG
+  # git push origin master --tags
+  # cd ../..
 
   # build site
   npm run deploy:build
   cd temp_web
-  git clone -b gh-pages https://$ROT_TOKEN@github.com/ElemeFE/element.git && cd element
+  git clone -b gh-pages https://$ROT_TOKEN@github.com/bluejfox/setaria-ui.git && cd setaria-ui
   # build sub folder
   echo $TRAVIS_TAG
   export SUB_FOLDER=$(echo "$TRAVIS_TAG" | grep -o -E "\d+\.\d+")
   echo $SUB_FOLDER
 
-  SUB_FOLDER='1.2'
+  SUB_FOLDER='1.0'
   mkdir $SUB_FOLDER
   rm -rf *.js *.css *.map static
   rm -rf $SUB_FOLDER/**
-  cp -rf ../../examples/element-ui/** .
-  cp -rf ../../examples/element-ui/** $SUB_FOLDER/
+  cp -rf ../../examples/setaria-ui/** .
+  cp -rf ../../examples/setaria-ui/** $SUB_FOLDER/
   git add -A .
   git commit -m "$TRAVIS_COMMIT_MSG"
   git push origin gh-pages
@@ -60,21 +60,21 @@ fi
 # build dev site
 npm run build:file && CI_ENV=/dev/$TRAVIS_BRANCH/ node_modules/.bin/cooking build -c build/cooking.demo.js
 cd temp_web
-git clone https://$ROT_TOKEN@github.com/ElementUI/dev.git && cd dev
+git clone https://$ROT_TOKEN@github.com/bluejfox/setaria-ui-dev.git && cd setaria-ui-dev
 mkdir $TRAVIS_BRANCH
 rm -rf $TRAVIS_BRANCH/**
-cp -rf ../../examples/element-ui/** $TRAVIS_BRANCH/
+cp -rf ../../examples/setaria-ui/** $TRAVIS_BRANCH/
 git add -A .
 git commit -m "$TRAVIS_COMMIT_MSG"
 git push origin master
 cd ../..
 
-# push dev theme-default
-cd temp_web
-git clone -b $TRAVIS_BRANCH https://$ROT_TOKEN@github.com/ElementUI/theme-default.git && cd theme-default
-rm -rf *
-cp -rf ../../packages/theme-default/** .
-git add -A .
-git commit -m "$TRAVIS_COMMIT_MSG"
-git push origin $TRAVIS_BRANCH
-cd ../..
+# # push dev theme-default
+# cd temp_web
+# git clone -b $TRAVIS_BRANCH https://$ROT_TOKEN@github.com/ElementUI/theme-default.git && cd theme-default
+# rm -rf *
+# cp -rf ../../packages/theme-default/** .
+# git add -A .
+# git commit -m "$TRAVIS_COMMIT_MSG"
+# git push origin $TRAVIS_BRANCH
+# cd ../..

@@ -1,6 +1,7 @@
 <template>
   <transition name="dialog-fade">
-    <div class="el-dialog__wrapper" v-show="visible" @click.self="handleWrapperClick">
+    <div class="el-dialog__wrapper" v-show="visible" @click.self="handleWrapperClick"
+      :style="wrapperStyle">
       <div
         class="el-dialog"
         :class="[sizeClass, customClass]"
@@ -80,10 +81,7 @@
         default: ''
       },
 
-      top: {
-        type: String,
-        default: '15%'
-      },
+      top: String,
 
       cache: {
         type: Boolean,
@@ -119,8 +117,23 @@
       sizeClass() {
         return `el-dialog--${ this.size }`;
       },
+      wrapperStyle() {
+        let ret = {};
+        if (this.size !== 'full' && !this.top) {
+          ret = {
+            'display': 'flex',
+            'flex-direction': 'column',
+            'justify-content': 'center'
+          };
+        }
+        return ret;
+      },
       style() {
-        return this.size === 'full' ? {} : { 'top': this.top };
+        let ret = {};
+        if (this.size !== 'full' && this.top) {
+          ret = { 'top': this.top };
+        }
+        return ret;
       },
       isCacheDialogContent() {
         let ret = this.cache;

@@ -42,16 +42,16 @@ module.exports = cooking.resolve();
   {
     filename: 'package.json',
     content: `{
-  "name": "element-${componentname}",
+  "name": "setaria-${componentname}",
   "version": "0.0.0",
   "description": "A ${componentname} component for Vue.js.",
   "keywords": [
-    "element",
+    "setaria",
     "vue",
     "component"
   ],
   "main": "./lib/index.js",
-  "repository": "https://github.com/ElemeFE/element/tree/master/packages/${componentname}",
+  "repository": "https://github.com/bluejfox/setaria-ui/tree/master/packages/${componentname}",
   "author": "elemefe",
   "license": "MIT",
   "dependencies": {}
