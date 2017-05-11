@@ -122,7 +122,7 @@
         if (this.size !== 'full' && !this.top) {
           ret = {
             'display': 'flex',
-            'flex-direction': 'column',
+            'align-items': 'center',
             'justify-content': 'center'
           };
         }

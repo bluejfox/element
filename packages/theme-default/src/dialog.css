@@ -5,14 +5,11 @@
 @component-namespace el {
 
   @b dialog {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     background: var(--color-white);
     border-radius: var(--border-radius-small);
     box-shadow: var(--dialog-box-shadow);
     box-sizing: border-box;
-    margin-bottom: 50px;
+    margin: auto;
 
     @modifier tiny {
       width: var(--dialog-tiny-width);

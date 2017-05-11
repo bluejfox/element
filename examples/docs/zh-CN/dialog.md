@@ -181,7 +181,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | title     | Dialog 的标题，也可通过具名 slot （见下表）传入 | string    | — | — |
 | size      | Dialog 的大小 | string    | tiny/small/large/full | small |
-| top       | Dialog CSS 中的 top 值（仅在 size 不为 full 时有效），不设值时，使用垂直居中 | string | — | — |
+| top       | Dialog CSS 中的 top 值（仅在 size 不为 full 时有效），不设值时，垂直居中 | string | — | — |
 | modal     | 是否需要遮罩层   | boolean   | — | true |
 | modal-append-to-body     | 遮罩层是否插入至 body 元素上，若为 false，则遮罩层会插入至 Dialog 的父元素上   | boolean   | — | true |
 | lock-scroll | 是否在 Dialog 出现时将 body 滚动锁定 | boolean | — | true |
