@@ -86,17 +86,14 @@
         field.validate('', cb);
       },
       handleSubmit(event) {
-        // 定义了校验规则的场合
-        if (this.rules) {
-          // 使用定义的校验规则进行校验
-          this.validate((valid) => {
-            // 校验成功的场合
-            if (valid) {
-              // 触发submit事件
-              this.$emit('submit');
-            }
-          });
-        }
+        // 使用定义的校验规则进行校验
+        this.validate((valid) => {
+          // 校验成功的场合
+          if (valid) {
+            // 触发submit事件
+            this.$emit('submit');
+          }
+        });
         if (this.isPrevent) {
           event.preventDefault();
         }

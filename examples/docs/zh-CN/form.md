@@ -238,7 +238,7 @@
 
 ::: demo 在 Form 组件中，每一个表单域由一个 Form-Item 组件构成，表单域中可以放置各种类型的表单控件，包括 Input、Select、Checkbox、Radio、Switch、DatePicker、TimePicker
 ```html
-<el-form ref="form" :model="form" label-width="80px">
+<el-form ref="form" :model="form" label-width="80px" @submit="onSubmit">
   <el-form-item label="活动名称">
     <el-input v-model="form.name"></el-input>
   </el-form-item>
@@ -278,7 +278,7 @@
     <el-input type="textarea" v-model="form.desc"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="onSubmit">立即创建</el-button>
+    <el-button type="primary" native-type="submit">立即创建</el-button>
     <el-button>取消</el-button>
   </el-form-item>
 </el-form>
@@ -712,6 +712,48 @@
             return false;
           }
         });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
+  }
+</script>
+```
+:::
+
+### 自动验证
+
+::: demo 为了避免在每次表单提交时手动调用校验函数，在触发了表单组件Submit事件的场合， 表单组件会先基于rules进行校验，校验成功后触发submit事件给父组件。
+```html
+<el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm" @submit="onSubmit">
+  <el-form-item
+    label="年龄"
+    prop="age"
+    :rules="[
+      { required: true, message: '年龄不能为空'},
+      { type: 'number', message: '年龄必须为数字值'}
+    ]"
+  >
+    <el-input type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" native-type="submit">提交</el-button>
+    <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+  </el-form-item>
+</el-form>
+<script>
+  export default {
+    data() {
+      return {
+        numberValidateForm: {
+          age: ''
+        }
+      };
+    },
+    methods: {
+      onSubmit() {
+        console.log('onSubmit');
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
