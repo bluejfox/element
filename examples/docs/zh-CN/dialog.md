@@ -22,6 +22,7 @@
         dialogVisible: false,
         dialogTableVisible: false,
         dialogFormVisible: false,
+        dialogDragVisible: false,
         form: {
           name: '',
           region: '',
@@ -169,6 +170,33 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
           desc: ''
         },
         formLabelWidth: '120px'
+      };
+    }
+  };
+</script>
+```
+:::
+
+### 可拖拽
+可通过设定dragable属性为true开启对话框的拖拽功能
+
+:::demo
+```html
+<el-button type="text" @click="dialogDragVisible = true">点击打开 Dialog</el-button>
+
+<el-dialog title="提示" v-model="dialogDragVisible" size="tiny" dragable>
+  <span>这是一段信息</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogDragVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogDragVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
+
+<script>
+  export default {
+    data() {
+      return {
+        dialogDragVisible: false
       };
     }
   };

@@ -1,7 +1,7 @@
 <template>
   <transition name="dialog-fade">
     <div class="el-dialog__wrapper" v-show="visible" @click.self="handleWrapperClick"
-      :style="wrapperStyle">
+      :style="wrapperStyle" ref="dialogWrapper">
       <div
         class="el-dialog"
         :class="[sizeClass, customClass]"
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+  import Draggabilly from 'draggabilly';
   import Popup from 'setaria-ui/src/utils/popup';
   import emitter from 'setaria-ui/src/mixins/emitter';
 
@@ -86,6 +87,11 @@
       cache: {
         type: Boolean,
         default: true
+      },
+
+      dragable: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -142,6 +148,17 @@
         }
         return ret;
       }
+    },
+
+    created() {
+      /*eslint no-new: "error"*/
+      this.$nextTick(() => {
+        if (this.dragable) {
+          const drag = new Draggabilly(this.$refs.dialog, {
+            containment: this.$refs.dialogWrapper
+          });
+        }
+      });
     },
 
     methods: {
