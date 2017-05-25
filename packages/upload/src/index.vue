@@ -86,6 +86,7 @@ export default {
       default: 'text'   // text,picture,picture-card
     },
     httpRequest: Function,
+    disabled: Boolean,
     fileOutputType: {
       type: String,
       default: 'DataUrl'
@@ -138,6 +139,8 @@ export default {
       }
 
       this.uploadFiles.push(file);
+      this.onChange(file, this.uploadFiles);
+
       if (!this.action && this.autoUpload === false) {
         this.handleSuccess(null, file);
         this.$emit('input', this.uploadFiles);
@@ -238,6 +241,7 @@ export default {
         fileList: this.uploadFiles,
         autoUpload: this.autoUpload,
         listType: this.listType,
+        disabled: this.disabled,
         'on-start': this.handleStart,
         'on-progress': this.handleProgress,
         'on-success': this.handleSuccess,

@@ -42,7 +42,8 @@
                 :picker-width="pickerWidth"
                 @pick="handleTimePick"
                 :visible="timePickerVisible"
-                :format="timeFormat">
+                :format="timeFormat"
+                @mounted="$refs.timepicker.format=timeFormat">
               </time-picker>
             </span>
           </div>
@@ -188,7 +189,7 @@
 
     methods: {
       handleClear() {
-        this.date = new Date();
+        this.date = this.$options.defaultValue ? new Date(this.$options.defaultValue) : new Date();
         this.$emit('pick');
       },
 
@@ -358,7 +359,7 @@
       return {
         popperClass: '',
         pickerWidth: 0,
-        date: new Date(),
+        date: this.$options.defaultValue ? new Date(this.$options.defaultValue) : new Date(),
         value: '',
         showTime: false,
         selectionMode: 'day',
@@ -438,11 +439,11 @@
       },
 
       timeFormat() {
-        let ret = 'HH:mm:ss';
         if (this.format !== '' && this.format.indexOf('ss') === -1) {
-          ret = 'HH:mm';
+          return 'HH:mm';
+        } else {
+          return 'HH:mm:ss';
         }
-        return ret;
       }
     }
   };

@@ -48,14 +48,14 @@
   "unpkg": "lib/index.js",
   "style": "lib/theme-default/index.css",
   "dependencies": {
-    "async-validator": "~1.6.6",
-    "babel-helper-vue-jsx-merge-props": "~2.0.0",
-    "deepmerge": "~1.2.0",
+    "async-validator": "^1.6.9",
+    "babel-helper-vue-jsx-merge-props": "^2.0.0",
+    "deepmerge": "^1.2.0",
     "draggabilly": "^2.1.1",
-    "throttle-debounce": "~1.0.1"
+    "throttle-debounce": "^1.0.1"
   },
   "peerDependencies": {
-    "vue": "~2.2.x"
+    "vue": "^2.3.0"
   },
   "devDependencies": {
     "babel-cli": "~6.14.0",
@@ -109,23 +109,23 @@
     "phantomjs-prebuilt": "~2.1.13",
     "postcss": "~5.1.2",
     "postcss-loader": "^0.11.1",
-    "postcss-salad": "~1.0.8",
-    "rimraf": "~2.5.4",
-    "sinon": "~1.17.6",
-    "sinon-chai": "~2.8.0",
-    "style-loader": "~0.13.1",
-    "theaterjs": "~3.0.0",
-    "transliteration": "~1.1.11",
-    "uppercamelcase": "~1.1.0",
-    "url-loader": "~0.5.7",
-    "vue": "~2.2.x",
-    "vue-loader": "~11.1.x",
-    "vue-markdown-loader": "~0.5.1",
-    "vue-router": "~2.2.x",
-    "vue-template-compiler": "~2.2.x",
-    "vue-template-es2015-compiler": "~1.4.2",
-    "webpack": "~1.13.2",
-    "webpack-dev-server": "~1.15.1",
-    "webpack-node-externals": "~1.5.4"
+    "postcss-salad": "^1.0.8",
+    "rimraf": "^2.5.4",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
+    "style-loader": "^0.13.1",
+    "theaterjs": "^3.0.0",
+    "transliteration": "^1.1.11",
+    "uppercamelcase": "^1.1.0",
+    "url-loader": "^0.5.7",
+    "vue": "^2.3.0",
+    "vue-loader": "^12.0.2",
+    "vue-markdown-loader": "^0.5.1",
+    "vue-router": "^2.0.0",
+    "vue-template-compiler": "^2.3.0",
+    "vue-template-es2015-compiler": "^1.5.2",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.1",
+    "webpack-node-externals": "^1.5.4"
   }
 }

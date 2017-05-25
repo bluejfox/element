@@ -35,11 +35,11 @@ const forced = {
     renderHeader: function(h) {
       return <el-checkbox
         nativeOn-click={ this.toggleAllSelection }
-        domProps-value={ this.isAllSelected } />;
+        value={ this.isAllSelected } />;
     },
     renderCell: function(h, { row, column, store, $index }) {
       return <el-checkbox
-        domProps-value={ store.isSelected(row) }
+        value={ store.isSelected(row) }
         disabled={ column.selectable ? !column.selectable.call(null, row, $index) : false }
         on-input={ () => { store.commit('rowSelectedChanged', row); } } />;
     },
@@ -363,6 +363,12 @@ export default {
       if (this.columnConfig) {
         this.columnConfig.fixed = newVal;
         this.owner.store.scheduleLayout();
+      }
+    },
+
+    sortable(newVal) {
+      if (this.columnConfig) {
+        this.columnConfig.sortable = newVal;
       }
     }
   },
