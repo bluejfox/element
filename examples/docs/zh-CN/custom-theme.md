@@ -1,10 +1,10 @@
 ## 自定义主题
-Element 默认提供一套主题，CSS 命名采用 BEM 的风格方便使用者覆盖样式。如果你想完全替换主题色或者部分样式，可以使用下面的方法。
+Setaria 默认提供一套主题，CSS 命名采用 BEM 的风格方便使用者覆盖样式。如果你想完全替换主题色或者部分样式，可以使用下面的方法。
 
 ## 仅替换主题色
-如果仅希望更换 Element 的主题色，推荐使用[在线主题生成工具](https://elementui.github.io/theme-preview)。
+如果仅希望更换 Setaria 的主题色，推荐使用[在线主题生成工具](https://elementui.github.io/theme-preview)。
 
-Element 默认的主题色是鲜艳、友好的蓝色。通过替换主题色，能够让 Element 的视觉更加符合具体项目的定位。
+Setaria 默认的主题色是鲜艳、友好的蓝色。通过替换主题色，能够让 Setaria 的视觉更加符合具体项目的定位。
 
 使用上述工具，可以很方便地实时预览主题色改变之后的视觉，同时它还可以基于新的主题色生成完整的样式文件包，供直接下载使用（关于如何使用下载的主题包，请参考本节「引入自定义主题」和「搭配插件按需引入组件主题」部分）。
 
@@ -76,10 +76,10 @@ et
 
 ```javascript
 import '../theme/index.css'
-import ElementUI from 'element-ui'
+import SetariaUI from 'setaria-ui'
 import Vue from 'vue'
 
-Vue.use(ElementUI)
+Vue.use(SetariaUI)
 ```
 
 ### 搭配插件按需引入组件主题
@@ -88,7 +88,7 @@ Vue.use(ElementUI)
 {
   "plugins": [["component", [
     {
-      "libraryName": "element-ui",
+      "libraryName": "setaria-ui",
       "styleLibraryName": "~theme"
     }
   ]]]
