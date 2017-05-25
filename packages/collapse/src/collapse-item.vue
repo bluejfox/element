@@ -14,8 +14,8 @@
   </div>
 </template>
 <script>
+  import ElCollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
   import Emitter from 'setaria-ui/src/mixins/emitter';
-  import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
   export default {
     name: 'ElCollapseItem',
@@ -23,6 +23,8 @@
     componentName: 'ElCollapseItem',
 
     mixins: [Emitter],
+
+    components: { ElCollapseTransition },
 
     data() {
       return {

@@ -53,6 +53,10 @@
 - MessageBox 的 `message` 属性增加对 VNode 的支持，#4550
 - Pagination 的 `current-page` 增加对 `.sync` 的支持，#4539
 - Form 新增名为 label 的 slot，用于自定义标签文本的内容，#4634
+- 新增 Dropdown 的 `visible-change` 事件，#4818（by @luciy）
+- 新增 Col 和 Row 的 `tag` 属性，#4799
+- 新增 Cascader 的 `before-filter` 属性，#4774
+- 新增 InputNumber 的 `debounce` 属性，#4712（by @pengchongfu）
 
 #### 修复：
 - Select 和 Table 的某些功能与 Vue 2.3.x 不兼容的问题，#4518
@@ -67,6 +71,20 @@
 - 嵌套在 FormItem 中的按钮样式的 RadioGroup 的样式问题，#4336
 - ColorPicker 修复将绑定值赋值为空不会清空颜色面板的问题，#4668（by @pengchongfu）
 - Table 修复在 Safari 下 `show-overflow-tooltip` 无效的问题，#4157（by @renxia）
+- 修复上个版本中 Cascader 搜索功能不可用的问题，#4812
+- 修复 `type` 为 range 的 DatePicker 错误地触发 watch 的问题，#4837（by @wacky6）
+- 修复 TimePicker 在某些浏览器上数字不居中的问题，#4847（by @pengchongfu）
+- 修复当按下 ESC 关闭 Dialog 时不触发 `before-close` 钩子的问题，#4819（by @patriciussanctus）
+- 修复当多个 MessageBox 中存在 VNode 格式的 `message` 时渲染不正确的问题
+- 修复按下 tab 键无法使 Checkbox 获得焦点的问题
+- 修复在按需引入某些组件时，报 `el-collapse-transition` 未找到的错，#4728
+- 修复 Pagination 在 FireFox 中的垂直居中问题，#4756
+- 修复 `type` 为 week 时的 DatePicker 在更新绑定值后面板视图不更新的问题，#4739
+- 修复 `show-summary` 的 Table 的一些高度计算错误，#4736
+- 修复 Autocomplete 输入中文时会清空输入框的问题，#4718
+- 修复异步获取数据的 Table 的合计行不随表格其余部分滚动的问题，#4717
+- 修复 `close-on-press-esc` 为 true 的 Dialog 在按下 ESC 时无法正确关闭的问题，#4706
+- 修复设置了 `on-value` 和 `off-value` 的 Switch `change` 事件参数不正确的问题，#4675
 
 #### 非兼容性更新:
 - 最低兼容 Vue 2.3.0

@@ -44,7 +44,7 @@
 </template>
 
 <script type="text/jsx">
-  import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
+  import ElCollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
   import ElCheckbox from 'setaria-ui/packages/checkbox';
   import emitter from 'setaria-ui/src/mixins/emitter';
 
@@ -66,6 +66,7 @@
     },
 
     components: {
+      ElCollapseTransition,
       ElCheckbox,
       NodeContent: {
         props: {
