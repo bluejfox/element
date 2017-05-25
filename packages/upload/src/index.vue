@@ -19,6 +19,10 @@ export default {
     IframeUpload
   },
 
+  provide: {
+    uploader: this
+  },
+
   props: {
     action: {
       type: String
@@ -178,6 +182,7 @@ export default {
       if (raw) {
         file = this.getFile(raw);
       }
+      this.abort(file);
       var fileList = this.uploadFiles;
       fileList.splice(fileList.indexOf(file), 1);
       this.onRemove(file, fileList);
@@ -190,6 +195,9 @@ export default {
         return !target;
       });
       return target;
+    },
+    abort(file) {
+      this.$refs['upload-inner'].abort(file);
     },
     clearFiles() {
       this.uploadFiles = [];
