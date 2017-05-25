@@ -62,7 +62,8 @@
       @paste.native="debouncedOnInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false"
-      :icon="iconClass">
+      :icon="iconClass"
+      :show-disabled-class="showDisabledClass">
     </el-input>
     <transition
       name="el-zoom-in-top"
@@ -154,6 +155,13 @@
 
       isDisabled() {
         return this.disabled || this.readonly;
+      },
+
+      showDisabledClass() {
+        if (this.readonly) {
+          return 'n';
+        }
+        return undefined;
       }
     },
 
@@ -433,10 +441,12 @@
       },
 
       handleIconClick(event) {
-        if (this.iconClass.indexOf('circle-close') > -1) {
-          this.deleteSelected(event);
-        } else {
-          this.toggleMenu();
+        if (!this.isDisabled) {
+          if (this.iconClass.indexOf('circle-close') > -1) {
+            this.deleteSelected(event);
+          } else {
+            this.toggleMenu();
+          }
         }
       },
 

@@ -94,3 +94,8 @@
 
 - 修复当设置Dialog 对话框的属性cache为false时，内容没有显示的问题
 - 修正Dialog 对话框的拖拽功能，只可以通过点击Dialog 对话框的Header进行拖拽
+
+### 1.0.18
+*2017-5-25*
+
+- 修复当设置Select 选择器的属性disabled设置为true时，没有显示禁用样式的问题

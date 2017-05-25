@@ -110,7 +110,8 @@
         type: Boolean,
         default: true
       },
-      onIconClick: Function
+      onIconClick: Function,
+      showDisabledClass: String
     },
 
     computed: {
@@ -121,7 +122,11 @@
         return merge({}, this.textareaCalcStyle, { resize: this.resize });
       },
       isClassDisabled() {
-        return this.disabled && !this.readonly;
+        if (this.showDisabledClass !== undefined) {
+          return this.showDisabledClass !== 'n';
+        } else if (this.disabled) {
+          return this.disabled;
+        }
       }
     },
 
