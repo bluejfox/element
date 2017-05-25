@@ -138,7 +138,7 @@
       isCacheDialogContent() {
         let ret = this.cache;
         if (!ret) {
-          ret = this.value;
+          ret = this.visible;
         }
         return ret;
       }
@@ -149,7 +149,8 @@
       this.$nextTick(() => {
         if (this.dragable) {
           const drag = new Draggabilly(this.$refs.dialog, {
-            containment: this.$refs.dialogWrapper
+            containment: this.$refs.dialogWrapper,
+            handle: '.el-dialog__header'
           });
         }
       });

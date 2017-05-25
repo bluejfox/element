@@ -23,6 +23,7 @@
         dialogTableVisible: false,
         dialogFormVisible: false,
         dialogDragVisible: false,
+        dialogCacheVisible: false,
         form: {
           name: '',
           region: '',
@@ -194,14 +195,46 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 ```
 :::
 
+### 缓存功能
+当Dialog 对话框的内容为组件，并且希望在每次打开Dialog 对话框时刷新组件的场合，可以设置cache为false使
+Dialog 对话框的内容刷新。
+
+:::demo
+```html
+<el-button type="text" @click="dialogCacheVisible = true">点击打开 Dialog</el-button>
+
+<el-dialog title="提示" v-model="dialogCacheVisible" size="tiny" :dragable="false" :cache="false">
+  <el-form>
+    <el-form-item label="活动名称">
+      <el-input></el-input>
+    </el-form-item>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogCacheVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogCacheVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
+
+<script>
+  export default {
+    data() {
+      return {
+        dialogCacheVisible: false
+      };
+    }
+  };
+</script>
+```
+:::
+
 ### 可拖拽
-可通过设定dragable属性为true开启对话框的拖拽功能
+可通过设定dragable属性为true开启对话框的拖拽功能，并点击Dialog 对话框的Header进行拖拽。
 
 :::demo
 ```html
 <el-button type="text" @click="dialogDragVisible = true">点击打开 Dialog</el-button>
 
-<el-dialog title="提示" v-model="dialogDragVisible" size="tiny" dragable>
+<el-dialog title="提示" v-model="dialogDragVisible" size="tiny" dragable :cache="false">
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogDragVisible = false">取 消</el-button>
@@ -236,6 +269,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 | close-on-press-escape | 是否可以通过按下 ESC 关闭 Dialog | boolean    | — | true |
 | show-close | 是否显示关闭按钮 | boolean    | — | true |
 | before-close | 关闭前的回调，会暂停 Dialog 的关闭 | function(done)，done 用于关闭 Dialog | — | — |
+| cache | 是否缓存 Dialog内容 | boolean    | — | true |
 | dragable | 是否开启拖拽功能 | boolean    | — | true |
 
 ### Slot
