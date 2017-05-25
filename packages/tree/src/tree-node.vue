@@ -27,7 +27,7 @@
       </span>
       <node-content :node="node"></node-content>
     </div>
-    <collapse-transition>
+    <el-collapse-transition>
       <div
         class="el-tree-node__children"
         v-show="expanded">
@@ -39,7 +39,7 @@
           @node-expand="handleChildNodeExpand">
         </el-tree-node>
       </div>
-    </collapse-transition>
+    </el-collapse-transition>
   </div>
 </template>
 
@@ -67,7 +67,6 @@
 
     components: {
       ElCheckbox,
-      CollapseTransition,
       NodeContent: {
         props: {
           node: {
