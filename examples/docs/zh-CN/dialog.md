@@ -87,6 +87,7 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
   title="提示"
   :visible.sync="dialogVisible"
   size="tiny"
+  :cache="true"
   :before-close="handleClose">
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
@@ -125,7 +126,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 <!-- Table -->
 <el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>
 
-<el-dialog title="收货地址" :visible.sync="dialogTableVisible">
+<el-dialog title="收货地址" :visible.sync="dialogTableVisible" :cache="true">
   <el-table :data="gridData">
     <el-table-column property="date" label="日期" width="150"></el-table-column>
     <el-table-column property="name" label="姓名" width="200"></el-table-column>
@@ -136,7 +137,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 <!-- Form -->
 <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
 
-<el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+<el-dialog title="收货地址" :visible.sync="dialogFormVisible" :cache="true">
   <el-form :model="form">
     <el-form-item label="活动名称" :label-width="formLabelWidth">
       <el-input v-model="form.name" auto-complete="off"></el-input>
@@ -234,7 +235,7 @@ Dialog 对话框的内容刷新。
 ```html
 <el-button type="text" @click="dialogDragVisible = true">点击打开 Dialog</el-button>
 
-<el-dialog title="提示" v-model="dialogDragVisible" size="tiny" dragable :cache="false">
+<el-dialog title="提示" v-model="dialogDragVisible" size="tiny" dragable :cache="true">
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogDragVisible = false">取 消</el-button>
@@ -269,7 +270,7 @@ Dialog 对话框的内容刷新。
 | close-on-press-escape | 是否可以通过按下 ESC 关闭 Dialog | boolean    | — | true |
 | show-close | 是否显示关闭按钮 | boolean    | — | true |
 | before-close | 关闭前的回调，会暂停 Dialog 的关闭 | function(done)，done 用于关闭 Dialog | — | — |
-| cache | 是否缓存 Dialog内容 | boolean    | — | true |
+| cache | 是否缓存 Dialog内容 | boolean    | — | false |
 | dragable | 是否开启拖拽功能 | boolean    | — | true |
 
 ### Slot

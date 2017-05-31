@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="el-dialog__body" v-if="rendered">
-          <slot v-if="isCacheDialogContent"></slot>
+          <slot v-if="isShowContent"></slot>
         </div>
         <div class="el-dialog__footer" v-if="$slots.footer">
           <slot name="footer"></slot>
@@ -88,7 +88,7 @@
 
       cache: {
         type: Boolean,
-        default: true
+        default: false
       },
 
       dragable: {
@@ -97,14 +97,28 @@
       }
     },
 
+    data() {
+      return {
+        isShowContent: true
+      };
+    },
+
     watch: {
       visible(val) {
         this.$emit('update:visible', val);
         if (val) {
           this.$emit('open');
           this.$el.addEventListener('scroll', this.updatePopper);
+          // 需要对对话框内容进行缓存的场合
+          if (!this.cache) {
+            // 清空对话框内容
+            this.clearBodyContent();
+          }
           this.$nextTick(() => {
             this.$refs.dialog.scrollTop = 0;
+            if (!this.cache) {
+              this.isShowContent = val;
+            }
           });
         } else {
           this.$el.removeEventListener('scroll', this.updatePopper);
@@ -132,13 +146,6 @@
         let ret = {};
         if (this.size !== 'full' && this.top) {
           ret = { 'top': this.top };
-        }
-        return ret;
-      },
-      isCacheDialogContent() {
-        let ret = this.cache;
-        if (!ret) {
-          ret = this.visible;
         }
         return ret;
       }
@@ -175,6 +182,9 @@
       updatePopper() {
         this.broadcast('ElSelectDropdown', 'updatePopper');
         this.broadcast('ElDropdownMenu', 'updatePopper');
+      },
+      clearBodyContent() {
+        this.isShowContent = false;
       }
     },
 
