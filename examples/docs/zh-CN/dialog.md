@@ -24,6 +24,8 @@
         dialogFormVisible: false,
         dialogDragVisible: false,
         dialogCacheVisible: false,
+        dialogParentVisible: false,
+        dialogChildVisible: false,
         form: {
           name: '',
           region: '',
@@ -248,6 +250,40 @@ Dialog 对话框的内容刷新。
     data() {
       return {
         dialogDragVisible: false
+      };
+    }
+  };
+</script>
+```
+:::
+
+### 在对话框中打开对话框
+对于希望在对话框中再次打开另一个子对话框的需求，可通过设置父对话框modal-append-to-body属性为true，子对话框的modal-append-to-body属性为false来实现。
+
+:::demo
+```html
+<el-button type="text" @click="dialogParentVisible = true">点击打开 Dialog</el-button>
+
+<el-dialog title="提示" :visible.sync="dialogParentVisible">
+  <el-button @click="dialogChildVisible = true">打开子对话框</el-button>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogParentVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogParentVisible = false">确 定</el-button>
+  </span>
+  <el-dialog title="提示" :visible.sync="dialogChildVisible" size="tiny" :modal-append-to-body="false">
+    子对话框
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="dialogChildVisible = false">取 消</el-button>
+    </span>
+  </el-dialog>
+</el-dialog>
+
+<script>
+  export default {
+    data() {
+      return {
+        dialogParentVisible: false,
+        dialogChildVisible: false
       };
     }
   };

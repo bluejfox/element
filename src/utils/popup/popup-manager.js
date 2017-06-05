@@ -94,9 +94,12 @@ const PopupManager = {
       removeClass(modalDom, 'v-modal-enter');
     }, 200);
 
+    let modalParent = null;
     if (dom && dom.parentNode && dom.parentNode.nodeType !== 11) {
+      modalParent = dom.parentNode;
       dom.parentNode.appendChild(modalDom);
     } else {
+      modalParent = document.body;
       document.body.appendChild(modalDom);
     }
 
@@ -105,7 +108,8 @@ const PopupManager = {
     }
     modalDom.style.display = '';
 
-    this.modalStack.push({ id: id, zIndex: zIndex, modalClass: modalClass });
+    this.modalStack.push({ id: id, zIndex: zIndex, modalClass: modalClass,
+      modalParent: modalParent });
   },
 
   closeModal: function(id) {
@@ -122,6 +126,8 @@ const PopupManager = {
 
         modalStack.pop();
         if (modalStack.length > 0) {
+          modalDom.parentNode.removeChild(modalDom);
+          modalStack[modalStack.length - 1].modalParent.appendChild(modalDom);
           modalDom.style.zIndex = modalStack[modalStack.length - 1].zIndex;
         }
       } else {
