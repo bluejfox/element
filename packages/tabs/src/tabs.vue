@@ -14,7 +14,8 @@
       closable: Boolean,
       addable: Boolean,
       value: {},
-      editable: Boolean
+      editable: Boolean,
+      beforeTabClick: Function
     },
 
     data() {
@@ -43,8 +44,16 @@
     methods: {
       handleTabClick(tab, tabName, event) {
         if (tab.disabled) return;
-        this.setCurrentName(tabName);
-        this.$emit('tab-click', tab, event);
+        let isSwitchTab = false;
+        if (!this.beforeTabClick) {
+          isSwitchTab = true;
+        } else {
+          isSwitchTab = this.beforeTabClick(tabName);
+        }
+        if (isSwitchTab) {
+          this.setCurrentName(tabName);
+          this.$emit('tab-click', tab, event);
+        }
       },
       handleTabRemove(pane, ev) {
         if (pane.disabled) return;

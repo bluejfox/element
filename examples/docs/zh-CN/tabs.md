@@ -4,6 +4,7 @@
       return {
         activeName: 'second',
         activeName2: 'first',
+        activeName3: 'first',
         editableTabsValue: '2',
         editableTabsValue2: '2',
         editableTabs: [{
@@ -54,7 +55,7 @@
               }
             });
           }
-          
+
           this.editableTabsValue = activeName;
           this.editableTabs = tabs.filter(tab => tab.name !== targetName);
         }
@@ -81,10 +82,18 @@
             }
           });
         }
-        
+
         this.editableTabsValue2 = activeName;
         this.editableTabs2 = tabs.filter(tab => tab.name !== targetName);
-      }
+      },
+      handleBeforeTabClick(tabName) {
+        this.$confirm('确认切换？')
+          .then(_ => {
+            this.activeName3 = tabName;
+          })
+          .catch(_ => {});
+        return false;
+      },
     }
   }
 </script>
@@ -247,7 +256,7 @@
               }
             });
           }
-          
+
           this.editableTabsValue = activeName;
           this.editableTabs = tabs.filter(tab => tab.name !== targetName);
         }
@@ -320,12 +329,43 @@
             }
           });
         }
-        
+
         this.editableTabsValue2 = activeName;
         this.editableTabs2 = tabs.filter(tab => tab.name !== targetName);
       }
     }
   }
+</script>
+```
+:::
+
+### 标签页点击控制
+
+点击标签页后如果希望基于某些条件判断是否执行切换动作，此时可通过设定before-tab-click属性来达到此目的。
+
+:::demo
+```html
+<template>
+  <el-tabs v-model="activeName3" @tab-click="handleClick" :before-tab-click="handleBeforeTabClick">
+    <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+    <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+    <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+  </el-tabs>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        activeName: 'second'
+      };
+    },
+    methods: {
+      handleClick(tab, event) {
+        console.log(tab, event);
+      }
+    }
+  };
 </script>
 ```
 :::
@@ -338,7 +378,8 @@
 | addable  | 标签是否可增加   | boolean   | — |  false  |
 | editable  | 标签是否同时可增加和关闭   | boolean   | — |  false  |
 | active-name(deprecated)  | 选中选项卡的 name  | string   |  —  |  第一个选项卡的 name |
-| value  | 绑定值，选中选项卡的 name  | string   |  —  |  第一个选项卡的 name |
+| value  | 绑定值，选中选项卡的 name  | string  |  —  |  第一个选项卡的 name |
+| before-tab-click  | 可选参数，标签页点击后执行切换动作前的钩子，若返回false则被reject，则停止切换  | function(tabName)  |  —  |  —  |
 
 ### Tabs Events
 | 事件名称 | 说明 | 回调参数 |
