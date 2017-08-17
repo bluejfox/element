@@ -17,7 +17,7 @@
           }
         }, 1000);
       };
-      var validaePass = (rule, value, callback) => {
+      var vaildatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please input the password'));
         } else {
@@ -27,7 +27,7 @@
           callback();
         }
       };
-      var validaePass2 = (rule, value, callback) => {
+      var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please input the password again'));
         } else if (value !== this.ruleForm2.pass) {
@@ -101,10 +101,10 @@
         },
         rules2: {
           pass: [
-            { validator: validaePass, trigger: 'blur' }
+            { validator: validatePass, trigger: 'blur' }
           ],
           checkPass: [
-            { validator: validaePass2, trigger: 'blur' }
+            { validator: validatePass2, trigger: 'blur' }
           ],
           age: [
             { validator: checkAge, trigger: 'blur' }
@@ -283,7 +283,7 @@ It includes all kinds of input items, such as `input`, `select`, `radio` and `ch
   <el-form-item label="Activity form">
     <el-input type="textarea" v-model="form.desc"></el-input>
   </el-form-item>
-  <el-form-item label-width="120px">
+  <el-form-item>
     <el-button type="primary" @click="onSubmit">Create</el-button>
     <el-button>Cancel</el-button>
   </el-form-item>
@@ -445,7 +445,7 @@ Form component allows you to verify your data, helping you find and correct erro
   <el-form-item label="Activity form" prop="desc">
     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
   </el-form-item>
-  <el-form-item label-width="120px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
     <el-button @click="resetForm('ruleForm')">Reset</el-button>
   </el-form-item>
@@ -525,7 +525,7 @@ Form component allows you to verify your data, helping you find and correct erro
   <el-form-item label="Age" prop="age">
     <el-input v-model.number="ruleForm2.age"></el-input>
   </el-form-item>
-  <el-form-item label-width="120px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm2')">Submit</el-button>
     <el-button @click="resetForm('ruleForm2')">Reset</el-button>
   </el-form-item>
@@ -549,7 +549,7 @@ Form component allows you to verify your data, helping you find and correct erro
           }
         }, 1000);
       };
-      var validaePass = (rule, value, callback) => {
+      var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please input the password'));
         } else {
@@ -559,7 +559,7 @@ Form component allows you to verify your data, helping you find and correct erro
           callback();
         }
       };
-      var validaePass2 = (rule, value, callback) => {
+      var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please input the password again'));
         } else if (value !== this.ruleForm2.pass) {
@@ -576,10 +576,10 @@ Form component allows you to verify your data, helping you find and correct erro
         },
         rules2: {
           pass: [
-            { validator: validaePass, trigger: 'blur' }
+            { validator: validatePass, trigger: 'blur' }
           ],
           checkPass: [
-            { validator: validaePass2, trigger: 'blur' }
+            { validator: validatePass2, trigger: 'blur' }
           ],
           age: [
             { validator: checkAge, trigger: 'blur' }
@@ -634,7 +634,7 @@ Form component allows you to verify your data, helping you find and correct erro
   >
     <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">Delete</el-button>
   </el-form-item>
-  <el-form-item label-width="120px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('dynamicValidateForm')">Submit</el-button>
     <el-button @click="addDomain">New domain</el-button>
     <el-button @click="resetForm('dynamicValidateForm')">Reset</el-button>
@@ -700,7 +700,7 @@ Form component allows you to verify your data, helping you find and correct erro
   >
     <el-input type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
   </el-form-item>
-  <el-form-item label-width="100px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('numberValidateForm')">Submit</el-button>
     <el-button @click="resetForm('numberValidateForm')">Reset</el-button>
   </el-form-item>
@@ -735,7 +735,7 @@ Form component allows you to verify your data, helping you find and correct erro
 :::
 
 :::tip
-If an `el-form-item` has an empty `label`, and you wish to align it with other items, please add `label-width` on that `el-form-item`.
+When an `el-form-item` is nested in another `el-form-item`, its label width will be `0`. You can set `label-width` on that `el-form-item` if needed.
 :::
 
 ### Form Attributes
@@ -746,7 +746,7 @@ If an `el-form-item` has an empty `label`, and you wish to align it with other i
 | rules | validation rules of form | object | — | — |
 | inline | whether the form is inline | boolean | — | false |
 | label-position | position of label | string | left/right/top | right |
-| label-width | width of label, and all form items will inherit from `Form` | string | — | — |
+| label-width | width of label, and all its direct child form items will inherit this value | string | — | — |
 | label-suffix | suffix of the label | string | — | — |
 | show-message  | whether to show the error message | boolean | — | true |
 

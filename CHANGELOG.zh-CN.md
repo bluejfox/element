@@ -39,6 +39,7 @@
   - 部分浏览器不支持 `classList` 的问题，#5613（by @flynntsc）
   - 异步加载数据的 Table 不显示合计行的问题，#5318
   - 带展开行的 Table 在高亮和斑马纹效果下的问题，#4871（by @mu-yu）
+  - 斑马纹的 Table 的背景色在 hover 时不正确的问题，#6024（by @xtongs）
 - Select
   - 单选时打开下拉框有时无法定位到已选中项的问题，#5564（by @wacky6）
   - 多选时 Vue 2.4.x 报错的问题，#5897
@@ -50,6 +51,7 @@
   - `auto-upload` 为 false 时，无法选择之前删除的文件的问题，#5706
   - `disabled` 时删除按钮仍可见并可操作的问题，#5841
   - 兼容 Vue 2.4 `key` 不能是对象的问题，#5872
+  - 禁用的 Upload 的文件列表仍然显示删除按钮并可操作的问题，#6091
 - MessageBox
   - 非 `confirm` 或 `prompt` 情况下点击取消按钮仍然被 resolve 的问题，#5658
 - Rate
@@ -67,10 +69,13 @@
 - Tree
   - 在 lazy 模式下 `setCheckedKeys` 和 `setCheckedNodes` 方法的 bug，#5937
   - 在 lazy 模式下勾选父级节点会一次性加载全部后代节点的问题，#5963
+  - 勾选父节点会弹出子节点的问题，#6029
+  - 勾选逻辑错误，#6034
 - Form
   - 未在 FormItem 上指定 `label` 时，label 的具名 slot 失效的问题，#5921
   - 行内 FormItem 对复合型 Input 失效的问题，#5151
   - FormItem 在 Firefox 中的高度与其他浏览器不一致的问题，#5152
+  - 作为 Form 直接子元素的 FormItem 不继承 `label-width` 的问题，#6044
 - Tooltip
   - Vue 2.4.x 下触发元素为自定义组件时不工作的问题，#5916
 - Switch
@@ -90,6 +95,12 @@
   - 无法触发原生 `keydown` 和 `keyup` 事件的问题，#5129
 - MessageBox
   - 提升可访问性，#4786
+- Menu
+  - collapse 模式下的 Menu 自动弹出子菜单的问题，#6111
+- Tab
+  - 使用 `v-if` 的动态 TabPane 顺序错误的问题，#6066
+- Other
+  - 鼠标在 `open-delay` 时间内移开元素后，仍然会弹出 Popover 的问题，#6058（by @laobubu）
 
 #### 非兼容性更新:
 - Select

@@ -436,7 +436,7 @@
   <el-form-item label="活动形式" prop="desc">
     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
   </el-form-item>
-  <el-form-item label-width="100px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
     <el-button @click="resetForm('ruleForm')">重置</el-button>
   </el-form-item>
@@ -515,7 +515,7 @@
   <el-form-item label="年龄" prop="age">
     <el-input v-model.number="ruleForm2.age"></el-input>
   </el-form-item>
-  <el-form-item label-width="100px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
     <el-button @click="resetForm('ruleForm2')">重置</el-button>
   </el-form-item>
@@ -623,7 +623,7 @@
   >
     <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
   </el-form-item>
-  <el-form-item label-width="100px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
     <el-button @click="addDomain">新增域名</el-button>
     <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
@@ -688,7 +688,7 @@
   >
     <el-input type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
   </el-form-item>
-  <el-form-item label-width="100px">
+  <el-form-item>
     <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
     <el-button @click="resetForm('numberValidateForm')">重置</el-button>
   </el-form-item>
@@ -720,6 +720,8 @@
   }
 </script>
 ```
+:::tip
+嵌套在 `el-form-item` 中的 `el-form-item` 标签宽度默认为零，不会继承 `el-form` 的 `label-width`。如果需要可以为其单独设置 `label-width` 属性。
 :::
 
 ### 自动验证
@@ -773,7 +775,7 @@
 | rules    | 表单验证规则 | object | — | — |
 | inline    | 行内表单模式 | boolean | — | false |
 | label-position | 表单域标签的位置 | string |  right/left/top            | right |
-| label-width | 表单域标签的宽度，所有的 form-item 都会继承 form 组件的 labelWidth 的值 | string | — | — |
+| label-width | 表单域标签的宽度，作为 Form 直接子元素的 form-item 会继承该值 | string | — | — |
 | label-suffix | 表单域标签的后缀 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 
