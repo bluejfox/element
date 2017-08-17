@@ -85,7 +85,7 @@
           </el-option>
           <slot></slot>
         </el-scrollbar>
-        <p class="el-select-dropdown__empty" v-if="emptyText && !allowCreate">{{ emptyText }}</p>
+        <p class="el-select-dropdown__empty" v-if="emptyText && (allowCreate && options.length === 0 || !allowCreate)">{{ emptyText }}</p>
       </el-select-menu>
     </transition>
   </div>
@@ -208,7 +208,8 @@
       readonly: {
         type: Boolean,
         default: false
-      }
+      },
+      defaultFirstOption: Boolean
     },
 
     data() {
@@ -280,6 +281,25 @@
           this.filteredOptionsCount = this.optionsCount;
           this.broadcast('ElOption', 'queryChange', val);
           this.broadcast('ElOptionGroup', 'queryChange');
+        }
+        if (this.defaultFirstOption && (this.filterable || this.remote) && this.filteredOptionsCount) {
+          this.hoverIndex = -1;
+          for (let i = 0; i !== this.options.length; ++i) {
+            const option = this.options[i];
+            if (val) {
+              // pick first options that passes the filter
+              if (!option.disabled && !option.groupDisabled && option.visible) {
+                this.hoverIndex = i;
+                break;
+              }
+            } else {
+              // pick currently selected option
+              if (option.itemSelected) {
+                this.hoverIndex = i;
+                break;
+              }
+            }
+          }
         }
       },
 
