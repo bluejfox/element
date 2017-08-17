@@ -1,5 +1,5 @@
 <template>
-  <div class="el-autocomplete" v-clickoutside="handleClickoutside">
+  <div class="el-autocomplete">
     <el-input
       ref="input"
       :value="value"
@@ -17,7 +17,7 @@
       @blur="handleBlur"
       @keydown.up.native.prevent="highlight(highlightedIndex - 1)"
       @keydown.down.native.prevent="highlight(highlightedIndex + 1)"
-      @keydown.enter.stop.native="handleKeyEnter"
+      @keydown.enter.native.prevent="handleKeyEnter"
     >
       <template slot="prepend" v-if="$slots.prepend">
         <slot name="prepend"></slot>
@@ -36,7 +36,6 @@
 </template>
 <script>
   import ElInput from 'setaria-ui/packages/input';
-  import Clickoutside from 'setaria-ui/src/utils/clickoutside';
   import ElAutocompleteSuggestions from './autocomplete-suggestions.vue';
   import Emitter from 'setaria-ui/src/mixins/emitter';
 
@@ -51,8 +50,6 @@
       ElInput,
       ElAutocompleteSuggestions
     },
-
-    directives: { Clickoutside },
 
     props: {
       popperClass: String,
@@ -136,9 +133,6 @@
         if (this.suggestionVisible && this.highlightedIndex >= 0 && this.highlightedIndex < this.suggestions.length) {
           this.select(this.suggestions[this.highlightedIndex]);
         }
-      },
-      handleClickoutside() {
-        this.isFocus = false;
       },
       select(item) {
         this.$emit('input', item.value);
