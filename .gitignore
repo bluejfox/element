@@ -11,3 +11,4 @@ examples/pages/en-US
 examples/pages/zh-CN
 .npmrc
 coverage
+waiter.config.js

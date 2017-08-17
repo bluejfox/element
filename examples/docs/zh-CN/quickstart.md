@@ -259,7 +259,8 @@ import {
   ColorPicker,
   Loading,
   MessageBox,
-  Message
+  Message,
+  Notification
 } from 'setaria-ui'
 
 Vue.use(Pagination)

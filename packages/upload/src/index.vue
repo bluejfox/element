@@ -226,6 +226,7 @@ export default {
     if (this.showFileList) {
       uploadList = (
         <UploadList
+          disabled={this.disabled}
           listType={this.listType}
           files={this.uploadFiles}
           on-remove={this.handleRemove}
