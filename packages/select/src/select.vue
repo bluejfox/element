@@ -12,7 +12,7 @@
         <el-tag
           v-for="item in selected"
           :key="getValueKey(item)"
-          closable
+          :closable="!disabled"
           :hit="item.hitState"
           type="primary"
           @close="deleteTag($event, item)"
@@ -370,21 +370,21 @@
         }
       },
 
-      scrollToOption(className = 'selected') {
-        if (this.$refs.popper) {
+      scrollToOption(option) {
+        const target = Array.isArray(option) && option[0] ? option[0].$el : option.$el;
+        if (this.$refs.popper && target) {
           const menu = this.$refs.popper.$el.querySelector('.el-select-dropdown__wrap');
-          scrollIntoView(menu, menu.getElementsByClassName(className)[0]);
+          scrollIntoView(menu, target);
         }
       },
 
       handleMenuEnter() {
-        this.$nextTick(() => this.scrollToOption());
+        this.$nextTick(() => this.scrollToOption(this.selected));
       },
 
       getOption(value) {
         let option;
-        const type = typeof value;
-        const isObject = type !== 'string' && type !== 'number' && type !== 'boolean';
+        const isObject = Object.prototype.toString.call(value).toLowerCase() === '[object object]';
         for (let i = this.cachedOptions.length - 1; i >= 0; i--) {
           const cachedOption = this.cachedOptions[i];
           const isEqual = isObject
@@ -544,12 +544,11 @@
           this.$emit('input', option.value);
           this.visible = false;
         }
-        this.$nextTick(() => this.scrollToOption());
+        this.$nextTick(() => this.scrollToOption(option));
       },
 
       getValueIndex(arr = [], value) {
-        const type = typeof value;
-        const isObject = type !== 'string' && type !== 'number' && type !== 'boolean';
+        const isObject = Object.prototype.toString.call(value).toLowerCase() === '[object object]';
         if (!isObject) {
           return arr.indexOf(value);
         } else {
@@ -606,7 +605,7 @@
             }
           }
         }
-        this.$nextTick(() => this.scrollToOption('hover'));
+        this.$nextTick(() => this.scrollToOption(this.options[this.hoverIndex]));
       },
 
       selectOption() {

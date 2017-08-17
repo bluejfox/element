@@ -32,8 +32,10 @@
   - `disabledDate` 范围被扩大的问题，#4946（by @liyangworld）
   - shortcut 面板过长时的溢出问题，#5297（by @alashow）
   - 在手动输入值后按 Tab 切换焦点时下拉框不消失的问题，#5149（by @ChuckFields）
+  - 部分格式化文字 i18n 不生效的问题，#6328
 - Steps
   - 动态增减步骤后的样式错误，#5456（by @elfman）
+  - `status` 为 `error` 的 Step 样式问题，#6155 (by @wacky6)
 - Table
   - 带有固定列且可展开时，鼠标 hover 高亮行错位的问题，#5471（by @elfman）
   - 部分浏览器不支持 `classList` 的问题，#5613（by @flynntsc）
@@ -45,6 +47,7 @@
   - 多选时 Vue 2.4.x 报错的问题，#5897
   - `default-first-option` 属性在远程搜索时不生效的问题，#5084
   - 修复可创建选项的 Select 在没有选项数据时不显示「无数据」文本的问题，#4977
+  - 绑定值为对象类型，初始值为 null时，会选中 value 为 `0` 的问题，#6143
 - Radio
   - RadioGroup 内只有一个 Radio 时的圆角丢失问题，#5646（by @YYvanYang）
 - Upload
@@ -60,12 +63,14 @@
   - 总页数的 i18n 不与 vue-i18n@6.x 兼容的问题，#5796（by @mario56）
   - 当前页为最大页数减一时，错误地显示省略号的问题，#5861（by @openks）
   - 输入框数值与当前页不同步的问题，#5377
+  - jumper 在 IE 下敲击回车无法触发翻页的问题，#6306 @qingdengyue
 - Loading
   - 不可见元素绑定 Loading 时的样式错误，#5649（by @xiongzixiao）
 - Cascader
   - 输入框中的文字未垂直居中的问题，#5819（by @jianzhi92）
   - `value` 为 0 的数据不能展开下一级的问题，#5172（by @Kingwl）
   - 在某些情况下下拉框的位置没有及时更新的问题，#5064
+  - 当 `expand-trigger` 为 `hover` 时，点击选择条目后快速移动会再次选到父级元素的问题，#6199
 - Tree
   - 在 lazy 模式下 `setCheckedKeys` 和 `setCheckedNodes` 方法的 bug，#5937
   - 在 lazy 模式下勾选父级节点会一次性加载全部后代节点的问题，#5963
@@ -80,6 +85,7 @@
   - Vue 2.4.x 下触发元素为自定义组件时不工作的问题，#5916
 - Switch
   - 当页面上有被选中的文本时点击 Switch 无效的问题，#5411
+  - 内部的原生 input 状态与组件不同步的问题，#6205 @wacky6
 - Carousel
   - initial-index 属性无效的问题，#5334
 - Dialog
@@ -91,14 +97,20 @@
   - 默认值为白色的 ColorPicker 无法通过面板改变 hue 的问题，#5184（by @Kingwl）
 - InputNumber
   - 与其他表单组件同行显示时不能对齐的问题，#5127
+  - 当 `size` 为 `large` 和 `small` 时的样式问题，#6310 @JeremyWuuuuu
 - Autocomplete
   - 无法触发原生 `keydown` 和 `keyup` 事件的问题，#5129
+  - 在 blur 时不会收起下拉框的问题，#6256
 - MessageBox
   - 提升可访问性，#4786
 - Menu
   - collapse 模式下的 Menu 自动弹出子菜单的问题，#6111
+  - 在 collaspse 时不能收起子级菜单的问题，#6200
 - Tab
   - 使用 `v-if` 的动态 TabPane 顺序错误的问题，#6066
+- Slider
+  - 在 resize 窗口后滑块位置不准的问题，#6263
+  - 点击 Slider 的滑块会使其移动至起点的问题，#6359
 - Other
   - 鼠标在 `open-delay` 时间内移开元素后，仍然会弹出 Popover 的问题，#6058（by @laobubu）
 
