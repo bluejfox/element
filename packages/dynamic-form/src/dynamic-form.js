@@ -129,8 +129,12 @@ export default {
     };
     if (this.schema && this.schema.properties) {
       Object.keys(this.schema.properties).forEach(key => {
+        const ui = this.uiSchema[key] || {};
+        const className = ui.className || '';
         let componentTagName = '';
-        let componentProps = {};
+        let componentProps = {
+          'class': `el-dynamic-form--component ${className}`
+        };
         const componentChildren = [];
         const props = {
           value: self.model[key]
@@ -146,7 +150,6 @@ export default {
           this.$emit('change', key, val, self.model);
         };
         if (property.enum || property.oneOf || property.anyOf) {
-          const ui = this.uiSchema[key] || {};
           if (property.oneOf && ui[UI_WIDGET] === 'radio') {
             componentTagName = 'el-radio-group';
           } else if (property.anyOf && ui[UI_WIDGET] === 'checkbox' && property.type === 'array') {
@@ -176,11 +179,8 @@ export default {
               value: item.const
             });
           });
-          componentProps = {
-            'class': 'el-dynamic-form--component',
-            props,
-            on: events.on
-          };
+          componentProps.props = props;
+          componentProps.on = events.on;
           if (componentTagName === 'el-select') {
             optionList.forEach(item => {
               componentChildren.push(h(
@@ -250,14 +250,11 @@ export default {
               }
             }
           }
-          componentProps = {
-            'class': 'el-dynamic-form--component',
-            style: {
-              width: '100%'
-            },
-            props,
-            on: events.on
+          componentProps.style = {
+            width: '100%'
           };
+          componentProps.props = props;
+          componentProps.on = events.on;
         } else if (property.type === 'integer' || property.type === 'number') {
           events.on.input = (val) => {
             let ret = val;
@@ -273,15 +270,13 @@ export default {
             this.$emit('change', key, ret, self.model);
           };
           componentTagName = 'el-input';
-          componentProps = {
-            'class': 'el-dynamic-form--component',
-            props,
-            on: events.on
-          };
+          componentProps.props = props;
+          componentProps.on = events.on;
         }
         const formItem = h(
           'el-form-item',
           {
+            'class': `el-form-item-${key}`,
             props: {
               label: property.title,
               prop: key

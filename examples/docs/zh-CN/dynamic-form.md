@@ -79,7 +79,8 @@
         },
         uiSchema: {
           "password": {
-            "ui:widget": "password"
+            "ui:widget": "password",
+            "className": "password-class"
           },
           "comment": {
             "ui:widget": "textarea",
@@ -327,6 +328,87 @@
 </script>
 ```
 :::
+
+### 样式自定义
+
+自定义样式的使用
+
+::: demo 根据标准JSON-Schema生成对应的表单
+```html
+<div>
+  <el-dynamic-form ref="form" :inline="true" :model="form1" :schema="schema" @submit="onSubmit" @change="onChange">
+    <div slot="button">
+      <el-button type="primary" native-type="submit">提交</el-button>
+    </div>
+  </el-dynamic-form>
+  <p>result:</p>
+  <div>
+    {{ this.form1 }}
+  </div>
+</div>
+<script>
+  export default {
+    data() {
+      return {
+        form1: {
+          firstName: 'first',
+          lastName: 'last',
+          password: '',
+          age: null,
+          gender: "Female",
+          birth: ""
+        },
+        schema: {
+          "title": "A registration form",
+          "description": "A simple form example.",
+          "type": "object",
+          "required": [
+            "firstName",
+            "lastName"
+          ],
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "title": "First name",
+              "minLength": 3,
+              "maxLength": 6
+            },
+            "lastName": {
+              "type": "string",
+              "title": "Last name"
+            },
+            "age": {
+              "type": "integer",
+              "title": "Age"
+            },
+            "gender": {
+              "type": "string",
+              "title": "gender",
+              "oneOf": [
+                {"const": "1", "title": "Male"},
+                {"const": "2", "title": "FeMale"}
+              ]
+            },
+            "birth": {
+              "type": "string",
+              "title": "birth",
+              "format": "date"
+            }
+          }
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        console.log('submit!');
+        console.log(this.form1);
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Form Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
