@@ -127,6 +127,10 @@
             {
               "path": "/form",
               "title": "Form 表单"
+            },
+            {
+              "path": "/dynamic-form",
+              "title": "动态Form 表单"
             }
           ]
         },

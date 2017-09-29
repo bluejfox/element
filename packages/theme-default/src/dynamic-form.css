@@ -1,0 +1,10 @@
+@charset "UTF-8";
+@import "./common/var.css";
+
+@component-namespace el {
+  @b dynamic-form {
+    @m component {
+      width: 100%;
+    }
+  }
+}
