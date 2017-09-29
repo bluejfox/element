@@ -9,7 +9,8 @@
           age: null,
           gender: '1',
           birth: '',
-          interest: ''
+          interest: [],
+          comment: ''
         },
         form2: {
           firstName: 'first',
@@ -18,7 +19,8 @@
           age: null,
           gender: '1',
           birth: '',
-          interest: ''
+          interest: [],
+          comment: ''
         },
         schema: {
           "title": "A registration form",
@@ -61,8 +63,17 @@
               "format": "date-time"
             },
             "interest": {
+              "type": "array",
+              "title": "interest",
+              "anyOf": [
+                {"const": "1", "title": "Game"},
+                {"const": "2", "title": "Music"},
+                {"const": "3", "title": "Sport"}
+              ]
+            },
+            "comment": {
               "type": "string",
-              "title": "interest"
+              "title": "comment"
             }
           }
         },
@@ -70,16 +81,25 @@
           "password": {
             "ui:widget": "password"
           },
-          "interest": {
+          "comment": {
             "ui:widget": "textarea",
             "ui:options": {
               rows: 5
             }
+          },
+          "gender": {
+            "ui:widget": "radio"
+          },
+          "interest": {
+            "ui:widget": "checkbox"
           }
         }
       };
     },
     methods: {
+      onChange(id, value, object) {
+        console.log(id, value, object);
+      },
       onSubmit() {
         console.log('submit!');
         console.log(this.form1);
@@ -146,7 +166,7 @@
 ::: demo 根据标准JSON-Schema生成对应的表单
 ```html
 <div>
-  <el-dynamic-form ref="form" :model="form1" :schema="schema" label-width="100px" @submit="onSubmit">
+  <el-dynamic-form ref="form" :model="form1" :schema="schema" label-width="100px" @submit="onSubmit" @change="onChange">
     <div slot="button">
       <el-button type="primary" native-type="submit">提交</el-button>
     </div>
