@@ -86,7 +86,8 @@
             "ui:widget": "textarea",
             "ui:options": {
               rows: 5
-            }
+            },
+            "ui:disabled": true
           },
           "gender": {
             "ui:widget": "radio"

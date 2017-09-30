@@ -5,6 +5,8 @@ import ElInput from 'setaria-ui/packages/input';
 
 const UI_WIDGET = 'ui:widget';
 const UI_OPTIONS = 'ui:options';
+const CLASSNAME = 'className';
+const UI_DISABLED = 'ui:disabled';
 
 export default {
   name: 'ElDynamicForm',
@@ -130,14 +132,15 @@ export default {
     if (this.schema && this.schema.properties) {
       Object.keys(this.schema.properties).forEach(key => {
         const ui = this.uiSchema[key] || {};
-        const className = ui.className || '';
+        const className = ui[CLASSNAME] || '';
         let componentTagName = '';
         let componentProps = {
           'class': `el-dynamic-form--component ${className}`
         };
         const componentChildren = [];
         const props = {
-          value: self.model[key]
+          value: self.model[key],
+          disabled: ui[UI_DISABLED] === true
         };
         const property = self.schema.properties[key];
         const events = {
