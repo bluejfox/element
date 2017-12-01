@@ -138,7 +138,7 @@
 <style>
   .demo-dynamic-form.demo-zh-CN {
     .el-form {
-      width: 440px;
+      width: 100%;
     }
 
     .line {
@@ -146,7 +146,7 @@
     }
 
     .demo-form-normal {
-      width: 440px;
+      width: 100%;
     }
     .demo-ruleForm {
       width: 460px;
@@ -187,8 +187,10 @@
           lastName: 'last',
           password: '',
           age: null,
-          gender: "Female",
-          birth: ""
+          gender: '1',
+          birth: '',
+          interest: [],
+          comment: ''
         },
         schema: {
           "title": "A registration form",
@@ -209,6 +211,10 @@
               "type": "string",
               "title": "Last name"
             },
+            "password": {
+              "type": "string",
+              "title": "password"
+            },
             "age": {
               "type": "integer",
               "title": "Age"
@@ -224,7 +230,20 @@
             "birth": {
               "type": "string",
               "title": "birth",
-              "format": "date"
+              "format": "date-time"
+            },
+            "interest": {
+              "type": "array",
+              "title": "interest",
+              "anyOf": [
+                {"const": "1", "title": "Game"},
+                {"const": "2", "title": "Music"},
+                {"const": "3", "title": "Sport"}
+              ]
+            },
+            "comment": {
+              "type": "string",
+              "title": "comment"
             }
           }
         }
@@ -267,8 +286,10 @@
           lastName: 'last',
           password: '',
           age: null,
-          gender: "1",
-          birth: ""
+          gender: '1',
+          birth: '',
+          interest: [],
+          comment: ''
         },
         schema: {
           "title": "A registration form",
@@ -292,7 +313,7 @@
             "password": {
               "type": "string",
               "title": "password"
-            }
+            },
             "age": {
               "type": "integer",
               "title": "Age"
@@ -309,92 +330,39 @@
               "type": "string",
               "title": "birth",
               "format": "date-time"
+            },
+            "interest": {
+              "type": "array",
+              "title": "interest",
+              "anyOf": [
+                {"const": "1", "title": "Game"},
+                {"const": "2", "title": "Music"},
+                {"const": "3", "title": "Sport"}
+              ]
+            },
+            "comment": {
+              "type": "string",
+              "title": "comment"
             }
           }
         },
         uiSchema: {
           "password": {
-            "ui:widget": "password"
-          }
-        }
-      }
-    },
-    methods: {
-      onSubmit() {
-        console.log('submit!');
-        console.log(this.form1);
-      }
-    }
-  }
-</script>
-```
-:::
-
-### 样式自定义
-
-自定义样式的使用
-
-::: demo 根据标准JSON-Schema生成对应的表单
-```html
-<div>
-  <el-dynamic-form ref="form" :inline="true" :model="form1" :schema="schema" @submit="onSubmit" @change="onChange">
-    <div slot="button">
-      <el-button type="primary" native-type="submit">提交</el-button>
-    </div>
-  </el-dynamic-form>
-  <p>result:</p>
-  <div>
-    {{ this.form1 }}
-  </div>
-</div>
-<script>
-  export default {
-    data() {
-      return {
-        form1: {
-          firstName: 'first',
-          lastName: 'last',
-          password: '',
-          age: null,
-          gender: "Female",
-          birth: ""
-        },
-        schema: {
-          "title": "A registration form",
-          "description": "A simple form example.",
-          "type": "object",
-          "required": [
-            "firstName",
-            "lastName"
-          ],
-          "properties": {
-            "firstName": {
-              "type": "string",
-              "title": "First name",
-              "minLength": 3,
-              "maxLength": 6
+            "ui:widget": "password",
+            "className": "password-class"
+          },
+          "comment": {
+            "ui:widget": "textarea",
+            "ui:options": {
+              rows: 5
             },
-            "lastName": {
-              "type": "string",
-              "title": "Last name"
-            },
-            "age": {
-              "type": "integer",
-              "title": "Age"
-            },
-            "gender": {
-              "type": "string",
-              "title": "gender",
-              "oneOf": [
-                {"const": "1", "title": "Male"},
-                {"const": "2", "title": "FeMale"}
-              ]
-            },
-            "birth": {
-              "type": "string",
-              "title": "birth",
-              "format": "date"
-            }
+            "ui:disabled": true
+          },
+          "gender": {
+            "ui:widget": "radio"
+          },
+          "interest": {
+            "ui:widget": "checkbox"
           }
         }
       }
@@ -421,6 +389,14 @@
 | label-width | 表单域标签的宽度，作为 Form 直接子元素的 form-item 会继承该值 | string | — | — |
 | label-suffix | 表单域标签的后缀 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
+| schema | JSON Schema对象 | Object | — | - |
+| ui-schema | 用于设置各个表单字段的组件类型(ui:widget)、是否可用(ui:disabled)等属性 | Object | — | - |
+
+### Form Events
+| 事件名称      | 说明    | 回调参数      |
+|---------- |-------- |---------- |
+| submit  | 表单提交后，校验成功时回调 | — |
+| change  | 表单字段值变更时回调 | key 表单字段的Key, val 表单字段的值 |
 
 ### Form Methods
 

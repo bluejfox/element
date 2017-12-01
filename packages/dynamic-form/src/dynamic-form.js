@@ -39,6 +39,10 @@ export default {
         return {
         };
       }
+    },
+    columns: {
+      type: Number,
+      default: 2
     }
   },
   data() {
@@ -300,13 +304,50 @@ export default {
       showMessage: self.showMessage,
       isPrevent: self.isPrevent
     };
+    // 自适应设置
+    const rowArray = [];
+    let colArray = null;
+    formItemArray.forEach((formItem, index) => {
+      if (colArray === null) {
+        colArray = [];
+      }
+      const span = 24 / self.columns;
+      const column = h(
+        'el-col',
+        {
+          props: {
+            lg: span,
+            md: span,
+            sm: span,
+            xs: 24
+          }
+        },
+        [formItem]
+      );
+      colArray.push(column);
+      if (((index + 1) % self.columns === 0 ||
+        index === formItemArray.length - 1) && index !== 0) {
+        const gutter = self.labelWidth === undefined || self.labelWidth === null ? 10 : 0;
+        const row = h(
+          'el-row',
+          {
+            props: {
+              gutter: gutter
+            }
+          },
+          [...colArray]
+        );
+        rowArray.push(row);
+        colArray = null;
+      }
+    });
     return h(
       'el-form',
       {
         props: formProps,
         on: formEvents.on
       },
-      [...formItemArray, self.$slots.button]
+      [...rowArray, self.$slots.button]
     );
   },
   components: {
