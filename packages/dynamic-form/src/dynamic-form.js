@@ -304,50 +304,55 @@ export default {
       showMessage: self.showMessage,
       isPrevent: self.isPrevent
     };
-    // 自适应设置
-    const rowArray = [];
-    let colArray = null;
-    formItemArray.forEach((formItem, index) => {
-      if (colArray === null) {
-        colArray = [];
-      }
-      const span = 24 / self.columns;
-      const column = h(
-        'el-col',
-        {
-          props: {
-            lg: span,
-            md: span,
-            sm: span,
-            xs: 24
-          }
-        },
-        [formItem]
-      );
-      colArray.push(column);
-      if (((index + 1) % self.columns === 0 ||
-        index === formItemArray.length - 1) && index !== 0) {
-        const gutter = self.labelWidth === undefined || self.labelWidth === null ? 10 : 0;
-        const row = h(
-          'el-row',
+    let formComponents = formItemArray;
+    // inline模式的场合不使用自适应
+    if (this.inline !== true) {
+      // 自适应设置
+      const rowArray = [];
+      let colArray = null;
+      formItemArray.forEach((formItem, index) => {
+        if (colArray === null) {
+          colArray = [];
+        }
+        const span = 24 / self.columns;
+        const column = h(
+          'el-col',
           {
             props: {
-              gutter: gutter
+              lg: span,
+              md: span,
+              sm: span,
+              xs: 24
             }
           },
-          [...colArray]
+          [formItem]
         );
-        rowArray.push(row);
-        colArray = null;
-      }
-    });
+        colArray.push(column);
+        if (((index + 1) % self.columns === 0 ||
+          index === formItemArray.length - 1) && index !== 0) {
+          const gutter = self.labelWidth === undefined || self.labelWidth === null ? 10 : 0;
+          const row = h(
+            'el-row',
+            {
+              props: {
+                gutter: gutter
+              }
+            },
+            [...colArray]
+          );
+          rowArray.push(row);
+          colArray = null;
+        }
+      });
+      formComponents = rowArray;
+    }
     return h(
       'el-form',
       {
         props: formProps,
         on: formEvents.on
       },
-      [...rowArray, self.$slots.button]
+      [...formComponents, self.$slots.button]
     );
   },
   components: {
