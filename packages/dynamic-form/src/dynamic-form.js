@@ -243,16 +243,13 @@ export default {
             componentTagName = 'el-input';
             if (this.uiSchema !== undefined && this.uiSchema !== null) {
               const ui = this.uiSchema[key] || {};
+              // 组件类型
               const widgetType = ui[UI_WIDGET];
               if (widgetType !== undefined) {
-                const widgetOption = ui[UI_OPTIONS] || {};
                 if (widgetType === 'password') {
                   props.type = 'password';
                 } else if (widgetType === 'textarea') {
                   props.type = 'textarea';
-                  if (typeof widgetOption.rows === 'number') {
-                    props.rows = widgetOption.rows;
-                  }
                 }
               }
             }
@@ -280,6 +277,11 @@ export default {
           componentProps.props = props;
           componentProps.on = events.on;
         }
+        // 合并ui:options属性至组件属性中
+        const widgetCustomOption = ui[UI_OPTIONS] || {};
+        // 定义的options属性为次优先
+        const mergedProps = Object.assign({}, widgetCustomOption, componentProps.props);
+        componentProps.props = mergedProps;
         const formItem = h(
           'el-form-item',
           {

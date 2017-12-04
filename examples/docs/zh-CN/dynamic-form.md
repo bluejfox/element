@@ -20,7 +20,8 @@
           gender: '1',
           birth: '',
           interest: [],
-          comment: ''
+          comment: '',
+          profession: ''
         },
         schema: {
           "title": "A registration form",
@@ -74,10 +75,21 @@
             "comment": {
               "type": "string",
               "title": "comment"
+            },
+            "profession": {
+              "type": "string",
+              "title": "profession",
+              "oneOf": [
+                { "const":1, "title":"teacher" },
+                { "const":2, "title":"doctor" }
+              ]
             }
           }
         },
         uiSchema: {
+          "lastName": {
+            "ui:disabled": true
+          },
           "password": {
             "ui:widget": "password",
             "className": "password-class"
@@ -86,14 +98,18 @@
             "ui:widget": "textarea",
             "ui:options": {
               rows: 5
-            },
-            "ui:disabled": true
+            }
           },
           "gender": {
             "ui:widget": "radio"
           },
           "interest": {
             "ui:widget": "checkbox"
+          },
+          "profession": {
+            "ui:options": {
+              "clearable": true
+            }
           }
         }
       };
@@ -262,7 +278,9 @@
 
 ### 定制化表单
 
-可用过传入ui-schema属性对表单的项目进行定制化
+可用过传入ui-schema属性对表单的项目进行定制化。 
+
+请注意: ui-options中的属性为各组件的特殊属性，即只有该组件才具有的属性。disabled等不在此列。
 
 ::: demo
 ```html
@@ -289,7 +307,8 @@
           gender: '1',
           birth: '',
           interest: [],
-          comment: ''
+          comment: '',
+          profession: ''
         },
         schema: {
           "title": "A registration form",
@@ -343,6 +362,14 @@
             "comment": {
               "type": "string",
               "title": "comment"
+            },
+            "profession": {
+              "type": "string",
+              "title": "profession",
+              "oneOf": [
+                { "const":1, "title":"teacher" },
+                { "const":2, "title":"doctor" }
+              ]
             }
           }
         },
@@ -363,6 +390,11 @@
           },
           "interest": {
             "ui:widget": "checkbox"
+          },
+          "profession": {
+            "ui:options": {
+              "clearable": true
+            }
           }
         }
       }
@@ -390,8 +422,16 @@
 | label-suffix | 表单域标签的后缀 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | schema | JSON Schema对象 | Object | — | - |
-| ui-schema | 用于设置各个表单字段的组件类型(ui:widget)、是否可用(ui:disabled)等属性 | Object | — | - |
+| ui-schema | 用于设置各个表单字段的组件类型(ui:widget)、是否可用(ui:disabled)等属性 (请参照下表) | Object | — | - |
 | columns | 表单的列数。分辨率在768像素以下时表单列数固定为1 | Number | — | 2 |
+
+### UI-Schema Attributes
+
+| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
+|---------- |-------------- |---------- |--------------------------------  |-------- |
+| ui:widget | 表单字段的组件类型 | string | password, textarea, select, checkbox, radio等  |  — |
+| ui:disabled | 表单字段的组件是否可用 | boolean | - | false |
+| ui:options | 表单字段的组件特殊属性 | object | setaria组件特殊属性 | - |
 
 ### Form Events
 | 事件名称      | 说明    | 回调参数      |
