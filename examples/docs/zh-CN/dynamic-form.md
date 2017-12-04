@@ -391,6 +391,7 @@
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | schema | JSON Schema对象 | Object | — | - |
 | ui-schema | 用于设置各个表单字段的组件类型(ui:widget)、是否可用(ui:disabled)等属性 | Object | — | - |
+| columns | 表单的列数。分辨率在768像素以下时表单列数固定为1 | Number | — | 2 |
 
 ### Form Events
 | 事件名称      | 说明    | 回调参数      |
