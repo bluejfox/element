@@ -63,6 +63,7 @@ export default {
         if (!ret[key]) {
           ret[key] = [];
         }
+        // 生成必须输入校验规则
         ret[key].push({
           required: true,
           message: `请输入${itemName}`,
@@ -105,15 +106,34 @@ export default {
           if (item.type === 'integer') {
             message = `${itemName}必须为整数`;
           }
+          const numberRule = {
+            type: item.type,
+            message: message,
+            trigger: 'blur'
+          };
+          let isRequiredRuleExist = false;
           if (!ret[key]) {
             ret[key] = [];
+          } else {
+            isRequiredRuleExist = ret[key].some(newRule => {
+              // 因async-validator无法正常处理数字类型的required:true规则，
+              // 因此暂时移除数字类型的required:true规则
+              if (newRule.required === true) {
+                newRule.type = item.type;
+                return true;
+              }
+            });
           }
-          ret[key].push({
-            type: item.type,
-            message: message
-          });
+          if (isRequiredRuleExist) {
+            // 在规则头部生成数字校验规则以规避上述问题
+            ret[key].unshift(numberRule);
+          } else {
+            // 在规则末尾生成数字校验规则
+            ret[key].push(numberRule);
+          }
         }
       });
+      console.log(ret);
       return ret;
     }
   },

@@ -7,7 +7,7 @@
           lastName: 'last',
           password: '',
           age: null,
-          gender: '1',
+          gender: 1,
           birth: '',
           interest: [],
           comment: ''
@@ -17,7 +17,7 @@
           lastName: 'last',
           password: '',
           age: null,
-          gender: '1',
+          gender: null,
           birth: '',
           interest: [],
           comment: '',
@@ -29,7 +29,8 @@
           "type": "object",
           "required": [
             "firstName",
-            "lastName"
+            "lastName",
+            "age"
           ],
           "properties": {
             "firstName": {
@@ -51,11 +52,11 @@
               "title": "Age"
             },
             "gender": {
-              "type": "string",
+              "type": "integer",
               "title": "gender",
               "oneOf": [
-                {"const": "1", "title": "Male"},
-                {"const": "2", "title": "FeMale"}
+                {"const": 1, "title": "Male"},
+                {"const": 2, "title": "FeMale"}
               ]
             },
             "birth": {
@@ -214,7 +215,8 @@
           "type": "object",
           "required": [
             "firstName",
-            "lastName"
+            "lastName",
+            "age"
           ],
           "properties": {
             "firstName": {
@@ -236,11 +238,11 @@
               "title": "Age"
             },
             "gender": {
-              "type": "string",
+              "type": "integer",
               "title": "gender",
               "oneOf": [
-                {"const": "1", "title": "Male"},
-                {"const": "2", "title": "FeMale"}
+                {"const": 1, "title": "Male"},
+                {"const": 2, "title": "FeMale"}
               ]
             },
             "birth": {
@@ -260,6 +262,14 @@
             "comment": {
               "type": "string",
               "title": "comment"
+            },
+            "profession": {
+              "type": "string",
+              "title": "profession",
+              "oneOf": [
+                { "const":1, "title":"teacher" },
+                { "const":2, "title":"doctor" }
+              ]
             }
           }
         }
@@ -316,7 +326,8 @@
           "type": "object",
           "required": [
             "firstName",
-            "lastName"
+            "lastName",
+            "age"
           ],
           "properties": {
             "firstName": {
@@ -338,11 +349,11 @@
               "title": "Age"
             },
             "gender": {
-              "type": "string",
+              "type": "integer",
               "title": "gender",
               "oneOf": [
-                {"const": "1", "title": "Male"},
-                {"const": "2", "title": "FeMale"}
+                {"const": 1, "title": "Male"},
+                {"const": 2, "title": "FeMale"}
               ]
             },
             "birth": {
