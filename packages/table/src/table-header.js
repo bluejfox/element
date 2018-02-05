@@ -102,7 +102,7 @@ export default {
                     on-mouseout={ this.handleMouseOut }
                     on-mousedown={ ($event) => this.handleMouseDown($event, column) }
                     on-click={ ($event) => this.handleHeaderClick($event, column) }
-                    class={ [column.id, column.order, column.headerAlign, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex, columns) ? 'is-hidden' : '', !column.children ? 'is-leaf' : '', column.labelClassName] }>
+                    class={ [column.id, column.order, column.headerAlign, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex, columns) ? 'is-hidden' : '', !column.children ? 'is-leaf' : '', column.labelClassName, column.sortable ? 'is-sortable' : ''] }>
                     <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : '', column.labelClassName] }>
                     {
                       column.renderHeader
@@ -369,9 +369,15 @@ export default {
         const bodyStyle = document.body.style;
         if (rect.width > 12 && rect.right - event.pageX < 8) {
           bodyStyle.cursor = 'col-resize';
+          if (hasClass(target, 'is-sortable')) {
+            target.style.cursor = 'col-resize';
+          }
           this.draggingColumn = column;
         } else if (!this.dragging) {
           bodyStyle.cursor = '';
+          if (hasClass(target, 'is-sortable')) {
+            target.style.cursor = 'pointer';
+          }
           this.draggingColumn = null;
         }
       }

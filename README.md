@@ -3,26 +3,6 @@
 
 Fork自[element-ui](https://github.com/ElemeFE/element)
 为了方便应用级开发，对部分Element-UI组件做了一定程度的调整。
-会根据需求增加应用级组件，敬请期待。
-
-## Links
-- [Home Page](http://element.eleme.io/)
-- [Docs](http://element.eleme.io/#/component)
-- [awesome-element](https://github.com/ElementUI/awesome-element)
-- [FAQ](./FAQ.md)
-- [Customize Theme](http://element.eleme.io/#/en-US/component/custom-theme)
-- [Preview and generate theme online](https://elementui.github.io/theme-preview)
-- [Element for React](https://github.com/eleme/element-react)
-- [Atom helper](https://github.com/ElemeFE/element-helper)
-- Starter Kit
-  - [element-starter](https://github.com/ElementUI/element-starter)
-  - [element-cooking-starter](https://github.com/ElementUI/element-cooking-starter)
-  - [element-in-laravel-starter](https://github.com/ElementUI/element-in-laravel-starter)
-- [Design resources](https://github.com/ElementUI/Resources)
-- Boilerplate for bug reports
-  - [CodePen](https://codepen.io/anon/pen/ozYpNA)
-  - [JSFiddle](https://jsfiddle.net/gmve9d3p/)
-- [Mint UI](https://github.com/ElemeFE/mint-ui) - Mobile UI elements for Vue.js
 
 ## Install
 ```shell

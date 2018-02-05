@@ -33,13 +33,22 @@
       hideOnClick: {
         type: Boolean,
         default: true
+      },
+      showTimeout: {
+        type: Number,
+        default: 250
+      },
+      hideTimeout: {
+        type: Number,
+        default: 150
       }
     },
 
     data() {
       return {
         timeout: null,
-        visible: false
+        visible: false,
+        triggerElm: null
       };
     },
 
@@ -57,36 +66,39 @@
 
     methods: {
       show() {
+        if (this.triggerElm.disabled) return;
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
           this.visible = true;
-        }, 250);
+        }, this.showTimeout);
       },
       hide() {
+        if (this.triggerElm.disabled) return;
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
           this.visible = false;
-        }, 150);
+        }, this.hideTimeout);
       },
       handleClick() {
+        if (this.triggerElm.disabled) return;
         this.visible = !this.visible;
       },
       initEvent() {
         let { trigger, show, hide, handleClick, splitButton } = this;
-        let triggerElm = splitButton
+        this.triggerElm = splitButton
           ? this.$refs.trigger.$el
           : this.$slots.default[0].elm;
 
         if (trigger === 'hover') {
-          triggerElm.addEventListener('mouseenter', show);
-          triggerElm.addEventListener('mouseleave', hide);
+          this.triggerElm.addEventListener('mouseenter', show);
+          this.triggerElm.addEventListener('mouseleave', hide);
 
           let dropdownElm = this.$slots.dropdown[0].elm;
 
           dropdownElm.addEventListener('mouseenter', show);
           dropdownElm.addEventListener('mouseleave', hide);
         } else if (trigger === 'click') {
-          triggerElm.addEventListener('click', handleClick);
+          this.triggerElm.addEventListener('click', handleClick);
         }
       },
       handleMenuItemClick(command, instance) {

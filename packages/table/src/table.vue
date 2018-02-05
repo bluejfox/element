@@ -257,11 +257,13 @@
         });
 
         const scrollBodyWrapper = event => {
-          const deltaX = event.deltaX;
+          const { deltaX, deltaY } = event;
+
+          if (Math.abs(deltaX) < Math.abs(deltaY)) return;
 
           if (deltaX > 0) {
             this.bodyWrapper.scrollLeft += 10;
-          } else {
+          } else if (deltaX < 0) {
             this.bodyWrapper.scrollLeft -= 10;
           }
         };
@@ -294,6 +296,9 @@
           }
           if (this.$el) {
             this.isHidden = this.$el.clientWidth === 0;
+            if (this.isHidden && this.layout.bodyWidth) {
+              setTimeout(() => this.doLayout());
+            }
           }
         });
       }

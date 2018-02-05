@@ -151,13 +151,13 @@ export default {
       }
     },
     handleProgress(ev, rawFile) {
-      var file = this.getFile(rawFile);
+      const file = this.getFile(rawFile);
       this.onProgress(ev, file, this.uploadFiles);
       file.status = 'uploading';
       file.percentage = ev.percent || 0;
     },
     handleSuccess(res, rawFile) {
-      var file = this.getFile(rawFile);
+      const file = this.getFile(rawFile);
 
       if (file) {
         file.status = 'success';
@@ -168,8 +168,8 @@ export default {
       }
     },
     handleError(err, rawFile) {
-      var file = this.getFile(rawFile);
-      var fileList = this.uploadFiles;
+      const file = this.getFile(rawFile);
+      const fileList = this.uploadFiles;
 
       file.status = 'fail';
 
@@ -183,13 +183,13 @@ export default {
         file = this.getFile(raw);
       }
       this.abort(file);
-      var fileList = this.uploadFiles;
+      let fileList = this.uploadFiles;
       fileList.splice(fileList.indexOf(file), 1);
       this.onRemove(file, fileList);
     },
     getFile(rawFile) {
-      var fileList = this.uploadFiles;
-      var target;
+      let fileList = this.uploadFiles;
+      let target;
       fileList.every(item => {
         target = rawFile.uid === item.uid ? item : null;
         return !target;
@@ -221,7 +221,7 @@ export default {
   },
 
   render(h) {
-    var uploadList;
+    let uploadList;
 
     if (this.showFileList) {
       uploadList = (
@@ -235,7 +235,7 @@ export default {
       );
     }
 
-    var uploadData = {
+    const uploadData = {
       props: {
         type: this.type,
         drag: this.drag,
