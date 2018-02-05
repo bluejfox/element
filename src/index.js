@@ -65,6 +65,8 @@ import Cascader from '../packages/cascader/index.js';
 import ColorPicker from '../packages/color-picker/index.js';
 import Transfer from '../packages/transfer/index.js';
 import DynamicForm from '../packages/dynamic-form/index.js';
+import TemplateBaseSearch from '../packages/template-base-search/index.js';
+import SimplePagination from '../packages/simple-pagination/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -130,6 +132,8 @@ const components = [
   ColorPicker,
   Transfer,
   DynamicForm,
+  TemplateBaseSearch,
+  SimplePagination,
   CollapseTransition
 ];
 
@@ -160,7 +164,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 };
 
 module.exports = {
-  version: '1.1.8',
+  version: '1.1.9',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -229,5 +233,7 @@ module.exports = {
   Cascader,
   ColorPicker,
   Transfer,
-  DynamicForm
+  DynamicForm,
+  TemplateBaseSearch,
+  SimplePagination
 };

@@ -1,0 +1,32 @@
+@charset "UTF-8";
+@import "./common/var.css";
+
+@component-namespace el {
+
+  @b template-base-search {
+    & .table-assist-button {
+      float: right;
+      margin: 5px ;
+    }
+    & .list-selected-tip {
+      background-color: rgb(50, 65, 87);
+      color: rgb(191, 203, 217);
+      height: 30px;
+      line-height: 30px;
+      
+      & .tip-button {
+        float: right;
+        font-size: 15px;
+      }
+    }
+  }
+  
+  @b column-visibility-status-list {
+    & .el-checkbox {
+      margin-bottom: 12px;
+      
+      & + .el-checkbox {
+      }
+    }
+  }
+}

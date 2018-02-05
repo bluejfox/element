@@ -239,6 +239,10 @@
             {
               "path": "/collapse",
               "title": "Collapse 折叠面板"
+            },
+            {
+              "path": "/template-base-search",
+              "title": "TemplateBaseSearch 检索页面模板"
             }
           ]
         }
