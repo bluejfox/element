@@ -99,7 +99,12 @@
       doSelectionChange(val) {
         this.selectionRows = val;
         console.log(this.selectionRows);
-      }
+      },
+      doHandleMultiTableData(val) {
+        const nameArray = [];
+        val.forEach(i => nameArray.push(i.name));
+        this.$message(`已选择 ${nameArray.join(',')}`);
+      },
     }
   }
 </script>
@@ -144,7 +149,8 @@
     show-multi-row-control-tips
     result-column-auto-align
     @selection-change="doSelectionChange"
-    @next-page-data-empty="doShowNoExistDataError">
+    @next-page-data-empty="doShowNoExistDataError"
+    @handle-multi-table-data="doHandleMultiTableData">
     <div slot="tableRowControl" slot-scope="props">
       <el-button type="text" @click="doUpdate(props.row)">修改</el-button>
       <span class="button-separator">|</span>

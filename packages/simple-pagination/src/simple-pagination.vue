@@ -10,10 +10,11 @@
     <slot>
       <el-row justify="end" align="middle" type="flex">
         <el-col :span="5">
-          当前在第 {{ currentPage }} 页
+          <span class="el-pagination__total">当前在第 {{ currentPage }} 页</span>
         </el-col>
         <el-button-group>
-          <el-button :disabled="isPrevButtonDisabled" :plain="true" size="large" type="info" icon="arrow-left" @click="doPrev">
+          <el-button :disabled="isPrevButtonDisabled" :plain="true" size="large" type="info"
+            icon="el-icon-arrow-left" @click="doPrev">
             上一页
           </el-button>
           <el-button :disabled="isNextButtonDisabled" :plain="true" size="large" type="info" @click="doNext">

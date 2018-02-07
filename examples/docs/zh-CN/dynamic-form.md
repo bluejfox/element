@@ -62,7 +62,7 @@
             "birth": {
               "type": "string",
               "title": "birth",
-              "format": "date-time"
+              "format": "date"
             },
             "interest": {
               "type": "array",
@@ -248,7 +248,7 @@
             "birth": {
               "type": "string",
               "title": "birth",
-              "format": "date-time"
+              "format": "date"
             },
             "interest": {
               "type": "array",
@@ -359,7 +359,7 @@
             "birth": {
               "type": "string",
               "title": "birth",
-              "format": "date-time"
+              "format": "date"
             },
             "interest": {
               "type": "array",

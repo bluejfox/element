@@ -1,0 +1,42 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(template-base-search) {
+  @include e(search-condition) {
+  }
+  
+  @include e(search-button) {
+  }
+  
+  @include e(table-assist-button) {
+    float: right;
+    margin: 5px 0;
+  }
+  
+  @include e(list-selected-tip) {
+    background-color: rgb(50, 65, 87);
+    color: rgb(191, 203, 217);
+    height: 40px;
+    line-height: 40px;
+    
+    .tip-button {
+      position: absolute;
+      right: 10px;
+      font-size: 15px;
+    }
+  }
+  
+  @include e(result-table) {
+    .control-column {
+      .el-button {
+        padding: 0;
+      }
+    }
+  }
+}
+
+@include b(column-visibility-status-list) {
+  label.el-checkbox {
+    margin-bottom: 12px;
+  }
+}

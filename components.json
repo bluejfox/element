@@ -63,6 +63,11 @@
   "cascader": "./packages/cascader/index.js",
   "color-picker": "./packages/color-picker/index.js",
   "transfer": "./packages/transfer/index.js",
+  "container": "./packages/container/index.js",
+  "header": "./packages/header/index.js",
+  "aside": "./packages/aside/index.js",
+  "main": "./packages/main/index.js",
+  "footer": "./packages/footer/index.js",
   "dynamic-form": "./packages/dynamic-form/index.js",
   "template-base-search": "./packages/template-base-search/index.js",
   "simple-pagination": "./packages/simple-pagination/index.js"

@@ -1,10 +1,23 @@
 <template>
-  <label class="el-radio">
+  <label
+    class="el-radio"
+    :class="[
+      border && radioSize ? 'el-radio--' + radioSize : '',
+      { 'is-disabled': isDisabled },
+      { 'is-focus': focus },
+      { 'is-bordered': border },
+      { 'is-checked': model === label }
+    ]"
+    role="radio"
+    :aria-checked="model === label"
+    :aria-disabled="isDisabled"
+    :tabindex="tabIndex"
+    @keydown.space.stop.prevent="model = label"
+  >
     <span class="el-radio__input"
       :class="{
         'is-disabled': isClassDisabled,
         'is-checked': model === label,
-        'is-focus': focus
       }"
     >
       <span class="el-radio__inner"></span>
@@ -15,8 +28,11 @@
         v-model="model"
         @focus="focus = true"
         @blur="focus = false"
+        @change="handleChange"
         :name="name"
-        :disabled="isDisabled || isReadOnly">
+        :disabled="isDisabled || isReadOnly"
+        tabindex="-1"
+      >
     </span>
     <span class="el-radio__label">
       <slot></slot>
@@ -32,6 +48,16 @@
 
     mixins: [Emitter],
 
+    inject: {
+      elForm: {
+        default: ''
+      },
+
+      elFormItem: {
+        default: ''
+      }
+    },
+
     componentName: 'ElRadio',
 
     props: {
@@ -43,7 +69,9 @@
       readonly: {
         type: Boolean,
         default: false
-      }
+      },
+      border: Boolean,
+      size: String
     },
 
     data() {
@@ -51,7 +79,6 @@
         focus: false
       };
     },
-
     computed: {
       isGroup() {
         let parent = this.$parent;
@@ -65,12 +92,10 @@
         }
         return false;
       },
-
       model: {
         get() {
           return this.isGroup ? this._radioGroup.value : this.value;
         },
-
         set(val) {
           if (this.isGroup) {
             this.dispatch('ElRadioGroup', 'input', [val]);
@@ -79,21 +104,39 @@
           }
         }
       },
-
+      _elFormItemSize() {
+        return (this.elFormItem || {}).elFormItemSize;
+      },
+      radioSize() {
+        const temRadioSize = this.size || this._elFormItemSize || (this.$ELEMENT || {}).size;
+        return this.isGroup
+          ? this._radioGroup.radioGroupSize || temRadioSize
+          : temRadioSize;
+      },
       isDisabled() {
         return this.isGroup
-          ? this._radioGroup.disabled || this.disabled
-          : this.disabled;
+          ? this._radioGroup.disabled || this.disabled || (this.elForm || {}).disabled
+          : this.disabled || (this.elForm || {}).disabled;
       },
-
+      tabIndex() {
+        return !this.isDisabled ? (this.isGroup ? (this.model === this.label ? 0 : -1) : 0) : -1;
+      },
       isReadOnly() {
         return this.isGroup
-          ? this._radioGroup.readonly || this.readonly
-          : this.readonly;
+          ? this._radioGroup.readonly || this.readonly || (this.elForm || {}).readonly
+          : this.readonly || (this.elForm || {}).readonly;
       },
-
       isClassDisabled() {
         return this.isDisabled && !this.isReadOnly;
+      }
+    },
+
+    methods: {
+      handleChange() {
+        this.$nextTick(() => {
+          this.$emit('change', this.model);
+          this.isGroup && this.dispatch('ElRadioGroup', 'handleChange', this.model);
+        });
       }
     }
   };

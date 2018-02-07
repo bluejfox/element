@@ -44,6 +44,8 @@ export default {
       default: ajax
     },
     disabled: Boolean,
+    limit: Number,
+    onExceed: Function,
     // FileReader支持的类型
     fileOutputType: {
       type: String,
@@ -69,6 +71,11 @@ export default {
       this.uploadFiles(files);
     },
     uploadFiles(files) {
+      if (this.limit && this.fileList.length + files.length > this.limit) {
+        this.onExceed && this.onExceed(files, this.fileList);
+        return;
+      }
+
       let postFiles = Array.prototype.slice.call(files);
       if (!this.multiple) { postFiles = postFiles.slice(0, 1); }
 
@@ -115,7 +122,8 @@ export default {
       const before = this.beforeUpload(rawFile);
       if (before && before.then) {
         before.then(processedFile => {
-          if (Object.prototype.toString.call(processedFile) === '[object File]') {
+          const fileType = Object.prototype.toString.call(processedFile);
+          if (fileType === '[object File]' || fileType === '[object Blob]') {
             this.post(processedFile);
           } else {
             this.post(rawFile);
@@ -201,6 +209,11 @@ export default {
           reject(err);
         };
       });
+    },
+    handleKeydown(e) {
+      if (e.keyCode === 13 || e.keyCode === 32) {
+        this.handleClick();
+      }
     }
   },
 
@@ -214,23 +227,25 @@ export default {
       accept,
       listType,
       uploadFiles,
-      disabled
+      disabled,
+      handleKeydown
     } = this;
     const data = {
       class: {
         'el-upload': true
       },
       on: {
-        click: handleClick
+        click: handleClick,
+        keydown: handleKeydown
       }
     };
     data.class[`el-upload--${listType}`] = true;
     return (
-      <div {...data}>
+      <div {...data} tabindex="0" >
         {
           drag
-          ? <upload-dragger disabled={disabled} on-file={uploadFiles}>{this.$slots.default}</upload-dragger>
-          : this.$slots.default
+            ? <upload-dragger disabled={disabled} on-file={uploadFiles}>{this.$slots.default}</upload-dragger>
+            : this.$slots.default
         }
         <input class="el-upload__input" type="file" ref="input" name={name} on-change={handleChange} multiple={multiple} accept={accept}></input>
       </div>

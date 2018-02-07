@@ -4,8 +4,14 @@
     :class="[
       size ? 'el-radio-button--' + size : '',
       { 'is-active': value === label },
-      { 'is-disabled': isClassDisabled }
+      { 'is-disabled': isDisabled },
+      { 'is-focus': focus }
     ]"
+    role="radio"
+    :aria-checked="value === label"
+    :aria-disabled="isDisabled"
+    :tabindex="tabIndex"
+    @keydown.space.stop.prevent="value = label"
   >
     <input
       class="el-radio-button__orig-radio"
@@ -13,7 +19,12 @@
       type="radio"
       v-model="value"
       :name="name"
-      :disabled="isDisabled || isReadOnly">
+      @change="handleChange"
+      :disabled="isDisabled"
+      tabindex="-1"
+      @focus="focus = true"
+      @blur="focus = false"
+    >
     <span class="el-radio-button__inner" :style="value === label ? activeStyle : null">
       <slot></slot>
       <template v-if="!$slots.default">{{label}}</template>
@@ -21,8 +32,21 @@
   </label>
 </template>
 <script>
+  import Emitter from 'setaria-ui/src/mixins/emitter';
+
   export default {
     name: 'ElRadioButton',
+
+    mixins: [Emitter],
+
+    inject: {
+      elForm: {
+        default: ''
+      },
+      elFormItem: {
+        default: ''
+      }
+    },
 
     props: {
       label: {},
@@ -33,6 +57,11 @@
         type: Boolean,
         default: false
       }
+    },
+    data() {
+      return {
+        focus: false
+      };
     },
     computed: {
       value: {
@@ -62,17 +91,31 @@
           color: this._radioGroup.textColor || ''
         };
       },
+      _elFormItemSize() {
+        return (this.elFormItem || {}).elFormItemSize;
+      },
       size() {
-        return this._radioGroup.size;
+        return this._radioGroup.radioGroupSize || this._elFormItemSize || (this.$ELEMENT || {}).size;
       },
       isDisabled() {
-        return this.disabled || this._radioGroup.disabled;
+        return this.disabled || this._radioGroup.disabled || (this.elForm || {}).disabled;
+      },
+      tabIndex() {
+        return !this.isDisabled ? (this._radioGroup ? (this.value === this.label ? 0 : -1) : 0) : -1;
       },
       isClassDisabled() {
         return this.isDisabled && !this.isReadOnly;
       },
       isReadOnly() {
-        return this.readonly || this._radioGroup.readonly;
+        return this.readonly || this._radioGroup.readonly || (this.elForm || {}).readonly;
+      }
+    },
+
+    methods: {
+      handleChange() {
+        this.$nextTick(() => {
+          this.dispatch('ElRadioGroup', 'handleChange', this.value);
+        });
       }
     }
   };

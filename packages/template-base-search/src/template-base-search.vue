@@ -6,18 +6,21 @@
       :schema="internalConditionSchema"
       :ui-schema="internalConditionUISchema"
       @submit="doConditionSubmit"
-      class="condition">
+      class="el-template-base-search__search-condition">
       <span slot="button">
-        <el-button type="primary" native-type="submit" class="search-data-list__search__button"><i class="el-icon-search"></i> 检索</el-button>
+        <el-button type="primary" native-type="submit"
+          class="el-template-base-search__search-button">
+          <i class="el-icon-search"></i> 检索
+        </el-button>
         <slot name="table-assist-button"></slot>
       </span>
     </el-dynamic-form>
     <el-alert
       :title="rowSelectedTip"
       type="info"
-      show-icon
+      :show-icon="false"
       v-if="showMultiRowControlTips && rowSelectable && multipleSelection.length > 0"
-      class="list-selected-tip"
+      class="el-template-base-search__list-selected-tip"
       :closable="false">
       <slot>
         <el-button type="text" @click="doToggleRowSelection">
@@ -30,11 +33,15 @@
         </el-button>
       </slot>
     </el-alert>
-    <el-button icon="setting" size="small" class="table-assist-button" @click="isShowColumnVisibilityStatusDialog = true"></el-button>
+    <el-button icon="el-icon-setting" 
+      size="small" 
+      class="el-template-base-search__table-assist-button"
+      @click="isShowColumnVisibilityStatusDialog = true">
+    </el-button>
     <el-table
       stripe
       border
-      class="result-table"
+      class="el-template-base-search__result-table"
       ref="resultTable"
       :data="tableData"
       :max-height="resultMaxHeight"
@@ -59,7 +66,10 @@
           <template v-else>{{ scope.row[colKey] }}</template>
         </template>
       </el-table-column>
-      <el-table-column label="操作" v-if="isControlColumnSlotExist" :min-width="resultControlColumnMinWidth">
+      <el-table-column label="操作"
+        v-if="isControlColumnSlotExist"
+        :min-width="resultControlColumnMinWidth"
+        class-name="control-column">
         <template scope="scope">
           <slot name="tableRowControl" :row="scope.row"></slot>
         </template>
@@ -78,7 +88,7 @@
       </el-pagination>
     </template>
     <el-dialog
-      v-model="isShowColumnVisibilityStatusDialog"
+      :visible.sync="isShowColumnVisibilityStatusDialog"
       :close-on-click-modal="false"
       title="自定义列表项"
       :modal-append-to-body="true"

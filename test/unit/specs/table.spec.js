@@ -45,7 +45,7 @@ describe('Table', () => {
         const ths = toArray(vm.$el.querySelectorAll('thead th'));
 
         expect(ths.map(node => node.textContent).filter(o => o))
-        .to.eql(['片名', '发行日期', '导演', '时长（分）']);
+          .to.eql(['片名', '发行日期', '导演', '时长（分）']);
         done();
       }, DELAY);
     });
@@ -85,6 +85,15 @@ describe('Table', () => {
       const vm = createTable('height="134"');
       setTimeout(_ => {
         expect(vm.$el.style.height).to.equal('134px');
+        destroyVM(vm);
+        done();
+      }, DELAY);
+    });
+
+    it('height as string', done => {
+      const vm = createTable('height="100pt"');
+      setTimeout(_ => {
+        expect(vm.$el.style.height).to.equal('100pt');
         destroyVM(vm);
         done();
       }, DELAY);
@@ -138,10 +147,10 @@ describe('Table', () => {
     it('tableRowClassName', done => {
       const vm = createTable(':row-class-name="tableRowClassName"', {
         methods: {
-          tableRowClassName(row, index) {
-            if (index === 1) {
+          tableRowClassName({row, rowIndex}) {
+            if (rowIndex === 1) {
               return 'info-row';
-            } else if (index === 3) {
+            } else if (rowIndex === 3) {
               return 'positive-row';
             }
 
@@ -171,8 +180,8 @@ describe('Table', () => {
     it('tableRowStyle[Function]', done => {
       const vm = createTable(':row-style="tableRowStyle"', {
         methods: {
-          tableRowStyle(row, index) {
-            if (index === 1) {
+          tableRowStyle({row, rowIndex}) {
+            if (rowIndex === 1) {
               return { height: '60px' };
             }
 
@@ -622,32 +631,6 @@ describe('Table', () => {
       }, DELAY);
     });
 
-    it('inline-template', done => {
-      const vm = createVue({
-        template: `
-          <el-table :data="testData">
-            <el-table-column prop="name" inline-template>
-              <span>[{{ row.name }}]</span>
-            </el-table-column>
-            <el-table-column prop="release"/>
-            <el-table-column prop="director"/>
-            <el-table-column prop="runtime"/>
-          </el-table>
-        `,
-
-        created() {
-          this.testData = getTestData();
-        }
-      });
-
-      setTimeout(_ => {
-        const cells = toArray(vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr td:first-child'));
-        expect(cells.map(n => n.textContent)).to.eql(getTestData().map(o => `[${o.name}]`));
-        destroyVM(vm);
-        done();
-      }, DELAY);
-    });
-
     it('render-header', done => {
       const vm = createVue({
         template: `
@@ -923,12 +906,12 @@ describe('Table', () => {
           extra = extra || '';
           return createVue({
             template: `
-            <el-table row-key="id" :data="testData" @expand="handleExpand" ${extra}>
+            <el-table row-key="id" :data="testData" @expand-change="handleExpand" ${extra}>
               <el-table-column type="expand">
-                <template scope="props">
+                <template slot-scope="props">
                   <div>{{props.row.name}}</div>
                 </template>
-              </el-table-column>
+            </el-table-column>
               <el-table-column prop="release" label="release" />
               <el-table-column prop="director" label="director" />
               <el-table-column prop="runtime" label="runtime" />
@@ -1021,7 +1004,14 @@ describe('Table', () => {
           'sortable :sort-method="sortMethod"', '', '', '', {
             methods: {
               sortMethod(a, b) {
-                return a.runtime < b.runtime;
+                // sort method should return number
+                if (a.runtime < b.runtime) {
+                  return 1;
+                }
+                if (a.runtime > b.runtime) {
+                  return -1;
+                }
+                return 0;
               }
             }
           });
@@ -1033,6 +1023,46 @@ describe('Table', () => {
           setTimeout(_ => {
             const lastCells = vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr td:last-child');
             expect(toArray(lastCells).map(node => node.textContent)).to.eql(['100', '95', '92', '92', '80']);
+            destroyVM(vm);
+            done();
+          }, DELAY);
+        }, DELAY);
+      });
+
+      it('sortable by method', done => {
+        const vm = createTable(
+          'sortable :sort-by="sortBy"', '', '', '', {
+            methods: {
+              sortBy(a) {
+                return -a.runtime;
+              }
+            }
+          });
+
+        setTimeout(_ => {
+          const elm = vm.$el.querySelector('.caret-wrapper');
+          elm.click();
+
+          setTimeout(_ => {
+            const lastCells = vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr td:last-child');
+            expect(toArray(lastCells).map(node => node.textContent)).to.eql(['100', '95', '92', '92', '80']);
+            destroyVM(vm);
+            done();
+          }, DELAY);
+        }, DELAY);
+      });
+
+      it('sortable by property', done => {
+        const vm = createTable(
+          'sortable sort-by="runtime"', '', '', '', {});
+
+        setTimeout(_ => {
+          const elm = vm.$el.querySelector('.caret-wrapper');
+          elm.click();
+
+          setTimeout(_ => {
+            const lastCells = vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr td:last-child');
+            expect(toArray(lastCells).map(node => node.textContent)).to.eql(['80', '92', '92', '95', '100']);
             destroyVM(vm);
             done();
           }, DELAY);
@@ -1071,7 +1101,7 @@ describe('Table', () => {
         setTimeout(_ => {
           const lastCells = vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr td:last-child');
           expect(toArray(lastCells).map(node => node.textContent))
-          .to.eql(['80', '92', '92', '95', '100']);
+            .to.eql(['80', '92', '92', '95', '100']);
           done();
         }, DELAY);
       });
