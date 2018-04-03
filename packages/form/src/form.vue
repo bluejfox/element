@@ -2,7 +2,7 @@
   <form class="el-form" :class="[
     labelPosition ? 'el-form--label-' + labelPosition : '',
     { 'el-form--inline': inline }
-  ]" @submit="handleSubmit($event)">
+  ]" @submit.prevent="handleSubmit($event)">
     <slot></slot>
   </form>
 </template>
