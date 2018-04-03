@@ -12,7 +12,6 @@
           class="el-template-base-search__search-button">
           <i class="el-icon-search"></i> 检索
         </el-button>
-        <slot name="table-assist-button"></slot>
       </span>
     </el-dynamic-form>
     <el-alert
@@ -33,11 +32,20 @@
         </el-button>
       </slot>
     </el-alert>
-    <el-button icon="el-icon-setting" 
-      size="small" 
-      class="el-template-base-search__table-assist-button"
-      @click="isShowColumnVisibilityStatusDialog = true">
-    </el-button>
+    <el-row type="flex" align="middle"
+      class="el-template-base-search__table-button-container">
+      <el-col :span="24">
+        <div
+          class="table-data-button">
+          <slot name="tableButton"></slot>
+        </div>
+        <el-button icon="el-icon-setting" 
+          size="small" 
+          class="table-assist-button"
+          @click="isShowColumnVisibilityStatusDialog = true">
+        </el-button>
+      </el-col>
+    </el-row>
     <el-table
       stripe
       border
@@ -71,7 +79,7 @@
         :min-width="resultControlColumnMinWidth"
         class-name="control-column">
         <template scope="scope">
-          <slot name="tableRowControl" :row="scope.row"></slot>
+          <slot name="tableRowButton" :row="scope.row"></slot>
         </template>
       </el-table-column>
     </el-table>
@@ -233,7 +241,7 @@
         return Object.assign({}, this.getUISchema(this.internalResultSchema), this.resultUiSchema);
       },
       isControlColumnSlotExist() {
-        return this.$scopedSlots.tableRowControl;
+        return this.$scopedSlots.tableRowButton;
       },
       isTableDataNotEmpty() {
         const tableData = this.tableData || [];

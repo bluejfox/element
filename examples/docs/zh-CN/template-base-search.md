@@ -151,7 +151,10 @@
     @selection-change="doSelectionChange"
     @next-page-data-empty="doShowNoExistDataError"
     @handle-multi-table-data="doHandleMultiTableData">
-    <div slot="tableRowControl" slot-scope="props">
+    <div slot="tableButton">
+      <el-button size="small" type="primary" plain>新增</el-button>
+    </div>
+    <div slot="tableRowButton" slot-scope="props">
       <el-button type="text" @click="doUpdate(props.row)">修改</el-button>
       <span class="button-separator">|</span>
       <el-button type="text">删除</el-button>
@@ -311,5 +314,6 @@
 ### TemplateBaseSearch Slot
 | name | 说明 |
 |------|--------|
-| tableRowControl | 用于插入检索结果行操控按钮, 可通过props.row取得当前行的数据 |
+| tableButton | 用于放置新增，拷贝，打印等按钮 |
+| tableRowButton | 用于在检索结果表格的行尾插入按钮（此处建议放置修改，删除等对行级数据操作的按钮）, 可通过props.row取得当前行的数据 |
 | column[:id] | 可通过此Slot对cell的显示进行customize |

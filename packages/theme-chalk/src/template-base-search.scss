@@ -8,9 +8,16 @@
   @include e(search-button) {
   }
   
-  @include e(table-assist-button) {
-    float: right;
+  @include e(table-button-container) {
     margin: 5px 0;
+    
+    .table-data-button {
+      float: left;
+    }
+    
+    .table-assist-button {
+      float: right;
+    }
   }
   
   @include e(list-selected-tip) {
