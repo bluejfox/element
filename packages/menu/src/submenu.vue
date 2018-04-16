@@ -41,7 +41,9 @@
       hideTimeout: {
         type: Number,
         default: 300
-      }
+      },
+      popperClass: String,
+      disabled: Boolean
     },
 
     data() {
@@ -146,20 +148,22 @@
         delete this.submenus[item.index];
       },
       handleClick() {
-        const {rootMenu} = this;
+        const { rootMenu, disabled } = this;
         if (
           (rootMenu.menuTrigger === 'hover' && rootMenu.mode === 'horizontal') ||
-          (rootMenu.collapse && rootMenu.mode === 'vertical')
+          (rootMenu.collapse && rootMenu.mode === 'vertical') ||
+          disabled
         ) {
           return;
         }
         this.dispatch('ElMenu', 'submenu-click', this);
       },
       handleMouseenter() {
-        const {rootMenu} = this;
+        const { rootMenu, disabled } = this;
         if (
           (rootMenu.menuTrigger === 'click' && rootMenu.mode === 'horizontal') ||
-          (!rootMenu.collapse && rootMenu.mode === 'vertical')
+          (!rootMenu.collapse && rootMenu.mode === 'vertical') ||
+          disabled
         ) {
           return;
         }
@@ -192,7 +196,9 @@
         title && (title.style.backgroundColor = this.rootMenu.backgroundColor || '');
       },
       updatePlacement() {
-        this.currentPlacement = this.mode === 'horizontal' ? 'bottom-start' : 'right-start';
+        this.currentPlacement = this.mode === 'horizontal' && this.rootMenu === this.$parent
+          ? 'bottom-start'
+          : 'right-start';
       },
       initPopper() {
         this.referenceElm = this.$el;
@@ -219,11 +225,14 @@
         paddingStyle,
         titleStyle,
         backgroundColor,
-        $slots,
         rootMenu,
         currentPlacement,
         menuTransitionName,
-        mode
+        mode,
+        disabled,
+        popperClass,
+        $slots,
+        $parent
       } = this;
 
       const popupMenu = (
@@ -231,7 +240,7 @@
           <div
             ref="menu"
             v-show={opened}
-            class={[`el-menu--${mode}`]}
+            class={[`el-menu--${mode}`, popperClass]}
             on-mouseenter={this.handleMouseenter}
             on-mouseleave={this.handleMouseleave}
             on-focus={this.handleMouseenter}>
@@ -257,12 +266,18 @@
         </el-collapse-transition>
       );
 
+      const submenuTitleIcon = (
+        rootMenu.mode === 'horizontal' && $parent === rootMenu ||
+        rootMenu.mode === 'vertical' && !rootMenu.collapse
+      ) ? 'el-icon-arrow-down' : 'el-icon-arrow-right';
+
       return (
         <li
           class={{
             'el-submenu': true,
             'is-active': active,
-            'is-opened': opened
+            'is-opened': opened,
+            'is-disabled': disabled
           }}
           role="menuitem"
           aria-haspopup="true"
@@ -280,12 +295,7 @@
             style={[paddingStyle, titleStyle, { backgroundColor }]}
           >
             {$slots.title}
-            <i class={{
-              'el-submenu__icon-arrow': true,
-              'el-icon-arrow-down': rootMenu.mode === 'horizontal' || rootMenu.mode === 'vertical' && !rootMenu.collapse,
-              'el-icon-arrow-right': rootMenu.mode === 'vertical' && rootMenu.collapse
-            }}>
-            </i>
+            <i class={[ 'el-submenu__icon-arrow', submenuTitleIcon ]}></i>
           </div>
           {this.isMenuPopup ? popupMenu : inlineMenu}
         </li>

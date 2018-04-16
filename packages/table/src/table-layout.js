@@ -56,7 +56,7 @@ class TableLayout {
     }
     this.height = value;
 
-    if (!el && value) return Vue.nextTick(() => this.setHeight(value, prop));
+    if (!el && (value || value === 0)) return Vue.nextTick(() => this.setHeight(value, prop));
 
     if (typeof value === 'number') {
       el.style[prop] = value + 'px';
@@ -79,7 +79,7 @@ class TableLayout {
 
     if (this.showHeader && !headerWrapper) return;
     const headerHeight = this.headerHeight = !this.showHeader ? 0 : headerWrapper.offsetHeight;
-    if (this.showHeader && headerWrapper.offsetWidth > 0 && headerHeight < 2) {
+    if (this.showHeader && headerWrapper.offsetWidth > 0 && (this.table.columns || []).length > 0 && headerHeight < 2) {
       return Vue.nextTick(() => this.updateElsHeight());
     }
     const tableHeight = this.tableHeight = this.table.$el.clientHeight;
