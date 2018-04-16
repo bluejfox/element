@@ -1,0 +1,58 @@
+@import "mixins/mixins";
+@import "mixins/utils";
+@import "common/var";
+
+@include b(list) {
+  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  color: $--color-text-regular;
+  font-size: $--font-size-base;
+  
+  .el-list__header,
+  .el-list__footer {
+    padding-top: $--list-bordered-medium-padding-top-bottom;
+    padding-bottom: $--list-bordered-medium-padding-top-bottom;
+  }
+  
+  @include when(bordered) {
+    border-radius: $--border-radius-base;
+    border: 1px solid $--border-color-light;
+    
+    .el-list__header,
+    .el-list-item,
+    .el-list__footer {
+      padding-left: $--list-bordered-medium-padding-left-right;
+      padding-right: $--list-bordered-medium-padding-left-right;
+      border-bottom: 1px solid $--border-color-light;
+    }
+    
+    &.el-list--large {
+      .el-list-item,
+      .el-list__header,
+      .el-list__footer {
+        padding: $--list-bordered-large-padding-top-bottom $--list-bordered-large-padding-left-right;
+      }
+    }
+    
+    &.el-list--small {
+      .el-list-item,
+      .el-list__header,
+      .el-list__footer {
+        padding: $--list-bordered-small-padding-top-bottom $--list-bordered-small-padding-left-right;
+      }
+    }
+  }
+  
+  @include b(list-item) {
+    align-items: center;
+    padding-top: $--list-bordered-medium-padding-top-bottom;
+    padding-bottom: $--list-bordered-medium-padding-top-bottom;
+    
+    @include b(list-item-meta) {
+    }
+  }
+}

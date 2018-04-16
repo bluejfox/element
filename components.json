@@ -70,5 +70,8 @@
   "footer": "./packages/footer/index.js",
   "dynamic-form": "./packages/dynamic-form/index.js",
   "template-base-search": "./packages/template-base-search/index.js",
-  "simple-pagination": "./packages/simple-pagination/index.js"
+  "simple-pagination": "./packages/simple-pagination/index.js",
+  "list": "./packages/list/index.js",
+  "list-item": "./packages/list-item/index.js",
+  "list-item-meta": "./packages/list-item-meta/index.js"
 }

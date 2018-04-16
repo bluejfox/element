@@ -710,3 +710,12 @@ $--breakpoints-spec: (
   'lg-and-down': (max-width: $--xl - 1),
   'xl-only' : (min-width: $--xl),
 );
+
+/* List
+--------------------------*/
+$--list-bordered-medium-padding-top-bottom: 12px !default;
+$--list-bordered-medium-padding-left-right: 24px !default;
+$--list-bordered-large-padding-top-bottom: 16px !default;
+$--list-bordered-large-padding-left-right: 24px !default;
+$--list-bordered-small-padding-top-bottom: 8px !default;
+$--list-bordered-small-padding-left-right: 16px !default;

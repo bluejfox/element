@@ -168,6 +168,10 @@
             {
               "path": "/badge",
               "title": "Badge 标记"
+            },
+            {
+              "path": "/list",
+              "title": "List 列表"
             }
           ]
         },

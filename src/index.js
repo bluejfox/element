@@ -72,6 +72,9 @@ import Footer from '../packages/footer/index.js';
 import DynamicForm from '../packages/dynamic-form/index.js';
 import TemplateBaseSearch from '../packages/template-base-search/index.js';
 import SimplePagination from '../packages/simple-pagination/index.js';
+import List from '../packages/list/index.js';
+import ListItem from '../packages/list-item/index.js';
+import ListItemMeta from '../packages/list-item-meta/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -144,6 +147,9 @@ const components = [
   DynamicForm,
   TemplateBaseSearch,
   SimplePagination,
+  List,
+  ListItem,
+  ListItemMeta,
   CollapseTransition
 ];
 
@@ -253,7 +259,10 @@ module.exports = {
   Footer,
   DynamicForm,
   TemplateBaseSearch,
-  SimplePagination
+  SimplePagination,
+  List,
+  ListItem,
+  ListItemMeta
 };
 
 module.exports.default = module.exports;

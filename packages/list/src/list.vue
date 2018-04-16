@@ -1,0 +1,41 @@
+<template>
+  <div
+    class="el-list"
+    :class="[
+      border && listSize ? 'el-list--' + listSize : '',
+      { 'is-bordered': border },
+    ]">
+    <div slot="header" class="el-list__header" v-if="$slots.header">
+      <slot name="header"></slot>
+    </div>
+    <slot></slot>
+    <div slot="footer" class="el-list__footer" v-if="$slots.footer">
+      <slot name="footer"></slot>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'ElList',
+
+    componentName: 'ElList',
+
+    props: {
+      border: {
+        type: Boolean,
+        default: false
+      },
+      size: {
+        type: String,
+        default: 'medium'
+      }
+    },
+    
+    computed: {
+      listSize() {
+        return this.size !== 'medium' ? this.size : '';
+      }
+    }
+  };
+</script>
