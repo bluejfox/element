@@ -211,6 +211,7 @@ export default {
       });
     },
     handleKeydown(e) {
+      if (e.target !== e.currentTarget) return;
       if (e.keyCode === 13 || e.keyCode === 32) {
         this.handleClick();
       }

@@ -1177,8 +1177,8 @@ You can drag and drop Tree nodes by adding a `draggable` attribute.
 | indent                | horizontal indentation of nodes in adjacent levels in pixels | number                     | —    | 16 |
 | lazy                  | whether to lazy load leaf node, used with `load` attribute  | boolean                     | —    | false |
 | draggable             | whether enable tree nodes drag and drop | boolean            | —    | false |
-| allow-drag            | this function will be executed before dragging a node. if return `false`, the node can not be drag.  | Function(node)  | —  | —  |
-| allow-drop            | this function will be executed when dragging enter a node. if return `false`, dragging node can not be drop at the node. | Function(draggingNode, dropNode)  | —    | —     |
+| allow-drag            | this function will be executed before dragging a node. If `false` is returned, the node can not be dragged | Function(node)  | —  | —  |
+| allow-drop            | this function will be executed before the dragging node is dropped. If `false` is returned, the dragging node can not be dropped at the target node | Function(draggingNode, dropNode)  | —    | —     |
 
 ### props
 | Attribute | Description                              | Type   | Accepted Values | Default |
@@ -1228,7 +1228,7 @@ You can drag and drop Tree nodes by adding a `draggable` attribute.
 | node-drag-end  | triggers when dragging ends  | four parameters: node object corresponding to the dragging node, node object corresponding to the dragging end node (may be `undefined`), node drop type (before / after / inner), event. |
 | node-drop  | triggers after the dragging node is dropped | four parameters: node object corresponding to the dragging node, node object corresponding to the dropped node, node drop type (before / after / inner), event. |
 
-### Scoped slot
-| name | Description |
+### Scoped Slot
+| Name | Description |
 |------|--------|
 | — | Custom content for tree nodes. The scope parameter is { node, data } |

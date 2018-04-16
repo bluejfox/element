@@ -5,8 +5,14 @@
 同步至Element-UI 2.3.4版本
 Element-UI的更新内容：
 #### 新特性
+- Autocomplete
+  - 新增 `placement` 属性，#10475
+- BreadCrumb
+  - 现在非链接的 BreadcrumbItem 在 hover 时不再具有视觉反馈，#10551
 - Button
   - 新增 `circle` 属性，#10359（by @YunYouJun
+- Card
+  - 新增 Card 的 `shadow` 属性，#10418（by @YunYouJun）
 - ColorPicker
   - 新增 `predefine` 属性，#10170（by @elfman）
   - 手动输入支持 `hsl`、`hsv` 和 `rgb` 格式，#9991
@@ -21,6 +27,7 @@ Element-UI的更新内容：
   - SubMenu 新增 `popper-class` 和 `disabled` 属性，#9604 #9771
   - 现在水平模式下的 Menu 支持多级 SubMenu 了，#9741
   - 新增 `collapse-transition` 属性，#8809（by @limichange）
+  - 新增 SubMenu 的 `popper-append-to-body` 属性，#10515
 - Pagination
   - 新增 `disabled` 属性，#10006
 - Popover
@@ -32,13 +39,16 @@ Element-UI的更新内容：
   - 新增 `input-size` 属性，#10154
 - Select
   - 新增 `popper-append-to-body` 属性，#9782
+  - 新增 `blur` 方法，#10416
 - Table
   - 现在 TableColumn 的 `formatter` 属性可以是动态的，#10184（by @elfman）
   - 新增 `select-on-indeterminate` 属性，#9924（by @syn-zeta）
+  - 新增 `$index` 作为 Table 的 `formatter` 属性回调的第四个参数，#10645
 - Transfer
   - 新增 `clearQuery` 方法，#9753
   - 新增 `target-order` 属性，#9960
   - 新增 `left-check-change` 和 `right-check-change` 事件，#10156
+  - 数据项的渲染支持通过 scoped slot 自定义，#10577
 - Tree
   - 新增 `node-contextmenu` 事件，#9678
   - 现在可以使用 scoped slot 自定义树节点的模板了，#9686
@@ -46,6 +56,12 @@ Element-UI的更新内容：
   - 新增 `draggable`、`allow-drop` 和 `allow-drag` 属性，以及 `node-drag-start`、`node-drag-enter`、`node-drag-leave`、`node-drag-over`、`node-drag-end` 和 `node-drop` 事件，#9251 #10372（by @elfman）
 
 #### 修复
+- Autocomplete
+  - 修复 Autocomplete 报错的问题，#10442
+- Badge
+  - 修复在 `value` 属性为 `0` 时不显示上标的问题，#10470
+- Checkbox
+  - 修复 TypeScript 类型声明未导出 CheckboxButton 的问题，#10666
 - Container
   - 修复布局组件在 IE11 中无法自动填充可用空间的问题，#9655
   - 修复 Aside、Header 和 Footer 在某些布局中被压缩的问题，#9812
@@ -54,18 +70,32 @@ Element-UI的更新内容：
   - 修复在 DateTimePicker 中手动输入日期后不能正确触发 `change` 事件的问题，#9913
   - 现在 DatePicker 的范围选择支持先点选结束日期，再点选开始日期了，#8156（by @earlymeme）
   - 修复 DatePicker 在清除初始值时不触发 `change` 事件的问题，#9986
+  - 现在 `default-time` 属性也可用于非范围选择的 DateTimePicker 了，#10321（by @RickMacTurk）
 - Form
   - 修复嵌套复合型 Input 时，FormItem 标签与输入框未对齐的问题，#10189
+- Input
+  - 修复 `type` 属性未传递至原生 input 元素的问题，#10415
+- InputNumber
+  - 调整 InputNumber `change` 事件的触发时机，使得在回调中能够取得最新的组件绑定值，#10553
 - Loading
   - 修复在 `mounted` 中修改 `v-loading` 的值为 true 时不能正确显示 Loading 的问题，#9722
 - Menu
   - 现在折叠状态的菜单项仅在传入 `title` slot 时才显示 Tooltip，#10193（by @PanJiaChen）
+  - 删除在 TypeScript 类型声明中重复的 `showTimeout` 属性，#10566（by @kimond）
 - MessageBox
   - 修复调用 MessageBox 未传入 `title` 时，打开的 MessageBox 会继承上一个实例的 `title` 属性的问题，#10126（by @Pochodaydayup）
 - Pagination
   - 修复 `current-change` 在未发生用户交互时错误触发的问题，#10247
+  - 修复禁用的上一页、下一页按钮仍会触发 `current-change` 事件的问题，#10628
 - Rate
   - 现在 Rate 的图标类相关属性支持动态更新了，#10003
+- Tab
+  - 修复 TabItem 在浏览器失焦和隐藏后出现蓝色边框的问题，#10503
+  - 修复 `type` 为 border-card 的 Tabs 中被禁用标签项的样式，#10640
+- Textarea
+  - 修复未绑定值的 Textarea 在 SSR 中会显示 `undefined` 的问题，#10630
+- Tree
+  - 修复节点拖拽相关的问题，#10474 #10494
 - Select
   - 现在的 Select 在选中选项后仍然处于 focus 状态，#9857（by @Seebiscuit）
   - 修复鼠标右键点击 Select 的输入框会展开选项的问题，#9894（by @openks）

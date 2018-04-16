@@ -192,6 +192,7 @@
     isDate,
     modifyDate,
     modifyTime,
+    modifyWithDefaultTime,
     prevYear,
     nextYear,
     prevMonth,
@@ -218,19 +219,6 @@
     } else {
       return [new Date(), advanceDate(Date.now(), 24 * 60 * 60 * 1000)];
     }
-  };
-
-  const modifyWithGivenTime = (date, time) => {
-    if (date == null || time == null) {
-      return date;
-    }
-    time = parseDate(time, 'HH:mm:ss');
-    return modifyTime(
-      date,
-      time.getHours(),
-      time.getMinutes(),
-      time.getSeconds()
-    );
   };
 
   export default {
@@ -512,8 +500,8 @@
 
       handleRangePick(val, close = true) {
         const defaultTime = this.defaultTime || [];
-        const minDate = modifyWithGivenTime(val.minDate, defaultTime[0]);
-        const maxDate = modifyWithGivenTime(val.maxDate, defaultTime[1]);
+        const minDate = modifyWithDefaultTime(val.minDate, defaultTime[0]);
+        const maxDate = modifyWithDefaultTime(val.maxDate, defaultTime[1]);
 
         if (this.maxDate === maxDate && this.minDate === minDate) {
           return;

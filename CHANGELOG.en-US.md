@@ -1,5 +1,44 @@
 ## Changelog
 
+### 2.3.4
+
+*2018-04-12*
+
+- Deleted duplicate `showTimeout` attribute in SubMenu's TypeScript declaration, #10566 (by @kimond)
+- Now you can customize Transfer's data item using scoped slot, #10577
+- Fixed clicking disabled prev and next button of Pagination still triggers `current-change` event, #10628
+- Fixed Textarea displaying `undefined` in SSR when its value is not set, #10630
+- Fixed disabled TabItem style when `type` is border-card, #10640
+- Added `$index` as `formatter`'s fourth param of Table, #10645
+- Fixed CheckboxButton not exported in TypeScript declaration, #10666
+
+### 2.3.3
+
+*2018-04-04*
+
+- Added `shadow` attribute for Card, #10418 (by @YunYouJun)
+- Fixed Badge being hidden when `value` is `0`, #10470
+- Fixed some bugs of draggable Tree, #10474 #10494
+- Added `placement` for Autocomplete, #10475
+- Now `default-time` attribute also works in non-range DateTimePicker, #10321 (by @RickMacTurk)
+- Removed the blue outline of TabItem after the browser blurs or is minimized, #10503
+- Added `popper-append-to-body` attribute for SubMenu, #10515
+- Removed visual feedback when hovering on non-link BreadcrumbItem, #10551
+- Fixed InputNumber's `change` event to ensure the component's binding value is updated in the event handler, #10553
+
+### 2.3.2
+
+*2018-03-29*
+
+- Fixed an Autocomplete regression, #10442
+
+### 2.3.1
+
+*2018-03-29*
+
+- Fixed a regression that `type` of Input is not passed down to the native input element, #10415
+- Added `blur` method for Select, #10416
+
 ### 2.3.0 Diamond
 
 *2018-03-28*

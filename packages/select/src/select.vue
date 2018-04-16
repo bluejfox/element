@@ -57,6 +57,9 @@
         @keydown.enter.prevent="selectOption"
         @keydown.esc.stop.prevent="visible = false"
         @keydown.delete="deletePrevTag"
+        @compositionstart="handleComposition"
+        @compositionupdate="handleComposition"
+        @compositionend="handleComposition"
         v-model="query"
         @input="e => handleQueryChange(e.target.value)"
         :debounce="remote ? 300 : 0"
@@ -308,7 +311,8 @@
         query: '',
         previousQuery: null,
         inputHovering: false,
-        currentPlaceholder: ''
+        currentPlaceholder: '',
+        isOnComposition: false
       };
     },
 
@@ -364,7 +368,7 @@
           if (!this.multiple) {
             if (this.selected) {
               if (this.filterable && this.allowCreate &&
-                this.createdSelected && this.createdOption) {
+                this.createdSelected && this.createdLabel) {
                 this.selectedLabel = this.createdLabel;
               } else {
                 this.selectedLabel = this.selected.currentLabel;
@@ -394,6 +398,9 @@
 
       options() {
         if (this.$isServer) return;
+        this.$nextTick(() => {
+          this.broadcast('ElSelectDropdown', 'updatePopper');
+        });
         if (this.multiple) {
           this.resetInputHeight();
         }
@@ -408,8 +415,16 @@
     },
 
     methods: {
+      handleComposition(event) {
+        if (event.type === 'compositionend') {
+          this.isOnComposition = false;
+          this.handleQueryChange(event.target.value);
+        } else {
+          this.isOnComposition = true;
+        }
+      },
       handleQueryChange(val) {
-        if (this.previousQuery === val) return;
+        if (this.previousQuery === val || this.isOnComposition) return;
         if (
           this.previousQuery === null &&
           (typeof this.filterMethod === 'function' || typeof this.remoteMethod === 'function')
@@ -536,6 +551,11 @@
         } else {
           this.softFocus = false;
         }
+      },
+
+      blur() {
+        this.visible = false;
+        this.$refs.reference.blur();
       },
 
       handleBlur(event) {
