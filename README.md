@@ -3,7 +3,7 @@
 
 Fork自[element-ui](https://github.com/ElemeFE/element)
 
-为了方便应用级开发，对部分Element-UI组件做了一定程度的调整。
+基于Vue和Element UI，结合其他优秀组件库（[Ant Design](https://ant.design/index-cn)，[Material Deisgn](https://material.angular.io/)），加速业务级应用页面开发。
 
 ## Feature
 - Simple Pagination
@@ -18,9 +18,9 @@ npm install setaria-ui -S
 ## Quick Start
 ``` javascript
 import Vue from 'vue'
-import Element from 'setaria-ui'
+import Setaria from 'setaria-ui'
 
-Vue.use(Element)
+Vue.use(Setaria)
 
 // or
 import {
@@ -32,7 +32,7 @@ import {
 Vue.component(Select.name, Select)
 Vue.component(Button.name, Button)
 ```
-For more information, please refer to [Quick Start](http://element.eleme.io/#/en-US/component/quickstart) in our documentation.
+For more information, please refer to [Quick Start](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/quickstart) in our documentation.
 
 ## Browser Support
 Modern browsers and Internet Explorer 10+.
