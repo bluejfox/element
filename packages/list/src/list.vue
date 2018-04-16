@@ -5,11 +5,11 @@
       border && listSize ? 'el-list--' + listSize : '',
       { 'is-bordered': border },
     ]">
-    <div slot="header" class="el-list__header" v-if="$slots.header">
+    <div class="el-list__header" v-if="$slots.header">
       <slot name="header"></slot>
     </div>
     <slot></slot>
-    <div slot="footer" class="el-list__footer" v-if="$slots.footer">
+    <div class="el-list__footer" v-if="$slots.footer">
       <slot name="footer"></slot>
     </div>
   </div>
@@ -31,7 +31,7 @@
         default: 'medium'
       }
     },
-    
+
     computed: {
       listSize() {
         return this.size !== 'medium' ? this.size : '';
