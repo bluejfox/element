@@ -1,4 +1,4 @@
-﻿<script>
+<script>
   export default {
     data() {
       return {
@@ -47,7 +47,7 @@
       querySearchAsync(queryString, cb) {
         var links = this.links;
         var results = queryString ? links.filter(this.createStateFilter(queryString)) : links;
-
+    
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
           cb(results);
@@ -112,11 +112,11 @@
         font-size: 14px;
         color: #8492a6;
       }
-
+    
       .el-col:not(:last-child) {
         border-right: 1px solid rgba(224,230,237,0.50);
       }
-
+    
       .el-autocomplete {
         text-align: left;
       }
@@ -624,8 +624,8 @@ Búsqueda de datos desde el servidor.
 | ------------- | ---------------------------------------- | ---------------- | -------------------------------- | ----------- |
 | type          | tipo de input                            | string           | text / textarea                  | text        |
 | value         | valor enlazado                           | string / number  | —                                | —           |
-| maxlength     | el maximo para el largo del texto        | number           | —                                | —           |
-| minlength     | el mínimo para el largo del texto        | number           | —                                | —           |
+| maxlength     | igual que `maxlength` en el input nativo | number           | —                                | —           |
+| minlength     | igual que `minlength` en el input nativo | number           | —                                | —           |
 | placeholder   | placeholder del Input                    | string           | —                                | —           |
 | disabled      | si esta deshabilitado                    | boolean          | —                                | false       |
 | size          | tamaño del input, esto no funciona cuando `type` no es textarea | string           | medium / small / mini            | —           |
@@ -661,6 +661,15 @@ Búsqueda de datos desde el servidor.
 | blur   | Se dispara cuando se pierde el foco      | (event: Event)            |
 | focus  | Se dispara cuando se obtiene el foco     | (event: Event)            |
 | change | se activa cuando cambia el valor de entrada | (value: string \| number) |
+| clear | se dispara cuando la entrada es borrada por el botón generado por el atributo "clearable". | (event: Event) |
+
+### Input Metodo
+
+| Metodo | Descripción                   | Parametros |
+| ------ | ----------------------------- | ---------- |
+| focus  | coloca el foco en el elemento | —          |
+| blur   | blur the input element        | —          |
+| select | select the text in input element | —       |
 
 ### Autocomplete Atributos
 
@@ -675,7 +684,6 @@ Atributo | Descripción | Tipo | Opciones | Por defecto
 |fetch-suggestions | un método para obtener las sugerencias del input. Cuando las sugerencias estén listas, invocar `callback(data:[])` para devolverlas a Autocomplete | Function(queryString, callback) | — | — |
 | popper-class | nombre personalizado de clase para el dropdown de autocomplete | string | — | — |
 | trigger-on-focus | si se deben mostrar sugerencias cuando el input obtiene el foco | boolean | — | true |
-| on-icon-click | funcion que se invoca cuando se hace click en el icono | function | — | — |
 | name | igual que `name` en el input nativo | string | — | — |
 | select-when-unmatched | si se emite un evento `select` al pulsar enter cuando no hay coincidencia de Autocomplete | boolean | — | false |
 | label | texto de la etiqueta | string | — | — |
@@ -695,7 +703,8 @@ Atributo | Descripción | Tipo | Opciones | Por defecto
 | ------ | ---------------------------------------- | ---------------------------------------- |
 | select | se dispara cuando se hace click a una sugerencia | sugerencia en la que se está haciendo click |
 
-### Metodo
+### Autocomplete Metodo
+
 | Metodo | Descripción                   | Parametros |
 | ------ | ----------------------------- | ---------- |
 | focus  | coloca el foco en el elemento | —          |

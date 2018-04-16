@@ -440,7 +440,7 @@ describe('Select', () => {
     };
     vm = getSelectVm({ filterable: true, filterMethod });
     const select = vm.$children[0];
-    select.$el.querySelector('input').focus();
+    select.$el.click();
     setTimeout(() => {
       select.selectedLabel = '面';
       select.onInputChange();
@@ -479,7 +479,7 @@ describe('Select', () => {
 
     const select = vm.$children[0];
     setTimeout(() => {
-      select.$el.querySelector('input').focus();
+      select.$el.click();
       select.query = '3';
       select.handleQueryChange('3');
       select.selectOption();
@@ -626,6 +626,7 @@ describe('Select', () => {
       remoteMethod
     });
     const select = vm.$children[0];
+    select.handleQueryChange('');
     vm.$nextTick(() => {
       select.handleQueryChange('面');
       setTimeout(() => {
@@ -663,6 +664,39 @@ describe('Select', () => {
     vm.$nextTick(_ => {
       expect(spyFocus.calledOnce).to.be.true;
       expect(spyBlur.calledOnce).to.be.true;
+      done();
+    });
+  });
+
+  it('soft focus', done => {
+    vm = createVue({
+      template: `
+        <div>
+          <el-select v-model="value" ref="select">
+            <el-option label="1" :value="1" />
+          </el-select>
+        </div>
+      `,
+      data() {
+        return {
+          value: ''
+        };
+      }
+    }, true);
+
+    const spyInputFocus = sinon.spy();
+    const spySelectFocus = sinon.spy();
+
+    vm.$refs.select.$on('focus', spySelectFocus);
+    vm.$refs.select.$refs.reference.$on('focus', spyInputFocus);
+
+    const option = vm.$el.querySelectorAll('.el-select-dropdown__item')[0];
+    triggerEvent(option, 'mouseenter');
+    option.click();
+
+    vm.$nextTick(_ => {
+      expect(spyInputFocus.calledOnce).to.be.true;
+      expect(spySelectFocus.calledOnce).not.to.be.true;
       done();
     });
   });

@@ -23,16 +23,18 @@
                 :placeholder="t('el.datepicker.selectDate')"
                 :value="visibleDate"
                 size="small"
-                @change.native="handleVisibleDateChange" />
+                @input="val => userInputDate = val"
+                @change="handleVisibleDateChange" />
             </span>
-            <span class="el-date-picker__editor-wrap">
+            <span class="el-date-picker__editor-wrap" v-clickoutside="() => timePickerVisible = false">
               <el-input
                 ref="input"
-                @focus="timePickerVisible = !timePickerVisible"
+                @focus="timePickerVisible = true"
                 :placeholder="t('el.datepicker.selectTime')"
                 :value="visibleTime"
                 size="small"
-                @change.native="handleVisibleTimeChange" />
+                @input="val => userInputTime = val"
+                @change="handleVisibleTimeChange" />
               <time-picker
                 ref="timepicker"
                 :time-arrow-control="arrowControl"
@@ -152,8 +154,11 @@
     nextYear,
     prevMonth,
     nextMonth,
-    changeYearMonthAndClampDate
+    changeYearMonthAndClampDate,
+    extractDateFormat,
+    extractTimeFormat
   } from '../util';
+  import Clickoutside from 'setaria-ui/src/utils/clickoutside';
   import Locale from 'setaria-ui/src/mixins/locale';
   import ElInput from 'setaria-ui/packages/input';
   import ElButton from 'setaria-ui/packages/button';
@@ -164,6 +169,8 @@
 
   export default {
     mixins: [Locale],
+
+    directives: { Clickoutside },
 
     watch: {
       showTime(val) {
@@ -211,7 +218,6 @@
         const value = value => {this.$refs.timepicker.value = value;};
         const date = date => {this.$refs.timepicker.date = date;};
 
-        this.$watch('format', format);
         this.$watch('value', value);
         this.$watch('date', date);
 
@@ -228,13 +234,11 @@
       emit(value, ...args) {
         if (!value) {
           this.$emit('pick', value, ...args);
-          return;
-        }
-        if (this.showTime) {
-          this.$emit('pick', clearMilliseconds(value), ...args);
         } else {
-          this.$emit('pick', clearTime(value), ...args);
+          this.$emit('pick', this.showTime ? clearMilliseconds(value) : clearTime(value), ...args);
         }
+        this.userInputDate = null;
+        this.userInputTime = null;
       },
 
       // resetDate() {
@@ -375,8 +379,8 @@
             event.stopPropagation();
             event.preventDefault();
           }
-          if (keyCode === 13) { // Enter
-            this.$emit('pick', this.date, false);
+          if (keyCode === 13 && this.userInputDate === null && this.userInputTime === null) { // Enter
+            this.emit(this.date, false);
           }
         }
       },
@@ -412,25 +416,27 @@
         }
       },
 
-      handleVisibleTimeChange(event) {
-        const time = parseDate(event.target.value, this.timeFormat);
+      handleVisibleTimeChange(value) {
+        const time = parseDate(value, this.timeFormat);
         if (time) {
           this.date = modifyDate(time, this.year, this.month, this.monthDate);
+          this.userInputTime = null;
           this.$refs.timepicker.value = this.date;
           this.timePickerVisible = false;
-          this.$emit('pick', this.date, true);
+          this.emit(this.date, true);
         }
       },
 
-      handleVisibleDateChange(event) {
-        const date = parseDate(event.target.value, this.dateFormat);
+      handleVisibleDateChange(value) {
+        const date = parseDate(value, this.dateFormat);
         if (date) {
           if (typeof this.disabledDate === 'function' && this.disabledDate(date)) {
             return;
           }
           this.date = modifyTime(date, this.date.getHours(), this.date.getMinutes(), this.date.getSeconds());
+          this.userInputDate = null;
           this.resetView();
-          this.$emit('pick', this.date, true);
+          this.emit(this.date, true);
         }
       },
 
@@ -463,7 +469,9 @@
         showWeekNumber: false,
         timePickerVisible: false,
         format: '',
-        arrowControl: false
+        arrowControl: false,
+        userInputDate: null,
+        userInputTime: null
       };
     },
 
@@ -489,13 +497,19 @@
       },
 
       visibleTime() {
-        const date = this.value || this.defaultValue;
-        return date ? formatDate(date, this.timeFormat) : '';
+        if (this.userInputTime !== null) {
+          return this.userInputTime;
+        } else {
+          return formatDate(this.value || this.defaultValue, this.timeFormat);
+        }
       },
 
       visibleDate() {
-        const date = this.value || this.defaultValue;
-        return date ? formatDate(date, this.dateFormat) : '';
+        if (this.userInputDate !== null) {
+          return this.userInputDate;
+        } else {
+          return formatDate(this.value || this.defaultValue, this.dateFormat);
+        }
       },
 
       yearLabel() {
@@ -511,8 +525,8 @@
       },
 
       timeFormat() {
-        if (this.format !== '' && this.format.indexOf('ss') === -1) {
-          return 'HH:mm';
+        if (this.format) {
+          return extractTimeFormat(this.format);
         } else {
           return 'HH:mm:ss';
         }
@@ -520,7 +534,7 @@
 
       dateFormat() {
         if (this.format) {
-          return this.format.replace('HH', '').replace(/[^a-zA-Z]*mm/, '').replace(/[^a-zA-Z]*ss/, '').trim();
+          return extractDateFormat(this.format);
         } else {
           return 'yyyy-MM-dd';
         }

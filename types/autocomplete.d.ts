@@ -1,5 +1,4 @@
 import { ElementUIComponent } from './component'
-import { IconClickEventHandler } from './input'
 
 export interface FetchSuggestionsCallback {
   /**
@@ -51,4 +50,9 @@ export declare class ElAutocomplete extends ElementUIComponent {
 
   /** Whether show suggestions when input focus */
   triggerOnFocus: boolean
+
+  /**
+   * Focus the Input component
+   */
+  focus (): void
 }

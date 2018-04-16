@@ -1,5 +1,73 @@
 ## Changelog
 
+### 2.3.0 Diamond
+
+*2018-03-28*
+
+#### New features
+- Table
+  - Now `formatter` of TableColumn can be dynamically updated, #10184 (by @elfman)
+  - Added `select-on-indeterminate` attribute, #9924 (by @syn-zeta)
+- Menu
+  - Added `collapse-transition` attribute, #8809 (by @limichange)
+- Input
+  - Added `select` method, #10229
+  - Added `blur` method, #10356
+- ColorPicker
+  - Added `predefine` attribute, #10170 (by @elfman)
+- Tree
+  - Added `draggable`, `allow-drop` and `allow-drag` attributes, and `node-drag-start`, `node-drag-enter`, `node-drag-leave`, `node-drag-over`, `node-drag-end` and `node-drop` events, #9251 #10372 (by @elfman)
+- Form
+  - `validate` method now has a second parameter, containing information of form items that failed the validation, #10279
+  - Added `validate` event, #10351
+- Progress
+  - Added `color` attribute, #10352 (by @YunYouJun)
+- Button
+  - Added `circle` attribute, #10359 (by @YunYouJun)
+
+#### Bug fixes
+- Form
+  - Fixed label of FormItem not align with mixed Input, #10189
+- Menu
+  - Now collapsed Menu will only show the Tooltip when the `title` slot of MenuItem is set, #10193 (by @PanJiaChen)
+- Pagination
+  - Fixed `current-change` event wrongly triggering without user interaction, #10247
+- DatePicker
+  - Now the date and time value in the dropdown panel are correctly formatted based on the `format` attribute, #10174（by @remizovvv）
+- Upload
+  - Fixed `accept` attribute not working when `drag` is true, #10278
+
+### 2.2.2
+
+*2018-03-14*
+
+- Agregado el evento `clear` para Input, #9988 (by @blackmiaool)
+- Ahora la entrada manual de ColorPicker soporta los modos `hsl`, `hsv` y `rgb`, #9991
+- Arreglado DatePicker no desencadenaba el evento `change` cuando se borraba su valor inicial, #9986
+- Ahora la clase de iconos relacionadas con los atributos de Rate soporta actualizaciones dinamicas, #10003
+- Arreglado Table que con columnas `fixed` no actualizaban correctamente su altura si se fijaba `max-height`, #10034
+- Ahora DatePicker en modo rango admite la selección inversa (haciendo clic en la fecha final y, a continuación, haciendo clic en la fecha de inicio), #8156 (by @earlymeme)
+- Agregado el atributo `disabled` para Pagination, #10006
+- Agregados los eventos `after-enter` y ` after-leave` para Popover, #10047
+- Arreglado Select no disparaba validación cuando el usuario seleccionaba una opción después de ejecutar `resetFields` de Form, #10105
+- Arreglado anchos incorrectos de columnas fijas de Table en algunos casos, #10130
+- Corregido MessageBox heredaba el atributo `title` de su instancia anterior cuando se llamaba sin `title`, #10126 (by @Pochodaydayup)
+- Agregado el atributo `input-size` para Slider, #10154
+- Agregados los eventos  `left-check-change` y `right-check-change` para Transfer, #10156
+
+### 2.2.1
+
+*2018-03-02*
+
+- Corregido Aside, Header y Footer que se contraia en algunos layout, #9812
+- Corregido Table con un atributo `height`  no renderizaba en SSR, #9876
+- Corregido Table con fila expandible no calculaba la altura cuando la fila era expandida, #9484
+- Corregido que cuando se escribia la fecha de forma manual en DateTimePicker no se disparaba el evento  `change`, #9913
+- Corregido que Select mostraba sus opciones cuando se hacia click con el botón derecho del mouse en el Input, #9894 (by @openks)
+- Agregado el atributo `tooltip-class` para Slider, #9957 
+- Ahora Select permanecera enfocado despues de la selección, #9857 (by @Seebiscuit)
+- Agregado el atributo `target-order` para Transfer, #9960
+
 ### 2.2.0 Graphite
 
 *2018-02-12*

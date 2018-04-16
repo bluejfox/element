@@ -5,29 +5,83 @@
 同步至Element-UI 2.3.4版本
 Element-UI的更新内容：
 #### 新特性
+- Button
+  - 新增 `circle` 属性，#10359（by @YunYouJun
+- ColorPicker
+  - 新增 `predefine` 属性，#10170（by @elfman）
+  - 手动输入支持 `hsl`、`hsv` 和 `rgb` 格式，#9991
+- Input
+  - 新增 `select` 方法，#10229
+  - 新增 `blur` 方法，#10356
+  - 新增 `clear` 事件，#9988（by @blackmiaool）
+- Form
+  - `validate` 方法新增第二个参数，包含未通过本次校验的表单项信息，#10279
+  - 新增 `validate` 事件，#10351
 - Menu
   - SubMenu 新增 `popper-class` 和 `disabled` 属性，#9604 #9771
   - 现在水平模式下的 Menu 支持多级 SubMenu 了，#9741
+  - 新增 `collapse-transition` 属性，#8809（by @limichange）
+- Pagination
+  - 新增 `disabled` 属性，#10006
+- Popover
+  - 新增 `after-enter` 和 `after-leave` 事件，#10047
+- Progress
+  - 新增 `color` 属性，#10352（by @YunYouJun）
+- Slider
+  - 新增 `tooltip-class` 属性，#9957
+  - 新增 `input-size` 属性，#10154
 - Select
   - 新增 `popper-append-to-body` 属性，#9782
+- Table
+  - 现在 TableColumn 的 `formatter` 属性可以是动态的，#10184（by @elfman）
+  - 新增 `select-on-indeterminate` 属性，#9924（by @syn-zeta）
 - Transfer
   - 新增 `clearQuery` 方法，#9753
+  - 新增 `target-order` 属性，#9960
+  - 新增 `left-check-change` 和 `right-check-change` 事件，#10156
 - Tree
   - 新增 `node-contextmenu` 事件，#9678
   - 现在可以使用 scoped slot 自定义树节点的模板了，#9686
   - 新增 `getNode`、`remove`、`append`、`insertBefore`、`insertAfter`、`getCheckedKeys`、`getHalfCheckedNodes`、`getHalfCheckedKeys` 方法和 `check` 事件，#9718 #9730
+  - 新增 `draggable`、`allow-drop` 和 `allow-drag` 属性，以及 `node-drag-start`、`node-drag-enter`、`node-drag-leave`、`node-drag-over`、`node-drag-end` 和 `node-drop` 事件，#9251 #10372（by @elfman）
 
 #### 修复
 - Container
   - 修复布局组件在 IE11 中无法自动填充可用空间的问题，#9655
+  - 修复 Aside、Header 和 Footer 在某些布局中被压缩的问题，#9812
+- DatePicker
+  - 现在时间日期选择器下拉面板中的值能够正确地从 `format` 属性中获取对应格式了，#10174（by @remizovvv）
+  - 修复在 DateTimePicker 中手动输入日期后不能正确触发 `change` 事件的问题，#9913
+  - 现在 DatePicker 的范围选择支持先点选结束日期，再点选开始日期了，#8156（by @earlymeme）
+  - 修复 DatePicker 在清除初始值时不触发 `change` 事件的问题，#9986
+- Form
+  - 修复嵌套复合型 Input 时，FormItem 标签与输入框未对齐的问题，#10189
 - Loading
   - 修复在 `mounted` 中修改 `v-loading` 的值为 true 时不能正确显示 Loading 的问题，#9722
+- Menu
+  - 现在折叠状态的菜单项仅在传入 `title` slot 时才显示 Tooltip，#10193（by @PanJiaChen）
+- MessageBox
+  - 修复调用 MessageBox 未传入 `title` 时，打开的 MessageBox 会继承上一个实例的 `title` 属性的问题，#10126（by @Pochodaydayup）
+- Pagination
+  - 修复 `current-change` 在未发生用户交互时错误触发的问题，#10247
+- Rate
+  - 现在 Rate 的图标类相关属性支持动态更新了，#10003
+- Select
+  - 现在的 Select 在选中选项后仍然处于 focus 状态，#9857（by @Seebiscuit）
+  - 修复鼠标右键点击 Select 的输入框会展开选项的问题，#9894（by @openks）
+  - 修复重置表单后，用户第一次改变 Select 的值时不触发校验的问题，#10105
 - Switch
   - 修复点击时会触发两次原生 click 事件的问题，#9760
 - Table
   - 修复点击可展开行的展开图标会触发 `row-click` 事件的问题，#9654
   - 修复某些情况下通过拖动改变列宽后，布局没有同步更新的问题，#9668
   - 修复合计行与固定列并存时的样式问题，#9667
+  - 修复可展开的 Table 在展开某一行后高度未重新计算的问题，#9848
+  - 修复设置了 `height` 属性的 Table 在服务端渲染时无法加载的问题，#9876
+  - 修复 Table 的固定列在某些情况下宽度不正确的问题，#10130
+  - 修复含有固定列的 Table 在设置 `max-height` 属性后有时不能及时更新布局高度的问题，#10034
+- Upload
+  - 现在拖拽上传会拦截不在 `accept` 属性范围内的文件，#10278
 
 ### 1.2.0
 *2018-02-05*
@@ -335,7 +389,7 @@ Element-UI的更新内容：
 - Steps
   - 移除 `center` 属性
   - 现在步骤条将默认充满父容器
-  - DatePicker
+- DatePicker
   - `change` 事件参数现在为组件的绑定值，格式由 `value-format` 控制
 - Table
   - 移除通过 `inline-template` 自定义列模板的功能

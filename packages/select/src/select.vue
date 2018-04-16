@@ -2,11 +2,11 @@
   <div
     class="el-select"
     :class="[selectSize ? 'el-select--' + selectSize : '']"
+    @click.stop="toggleMenu"
     v-clickoutside="handleClose">
     <div
       class="el-select__tags"
       v-if="multiple"
-      @click.stop="toggleMenu"
       ref="tags"
       :style="{ 'max-width': inputWidth - 32 + 'px' }">
       <span v-if="collapseTags && selected.length">
@@ -74,12 +74,11 @@
       :auto-complete="autoComplete"
       :size="selectSize"
       :disabled="selectDisabled"
-      :readonly="!filterable || multiple"
+      :readonly="!filterable || multiple || !visible"
       :validate-event="false"
       :class="{ 'is-focus': visible }"
       @focus="handleFocus"
       @blur="handleBlur"
-      @mousedown.native="handleMouseDown"
       @keyup.native="debouncedOnInputChange"
       @keydown.native.down.stop.prevent="navigateOptions('next')"
       @keydown.native.up.stop.prevent="navigateOptions('prev')"
@@ -116,7 +115,12 @@
           </el-option>
           <slot></slot>
         </el-scrollbar>
-        <p class="el-select-dropdown__empty" v-if="emptyText && (allowCreate && options.length === 0 || !allowCreate)">{{ emptyText }}</p>
+        <p
+          class="el-select-dropdown__empty"
+          v-if="emptyText &&
+            (!allowCreate || loading || (allowCreate && options.length === 0 ))">
+          {{ emptyText }}
+        </p>
       </el-select-menu>
     </transition>
   </div>
@@ -298,6 +302,7 @@
         optionsCount: 0,
         filteredOptionsCount: 0,
         visible: false,
+        softFocus: false,
         selectedLabel: '',
         hoverIndex: -1,
         query: '',
@@ -339,7 +344,6 @@
 
       visible(val) {
         if (!val) {
-          this.$refs.reference.$el.querySelector('input').blur();
           this.handleIconHide();
           this.broadcast('ElSelectDropdown', 'destroyPopper');
           if (this.$refs.input) {
@@ -406,7 +410,10 @@
     methods: {
       handleQueryChange(val) {
         if (this.previousQuery === val) return;
-        if (this.previousQuery === null && typeof this.filterMethod === 'function') {
+        if (
+          this.previousQuery === null &&
+          (typeof this.filterMethod === 'function' || typeof this.remoteMethod === 'function')
+        ) {
           this.previousQuery = val;
           return;
         }
@@ -524,8 +531,11 @@
       },
 
       handleFocus(event) {
-        this.visible = true;
-        this.$emit('focus', event);
+        if (!this.softFocus) {
+          this.$emit('focus', event);
+        } else {
+          this.softFocus = false;
+        }
       },
 
       handleBlur(event) {
@@ -533,20 +543,8 @@
       },
 
       handleIconClick(event) {
-        if (!this.isDisabled) {
-          if (this.iconClass.indexOf('circle-close') > -1) {
-            this.deleteSelected(event);
-          } else {
-            this.toggleMenu();
-          }
-        }
-      },
-
-      handleMouseDown(event) {
-        if (event.target.tagName !== 'INPUT') return;
-        if (this.visible) {
-          this.handleClose();
-          event.preventDefault();
+        if (this.iconClass.indexOf('circle-close') > -1) {
+          this.deleteSelected(event);
         }
       },
 
@@ -649,7 +647,16 @@
           this.emitChange(option.value);
           this.visible = false;
         }
-        this.$nextTick(() => this.scrollToOption(option));
+        this.$nextTick(() => {
+          if (this.visible) return;
+          this.scrollToOption(option);
+          this.setSoftFocus();
+        });
+      },
+
+      setSoftFocus() {
+        this.softFocus = true;
+        (this.$refs.input || this.$refs.reference).focus();
       },
 
       getValueIndex(arr = [], value) {
@@ -680,8 +687,12 @@
       },
 
       selectOption() {
-        if (this.options[this.hoverIndex]) {
-          this.handleOptionSelect(this.options[this.hoverIndex]);
+        if (!this.visible) {
+          this.toggleMenu();
+        } else {
+          if (this.options[this.hoverIndex]) {
+            this.handleOptionSelect(this.options[this.hoverIndex]);
+          }
         }
       },
 
@@ -783,6 +794,9 @@
 
       this.$on('handleOptionClick', this.handleOptionSelect);
       this.$on('setSelected', this.setSelected);
+      this.$on('fieldReset', () => {
+        this.dispatch('ElFormItem', 'el.form.change');
+      });
     },
 
     mounted() {
