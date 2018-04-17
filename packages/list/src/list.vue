@@ -4,6 +4,7 @@
     :class="[
       border && listSize ? 'el-list--' + listSize : '',
       { 'is-bordered': border },
+      { 'is-split': split }
     ]">
     <div class="el-list__header" v-if="$slots.header">
       <slot name="header"></slot>
@@ -21,6 +22,12 @@
 
     componentName: 'ElList',
 
+    provide() {
+      return {
+        elList: this
+      };
+    },
+
     props: {
       border: {
         type: Boolean,
@@ -29,6 +36,10 @@
       size: {
         type: String,
         default: 'medium'
+      },
+      split: {
+        type: Boolean,
+        default: true
       }
     },
 
