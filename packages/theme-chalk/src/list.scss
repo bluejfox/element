@@ -125,6 +125,57 @@
     }
   }
   
+  @include when(vertical) {
+    @include b(list-item) {
+      display: block;
+      
+      @include b(list-item-extra-wrap) {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        
+        @include b(list-item-main) {
+          display: block;
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+          -ms-flex: 1;
+          flex: 1;
+          
+          @include b(list-item-meta) {
+            margin-bottom: $--list-vertical-item-meta-margin-bottom;
+            
+            @include b(list-item-meta-avatar) {
+              display: none;
+            }
+            
+            @include b(list-item-meta-title) {
+              color: rgba(0,0,0,.85);
+              margin-bottom: $--list-vertical-item-meta-title-margin-bottom;
+              font-size: 16px;
+              line-height: 24px;
+            }
+          }
+          
+          @include b(list-item-content) {
+            display: block;
+            color: rgba(0,0,0,.65);
+            font-size: 14px;
+            margin-bottom: $--list-vertical-item-content-margin-bottom;
+          }
+          
+          @include b(list-item-action) {
+            margin-left: auto;
+          }
+        }
+        
+        @include b(list-item-extra) {
+          margin-left: $--list-vertical-item-extra-margin-left;
+        }
+      }
+    }
+  }
+  
   @include b(list-load-more) {
     -webkit-box-align: center;
     -webkit-align-items: center;

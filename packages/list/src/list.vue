@@ -5,7 +5,8 @@
     :class="[
       border && listSize ? 'el-list--' + listSize : '',
       { 'is-bordered': border },
-      { 'is-split': split }
+      { 'is-split': split },
+      { 'is-vertical': itemLayout === 'vertical' }
     ]">
     <div class="el-list__header" v-if="$slots.header">
       <slot name="header"></slot>
@@ -58,7 +59,8 @@
       },
       loadMore: String,
       loading: Boolean,
-      loadingConfig: Object
+      loadingConfig: Object,
+      itemLayout: String
     },
 
     data() {
