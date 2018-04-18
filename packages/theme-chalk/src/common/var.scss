@@ -713,9 +713,15 @@ $--breakpoints-spec: (
 
 /* List
 --------------------------*/
-$--list-bordered-medium-padding-top-bottom: 12px !default;
-$--list-bordered-medium-padding-left-right: 24px !default;
-$--list-bordered-large-padding-top-bottom: 16px !default;
-$--list-bordered-large-padding-left-right: 24px !default;
-$--list-bordered-small-padding-top-bottom: 8px !default;
-$--list-bordered-small-padding-left-right: 16px !default;
+$--list-medium-padding-top: 12px !default;
+$--list-medium-padding-bottom: 12px !default;
+$--list-medium-padding-left: 24px !default;
+$--list-medium-padding-right: 24px !default;
+$--list-large-padding-top: 16px !default;
+$--list-large-padding-bottom: 16px !default;
+$--list-large-padding-left: 24px !default;
+$--list-large-padding-right: 24px !default;
+$--list-small-padding-top: 8px !default;
+$--list-small-padding-bottom: 8px !default;
+$--list-small-padding-left: 16px !default;
+$--list-small-padding-right: 16px !default;

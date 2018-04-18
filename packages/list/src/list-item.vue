@@ -7,6 +7,9 @@
     ]" v-if="$slots.default">
       <slot></slot>
     </div>
+    <div class="el-list-item-action" v-if="$slots.actions">
+      <slot name="actions"></slot>
+    </div>
   </div>
 </template>
 

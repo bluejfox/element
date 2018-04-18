@@ -24,8 +24,8 @@
   
   .el-list__header,
   .el-list__footer {
-    padding-top: $--list-bordered-medium-padding-top-bottom;
-    padding-bottom: $--list-bordered-medium-padding-top-bottom;
+    padding-top: $--list-medium-padding-top;
+    padding-bottom: $--list-medium-padding-bottom;
   }
   
   @include when(bordered) {
@@ -35,8 +35,8 @@
     .el-list__header,
     .el-list-item,
     .el-list__footer {
-      padding-left: $--list-bordered-medium-padding-left-right;
-      padding-right: $--list-bordered-medium-padding-left-right;
+      padding-left: $--list-medium-padding-left;
+      padding-right: $--list-medium-padding-right;
       border-bottom: 1px solid $--border-color-light;
     }
     
@@ -44,7 +44,7 @@
       .el-list-item,
       .el-list__header,
       .el-list__footer {
-        padding: $--list-bordered-large-padding-top-bottom $--list-bordered-large-padding-left-right;
+        padding: $--list-large-padding-top $--list-large-padding-right $--list-large-padding-bottom $--list-large-padding-left;
       }
     }
     
@@ -52,7 +52,7 @@
       .el-list-item,
       .el-list__header,
       .el-list__footer {
-        padding: $--list-bordered-small-padding-top-bottom $--list-bordered-small-padding-left-right;
+        padding: $--list-small-padding-top $--list-small-padding-right $--list-small-padding-bottom $--list-small-padding-left;
       }
     }
   }
@@ -62,57 +62,91 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    padding-top: $--list-bordered-medium-padding-top-bottom;
-    padding-bottom: $--list-bordered-medium-padding-top-bottom;
-  }
-  
-  @include b(list-item-meta) {
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    font-size: 0;
+    padding-top: $--list-medium-padding-top;
+    padding-bottom: $--list-medium-padding-bottom;
     
-    @include b(list-item-meta-avatar) {
-      margin-right: 16px;
-    }
-    
-    @include b(list-item-meta-content) {
+    @include b(list-item-meta) {
+      -webkit-box-align: start;
+      -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+      align-items: flex-start;
       -webkit-box-flex: 1;
-      -webkit-flex: 1 0;
-      -ms-flex: 1 0;
-      flex: 1 0;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      font-size: 0;
       
-      @include b(list-item-meta-title) {
-        color: rgba(0,0,0,.65);
-        margin-bottom: 4px;
-        font-size: 14px;
-        line-height: 22px;
+      @include b(list-item-meta-avatar) {
+        margin-right: 16px;
       }
       
-      @include b(list-item-meta-description) {
-        color: rgba(0,0,0,.45);
-        font-size: 14px;
-        line-height: 22px;
+      @include b(list-item-meta-content) {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 0;
+        -ms-flex: 1 0;
+        flex: 1 0;
+        
+        @include b(list-item-meta-title) {
+          color: rgba(0,0,0,.65);
+          margin-bottom: 4px;
+          font-size: 14px;
+          line-height: 22px;
+        }
+        
+        @include b(list-item-meta-description) {
+          color: rgba(0,0,0,.45);
+          font-size: 14px;
+          line-height: 22px;
+        }
       }
+    }
+    
+    @include b(list-item-content) {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+    }
+    
+    @include b(list-item-content-single) {
+      -webkit-box-pack: start;
+      -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+      justify-content: flex-start;
+    }
+    
+    @include b(list-item-action) {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      margin-left: 48px;
+      padding: 0;
+      list-style: none;
     }
   }
   
-  @include b(list-item-content) {
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
+  @include b(list-load-more) {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: $--list-medium-padding-top;
+    padding-bottom: $--list-medium-padding-bottom;
+    text-align: center;
   }
   
-  @include b(list-item-content-single) {
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
+  @include b(list-loading) {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+    
+    .el-list-loading__container {
+      width: 100px;
+      height: 50px;
+      flex: 1;
+    }
   }
 }
 
