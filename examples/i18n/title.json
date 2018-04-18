@@ -1,20 +1,20 @@
 {
   "zh-CN": {
     "home": "Setaria-UI - 网站快速成型工具",
-    "guide": "指南 | Element",
-    "component": "组件 | Element",
-    "resource": "资源 | Element"
+    "guide": "指南 | Setaria-UI",
+    "component": "组件 | Setaria-UI",
+    "resource": "资源 | Setaria-UI"
   },
   "en-US": {
     "home": "Setaria-UI - A Desktop UI Toolkit for Web",
-    "guide": "Guide | Element",
-    "component": "Component | Element",
-    "resource": "Resource | Element"
+    "guide": "Guide | Setaria-UI",
+    "component": "Component | Setaria-UI",
+    "resource": "Resource | Setaria-UI"
   },
   "es": {
-    "home": "Element - Un kit de interfaz de usuario para la web",
-    "guide": "Guía | Element",
-    "component": "Componentes | Element",
-    "resource": "Recursos | Element"
+    "home": "Setaria-UI - Un kit de interfaz de usuario para la web",
+    "guide": "Guía | Setaria-UI",
+    "component": "Componentes | Setaria-UI",
+    "resource": "Recursos | Setaria-UI"
   }
 }
