@@ -78,7 +78,8 @@
         if (val) {
           this.$nextTick(() => {
             let loadingConfig = {
-              target: this.$refs.loading
+              target: this.$refs.loading,
+              spinner: 'el-icon-loading'
             };
             if (this.loadingConfig) {
               loadingConfig = merge(loadingConfig, this.loadingConfig);
