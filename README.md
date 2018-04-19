@@ -3,6 +3,8 @@
 
 Fork自[element-ui](https://github.com/ElemeFE/element)
 
+**同步至Element-UI 2.3.4**
+
 基于Vue和Element UI，结合其他优秀组件库（[Ant Design](https://ant.design/index-cn)，[Material Deisgn](https://material.angular.io/)等)，加速业务级应用页面开发。
 
 ## Feature
