@@ -18,8 +18,8 @@ In main.js:
 
 ```javascript
 import Vue from 'vue';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from 'setaria-ui';
+import 'setaria-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 
 Vue.use(ElementUI);
@@ -51,7 +51,7 @@ Luego edite .babelrc:
     [
       "component",
       {
-        "libraryName": "element-ui",
+        "libraryName": "setaria-ui",
         "styleLibraryName": "theme-chalk"
       }
     ]
@@ -63,7 +63,7 @@ Luego, si necesita Button y Select, edite main.js:
 
 ```javascript
 import Vue from 'vue';
-import { Button, Select } from 'element-ui';
+import { Button, Select } from 'setaria-ui';
 import App from './App.vue';
 
 Vue.component(Button.name, Button);
@@ -151,7 +151,7 @@ import {
   MessageBox,
   Message,
   Notification
-} from 'element-ui';
+} from 'setaria-ui';
 
 Vue.use(Pagination);
 Vue.use(Dialog);
@@ -234,7 +234,7 @@ Importando Element completamente：
 
 ```js
 import Vue from 'vue';
-import Element from 'element-ui';
+import Element from 'setaria-ui';
 Vue.use(Element, { size: 'small' });
 ```
 
@@ -242,7 +242,7 @@ Importando Element parcialmente：
 
 ```js
 import Vue from 'vue';
-import { Button } from 'element-ui';
+import { Button } from 'setaria-ui';
 
 Vue.prototype.$ELEMENT = { size: 'small' };
 Vue.use(Button);
@@ -259,5 +259,5 @@ Ahora ha incorporado Vue y Element a su proyecto y es el momento para comenzar a
 We can also start a project using [Nuxt.js](nuxtjs.org):
 
 <div class="glitch-embed-wrap" style="height: 420px; width: 100%;">
-  <iframe src="https://glitch.com/embed/#!/embed/nuxt-with-element-ui?path=nuxt.config.js&previewSize=0&attributionHidden=true" alt="nuxt-with-element-ui on glitch" style="height: 100%; width: 100%; border: 0;"></iframe>
+  <iframe src="https://glitch.com/embed/#!/embed/nuxt-with-setaria-ui?path=nuxt.config.js&previewSize=0&attributionHidden=true" alt="nuxt-with-setaria-ui on glitch" style="height: 100%; width: 100%; border: 0;"></iframe>
 </div>
