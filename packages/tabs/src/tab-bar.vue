@@ -27,22 +27,20 @@
           this.tabs.every((tab, index) => {
             let $el = this.$parent.$refs.tabs[index];
             if (!$el) { return false; }
-
             if (!tab.active) {
               offset += $el[`client${firstUpperCase(sizeName)}`];
               return true;
             } else {
               tabSize = $el[`client${firstUpperCase(sizeName)}`];
               if (sizeName === 'width' && this.tabs.length > 1) {
-                tabSize -= (index === 0 || index === this.tabs.length - 1) ? 20 : 40;
+                if (index !== 0) {
+                  offset += index * 30;
+                }
               }
               return false;
             }
           });
 
-          if (sizeName === 'width' && offset !== 0) {
-            offset += 20;
-          }
           const transform = `translate${firstUpperCase(sizeDir)}(${offset}px)`;
           style[sizeName] = tabSize + 'px';
           style.transform = transform;

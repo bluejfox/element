@@ -84,7 +84,7 @@
     z-index: #{$--index-normal + 1};
   }
   @include e(item) {
-    padding: 0 20px;
+    padding: 0 15px;
     height: 40px;
     box-sizing: border-box;
     line-height: 40px;
@@ -94,6 +94,7 @@
     font-weight: 500;
     color: $--color-text-primary;
     position: relative;
+    margin-right: 30px;
 
     &:focus, &:focus:active {
       outline: none;
@@ -169,6 +170,7 @@
       border-bottom: 1px solid transparent;
       border-left: 1px solid $--border-color-light;
       transition: color .3s cubic-bezier(.645,.045,.355,1), padding .3s cubic-bezier(.645,.045,.355,1);
+      margin-right: 0;
       &:first-child {
         border-left: none;
       }
@@ -233,15 +235,6 @@
     }
   }
   @include m((top, bottom)) {
-    .el-tabs__item.is-top:nth-child(2),
-    .el-tabs__item.is-bottom:nth-child(2) {
-      padding-left: 0;
-    }
-    .el-tabs__item.is-top:last-child,
-    .el-tabs__item.is-bottom:last-child {
-      padding-right: 0;
-    }
-
     &.el-tabs--border-card, &.el-tabs--card,
     .el-tabs--left, .el-tabs--right {
       .el-tabs__item:nth-child(2) {
