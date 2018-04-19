@@ -1,6 +1,13 @@
 ## 更新日志
 
 ### 1.3.0
+*2018-04-19*
+
+#### 新特性
+- List
+  - 新增List组件
+
+### 1.3.0
 *2018-04-16*
 同步至Element-UI 2.3.4版本
 Element-UI的更新内容：
@@ -10,7 +17,7 @@ Element-UI的更新内容：
 - BreadCrumb
   - 现在非链接的 BreadcrumbItem 在 hover 时不再具有视觉反馈，#10551
 - Button
-  - 新增 `circle` 属性，#10359（by @YunYouJun
+  - 新增 `circle` 属性，#10359（by @YunYouJun)
 - Card
   - 新增 Card 的 `shadow` 属性，#10418（by @YunYouJun）
 - ColorPicker
