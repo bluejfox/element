@@ -235,6 +235,11 @@
     }
   }
   @include m((top, bottom)) {
+    .el-tabs__item.is-top:last-child,
+    .el-tabs__item.is-bottom:last-child {
+      margin-right: 0;
+    }
+    
     &.el-tabs--border-card, &.el-tabs--card,
     .el-tabs--left, .el-tabs--right {
       .el-tabs__item:nth-child(2) {
