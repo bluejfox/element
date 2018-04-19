@@ -9,7 +9,7 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 [x] Simple Pagination
 [x] JSON Schema Dynamic Form
 [x] Enterprise Base Search Template
-[  ] List
+[x] List(参考自[Ant Design](https://ant.design/components/list-cn/))
 
 ## Install
 ```shell
