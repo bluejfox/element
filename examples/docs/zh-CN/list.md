@@ -15,7 +15,11 @@
     }
     
     .vertical-action {
-      color: rgba(0,0,0,.45)
+      color: rgba(0,0,0,.45);
+    }
+    
+    .box-card {
+      width: 100%;
     }
   }
 </style>
@@ -50,7 +54,27 @@
         listLoadingFlag: false,
         loadingConfig: {
           text: '加载中'
-        }
+        },
+        basicGridList: [
+          {
+            title: 'Title1'
+          },
+          {
+            title: 'Title2'
+          },
+          {
+            title: 'Title3'
+          },
+          {
+            title: 'Title4'
+          },
+          {
+            title: 'Title5'
+          },
+          {
+            title: 'Title6'
+          }
+        ]
       };
     },
     watch: {
@@ -328,6 +352,96 @@
 ```
 :::
 
+### 栅格列表
+
+:::demo 可以通过设置 List 的 grid 属性来实现栅格列表，column 可设置期望显示的列数。
+
+```html
+<template>
+  <el-list :grid="{ gutter: 16, column: 4 }">
+    <el-list-item v-for="item in basicGridList">
+      <el-card :header="item.title" class="box-card">
+        Card content
+      </el-card>
+    </el-list-item>
+  </el-list>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        basicGridList: [
+          {
+            title: 'Title1'
+          },
+          {
+            title: 'Title2'
+          },
+          {
+            title: 'Title3'
+          },
+          {
+            title: 'Title4'
+          },
+          {
+            title: 'Title5'
+          },
+          {
+            title: 'Title6'
+          }
+        ]
+      };
+    }
+  };
+</script>
+```
+:::
+
+### 响应式的栅格列表
+
+:::demo 响应式的栅格列表。尺寸与 Layout 保持一致。
+
+```html
+<template>
+  <el-list :grid="{ gutter: 16, xl: 8, lg: 6, md: 4, sm: 2, xs: 1 }">
+    <el-list-item v-for="item in basicGridList">
+      <el-card :header="item.title" class="box-card">
+        Card content
+      </el-card>
+    </el-list-item>
+  </el-list>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        basicGridList: [
+          {
+            title: 'Title1'
+          },
+          {
+            title: 'Title2'
+          },
+          {
+            title: 'Title3'
+          },
+          {
+            title: 'Title4'
+          },
+          {
+            title: 'Title5'
+          },
+          {
+            title: 'Title6'
+          }
+        ]
+      };
+    }
+  };
+</script>
+```
+:::
+
 ### List Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -337,6 +451,18 @@
 | load-more  | 加载更多（同时设置了插槽的场合，优先显示插槽）    | string   |  —  |  —  |
 | loading  | 当卡片内容还在加载中时，可以用 loading 展示一个占位,支持 .sync 修饰符  | boolean   |  —  |  false  |
 | loading-config  | 加载组件的配置信息    | object   |  参考 Loading 加载 组件  |  —  |
+| grid  | 列表栅格配置  | object   |  —  |  —  |
+
+### List Grid Props
+| 参数      | 说明    | 类型      | 可选值       | 默认值   |
+|---------- |-------- |---------- |-------------  |-------- |
+| column  |  列数  | number | 能被24整除的数字  |  —  |
+| gutter  |  栅格间隔  | number |   —   |  —  |
+| xs  |  <768px 响应式栅格数或者栅格属性对  | number |  能被24整除的数字  |  —  |
+| sm  |  ≥768px 响应式栅格数或者栅格属性对  | number |  能被24整除的数字  |  —  |
+| md  |  ≥992px 响应式栅格数或者栅格属性对  | number |  能被24整除的数字  |  —  |
+| lg  |  ≥1200px 响应式栅格数或者栅格属性对  | number |  能被24整除的数字  |  —  |
+| xl  |  ≥1920px 响应式栅格数或者栅格属性对 | number |  能被24整除的数字  |  —  |
 
 ### List Events
 | 事件名称      | 说明    | 回调参数      |

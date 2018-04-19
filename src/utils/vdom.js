@@ -7,3 +7,7 @@ export function isVNode(node) {
 export function getFirstComponentChild(children) {
   return children && children.filter(c => c && c.tag)[0];
 };
+
+export function getComponentName(node) {
+  return isVNode(node) ? node.componentOptions.Ctor.options.componentName : '';
+}
