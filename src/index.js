@@ -75,6 +75,7 @@ import SimplePagination from '../packages/simple-pagination/index.js';
 import List from '../packages/list/index.js';
 import ListItem from '../packages/list-item/index.js';
 import ListItemMeta from '../packages/list-item-meta/index.js';
+import JsonViewer from '../packages/json-viewer/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -150,6 +151,7 @@ const components = [
   List,
   ListItem,
   ListItemMeta,
+  JsonViewer,
   CollapseTransition
 ];
 
@@ -262,7 +264,8 @@ module.exports = {
   SimplePagination,
   List,
   ListItem,
-  ListItemMeta
+  ListItemMeta,
+  JsonViewer
 };
 
 module.exports.default = module.exports;

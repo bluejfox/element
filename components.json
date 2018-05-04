@@ -73,5 +73,6 @@
   "simple-pagination": "./packages/simple-pagination/index.js",
   "list": "./packages/list/index.js",
   "list-item": "./packages/list-item/index.js",
-  "list-item-meta": "./packages/list-item-meta/index.js"
+  "list-item-meta": "./packages/list-item-meta/index.js",
+  "json-viewer": "./packages/json-viewer/index.js"
 }

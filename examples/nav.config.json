@@ -130,7 +130,7 @@
             },
             {
               "path": "/dynamic-form",
-              "title": "动态Form 表单"
+              "title": "DynamicForm 动态Form表单"
             }
           ]
         },
@@ -164,6 +164,10 @@
             {
               "path": "/list",
               "title": "List 列表"
+            },
+            {
+              "path": "/json-viewer",
+              "title": "JsonViewer JSON视图查看"
             }
           ]
         },

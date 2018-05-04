@@ -11,6 +11,7 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 * JSON Schema Dynamic Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dynamic-form)
 * Enterprise Base Search Template [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/template-base-search)
 * List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
+* JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
 
 ## Install
 ```shell

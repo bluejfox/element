@@ -104,6 +104,9 @@ export default {
       filterPlaceholder: '请输入搜索内容',
       noCheckedFormat: '共 {total} 项',
       hasCheckedFormat: '已选 {checked}/{total} 项'
+    },
+    jsonviewer: {
+      childrenSizeUnit: '个项目'
     }
   }
 };

@@ -1,0 +1,44 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(json-viewer) {
+  font-size: 14px;
+  
+  @include e(item) {
+    width: 100%;
+  }
+  
+  @include e(label) {
+    color: blue;
+    margin-right: 4px;
+  }
+  
+  @include e(value) {
+    &.is-number {
+      color: #059605;
+    }
+    
+    &.is-string {
+      color: #d87283;
+    }
+    
+    &.is-boolean {
+      color: purple;
+    }
+  }
+  
+  @include e(size) {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.35);
+    margin-left: 4px;
+  }
+  
+  @include e(copy) {
+    margin-left: 12px;
+    
+    .copy-button {
+      padding: 2px;
+      font-size: 8px;
+    }
+  }
+}
