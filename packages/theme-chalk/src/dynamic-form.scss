@@ -1,0 +1,15 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(dynamic-form) {
+  
+  @include b(dynamic-form-item) {
+    &.is-hidden {
+      display: none;
+    }
+    
+    .el-dynamic-form__component {
+      width: 100%;
+    }
+  }
+}

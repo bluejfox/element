@@ -3,10 +3,16 @@ import ElFormItem from 'setaria-ui/packages/form/src/form-item';
 import ElSelect from 'setaria-ui/packages/select';
 import ElInput from 'setaria-ui/packages/input';
 
+const CLASSNAME = 'className';
+// UI Property
 const UI_WIDGET = 'ui:widget';
 const UI_OPTIONS = 'ui:options';
-const CLASSNAME = 'className';
 const UI_DISABLED = 'ui:disabled';
+const UI_HIDDEN = 'ui:hidden';
+const UI_FORMAT = 'ui:format';
+// 默认日期格式
+const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd';
+const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm:ss`;
 
 export default {
   name: 'ElDynamicForm',
@@ -158,7 +164,7 @@ export default {
         const className = ui[CLASSNAME] || '';
         let componentTagName = '';
         let componentProps = {
-          'class': `el-dynamic-form--component ${className}`
+          'class': `el-dynamic-form__component ${className}`
         };
         const componentChildren = [];
         const props = {
@@ -205,8 +211,6 @@ export default {
               value: item.const
             });
           });
-          componentProps.props = props;
-          componentProps.on = events.on;
           if (componentTagName === 'el-select') {
             optionList.forEach(item => {
               componentChildren.push(h(
@@ -244,48 +248,46 @@ export default {
               ));
             });
           }
+        } else if (property.format === 'date' ||
+          property.format === 'date-time') {
+          componentTagName = 'el-date-picker';
+          events.on.input = (val) => {
+            this.model[key] = val;
+          };
+          events.on.change = (val) => {
+            this.model[key] = val;
+            this.$emit('change', key, val, self.model);
+          };
+          if (property.type === 'string') {
+            props.type = property.format.replace(/-/g, '');
+          } else if (property.type === 'array') {
+            props.type = `${property.format}-range`.replace(/-/g, '');
+          }
+          if (ui[UI_FORMAT] !== undefined && ui[UI_FORMAT] !== null) {
+            props['value-format'] = ui[UI_FORMAT];
+          } else if (property.format === 'date' || property.format === 'date-range') {
+            props['value-format'] = DEFAULT_DATE_FORMAT;
+          } else if (property.format === 'date-time' || property.format === 'date-time-range') {
+            props['value-format'] = DEFAULT_DATE_TIME_FORMAT;
+          }
         } else if (property.type === 'string') {
-          if (property.format === 'date' || property.format === 'date-time') {
-            componentTagName = 'el-date-picker';
-            events.on.input = (val) => {
-              this.model[key] = val;
-            };
-            events.on.change = (val) => {
-              this.model[key] = val;
-              this.$emit('change', key, val, self.model);
-            };
-            props.type = 'date';
-            if (property.format === 'date-time') {
-              props.type = 'datetime';
-            }
-          } else {
-            componentTagName = 'el-input';
-            if (this.uiSchema !== undefined && this.uiSchema !== null) {
-              const ui = this.uiSchema[key] || {};
-              // 组件类型
-              const widgetType = ui[UI_WIDGET];
-              if (widgetType !== undefined) {
-                if (widgetType === 'password') {
-                  props.type = 'password';
-                } else if (widgetType === 'textarea') {
-                  props.type = 'textarea';
-                }
-              }
+          componentTagName = 'el-input';
+          // 组件类型
+          const widgetType = ui[UI_WIDGET];
+          if (widgetType !== undefined) {
+            if (widgetType === 'password') {
+              props.type = 'password';
+            } else if (widgetType === 'textarea') {
+              props.type = 'textarea';
             }
           }
           componentProps.style = {
             width: '100%'
           };
-          componentProps.props = props;
-          componentProps.on = events.on;
         } else if (property.type === 'integer' || property.type === 'number') {
           events.on.input = (val) => {
             let ret = val;
-            // if (property.type === 'integer') {
-            //   ret = parseInt(val, 10);
-            // } else {
             ret = parseFloat(val);
-            // }
             if (isNaN(ret)) {
               ret = '';
             }
@@ -293,9 +295,9 @@ export default {
             this.$emit('change', key, ret, self.model);
           };
           componentTagName = 'el-input';
-          componentProps.props = props;
-          componentProps.on = events.on;
         }
+        componentProps.props = props;
+        componentProps.on = events.on;
         // 合并ui:options属性至组件属性中
         const widgetCustomOption = ui[UI_OPTIONS] || {};
         // 定义的options属性为次优先
@@ -304,7 +306,11 @@ export default {
         const formItem = h(
           'el-form-item',
           {
-            'class': `el-form-item-${key}`,
+            'class': [
+              `el-form-item-${key}`,
+              'el-dynamic-form-item',
+              ui[UI_HIDDEN] === true ? 'is-hidden' : ''
+            ],
             props: {
               label: property.title,
               prop: key
@@ -370,6 +376,7 @@ export default {
     return h(
       'el-form',
       {
+        'class': 'el-dynamic-form',
         props: formProps,
         on: formEvents.on
       },

@@ -84,7 +84,11 @@
                 { "const":1, "title":"teacher" },
                 { "const":2, "title":"doctor" }
               ]
-            }
+            },
+            "hidden": {
+              "type": "string",
+              "title": "hidden"
+            },
           }
         },
         uiSchema: {
@@ -111,6 +115,9 @@
             "ui:options": {
               "clearable": true
             }
+          },
+          "hidden": {
+            "ui:hidden": true
           }
         }
       };
@@ -147,6 +154,9 @@
           value: '',
           key: Date.now()
         });
+      },
+      handleToggleHiddenField() {
+        this.uiSchema.hidden['ui:hidden'] = !this.uiSchema.hidden['ui:hidden'];
       }
     }
   }
@@ -292,12 +302,13 @@
 
 请注意: ui-options中的属性为各组件的特殊属性，即只有该组件才具有的属性。disabled等不在此列。
 
-::: demo
+::: demo 对于日期项目，可以通过设置type属性为array使用日期/日期时间范围
 ```html
 <div>
   <el-dynamic-form ref="form" :model="form2" :schema="schema" :ui-schema="uiSchema" label-width="100px" @submit="onSubmit">
     <div slot="button">
       <el-button type="primary" native-type="submit">提交</el-button>
+      <el-button @click="handleToggleHiddenField">显示/隐藏项目</el-button>
     </div>
   </el-dynamic-form>
   <p>result:</p>
@@ -370,6 +381,10 @@
                 {"const": "3", "title": "Sport"}
               ]
             },
+            "hidden": {
+              "type": "string",
+              "title": "hidden"
+            },
             "comment": {
               "type": "string",
               "title": "comment"
@@ -406,6 +421,9 @@
             "ui:options": {
               "clearable": true
             }
+          },
+          "hidden": {
+            "ui:hidden": true
           }
         }
       }
@@ -414,6 +432,9 @@
       onSubmit() {
         console.log('submit!');
         console.log(this.form1);
+      },
+      handleToggleHiddenField() {
+        this.uiSchema.hidden['ui:hidden'] = !this.uiSchema.hidden['ui:hidden'];
       }
     }
   }
@@ -440,11 +461,13 @@
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| ui:widget | 表单字段的组件类型 | string | password, textarea, select, checkbox, radio等  |  — |
+| ui:widget | 表单字段的组件类型 | string | password, textarea, select, checkbox, radio  |  — |
 | ui:disabled | 表单字段的组件是否可用 | boolean | - | false |
+| ui:hidden | 表单字段的组件是否可见 | boolean | - | false |
 | ui:options | 表单字段的组件特殊属性 | object | setaria组件特殊属性 | - |
 
 ### Form Events
+
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
 | submit  | 表单提交后，校验成功时回调 | — |
@@ -457,21 +480,3 @@
 | validate | 对整个表单进行校验的方法 | Function(callback: Function(boolean))
 | validateField | 对部分表单字段进行校验的方法 | Function(prop: string, callback: Function(errorMessage: string))
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | -
-
-### Form-Item Attributes
-
-| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| prop    | 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的 | string    | 传入 Form 组件的 `model` 中的字段 | — |
-| label | 标签文本 | string | — | — |
-| label-width | 表单域标签的的宽度，例如 '50px' | string |       —       | — |
-| required | 是否必填，如不设置，则会根据校验规则自动生成 | bolean | — | false |
-| rules    | 表单验证规则 | object | — | — |
-| error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
-| show-message  | 是否显示校验错误信息 | boolean | — | true |
-
-### Form-Item Slot
-| name | 说明 |
-|------|--------|
-| — | Form Item 的内容 |
-| label | 标签文本的内容 |
