@@ -40,7 +40,7 @@
     "type": "git",
     "url": "git@github.com:bluejfox/setaria-ui.git"
   },
-  "homepage": "",
+  "homepage": "https://bluejfox.github.io/setaria-ui/#/zh-CN/component/",
   "keywords": [
     "setaria",
     "vue",
