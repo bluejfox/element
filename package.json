@@ -30,9 +30,7 @@
     "pub": "npm run bootstrap && sh build/git-release.sh && sh build/release.sh && node build/bin/gen-indices.js && sh build/deploy-faas.sh",
     "pub:all": "npm run dist:all && lerna publish --skip-git && git commit -am 'publish independent packages' && git push eleme dev",
     "test": "npm run lint && npm run build:theme && cross-env CI_ENV=/dev/ karma start test/unit/karma.conf.js --single-run",
-    "test:watch": "npm run build:theme && karma start test/unit/karma.conf.js",
-    "deploy-prod": "NODE_ENV=production npm run deploy:build && gh-pages -d examples/setaria-ui",
-    "deploy-prod:build": "NODE_ENV=production npm run build:file && cooking build -c build/cooking.demo.js -p"
+    "test:watch": "npm run build:theme && karma start test/unit/karma.conf.js"
   },
   "faas": {
     "domain": "element",

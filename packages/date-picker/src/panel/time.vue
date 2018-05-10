@@ -43,17 +43,7 @@
     },
 
     props: {
-      pickerWidth: {},
-      date: {
-        default() {
-          return new Date();
-        }
-      },
       visible: Boolean,
-      format: {
-        type: String,
-        default: 'HH:mm:ss'
-      },
       timeArrowControl: Boolean
     },
 
@@ -97,6 +87,7 @@
       return {
         popperClass: '',
         value: '',
+        format: 'HH:mm:ss',
         defaultValue: null,
         date: new Date(),
         oldValue: new Date(),

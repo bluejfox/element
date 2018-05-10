@@ -40,7 +40,6 @@
                 :time-arrow-control="arrowControl"
                 @pick="handleTimePick"
                 :visible="timePickerVisible"
-                :format="timeFormat"
                 @mounted="proxyTimePickerDataProperties">
               </time-picker>
             </span>
