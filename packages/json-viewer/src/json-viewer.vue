@@ -1,13 +1,19 @@
 <template>
   <div class="el-json-viewer">
-    <el-tree :data="jsonData" ref="jsonTree">
+    <el-tree :data="jsonData" ref="jsonTree"
+      @node-expand="handleExpand" @node-collapse="handleCollapse">
       <div
         class="el-json-viewer__item"
         slot-scope="{ node, data }"
         @mouseover="handleMouseOver(node)"
         @mouseout="handleMouseOut(node)">
         <span class="el-json-viewer__label">
-          {{ data.label }}:
+          <template v-if="isRoot(data.label)">
+            {{ getRootDisplayLabel(node, data) }}
+          </template>
+          <template v-else-if="data.label !== 'undefined'">
+            {{ data.label }}:
+          </template>
         </span>
         <span 
           :class="[
@@ -32,7 +38,7 @@
             {{ data.displayValue }}
           </template>
         </span>
-        <span class="el-json-viewer__collapse" v-if="!node.expanded && data.children">
+        <span class="el-json-viewer__collapse" v-if="!node.expanded && data.children && !isRoot(data.label)">
           {{ data.type === 'object' ?
             data.children.length > 0 ? '{ ... }' : '{}'
             :
@@ -69,6 +75,11 @@
         default: true
       }
     },
+    data() {
+      return {
+        isRootNodeExpand: false
+      };
+    },
     computed: {
       jsonData() {
         const jsonObj = JSON.parse(this.data);
@@ -77,7 +88,17 @@
         }
 
         // If it's an object or an array, transform as an object
-        return this.transformObject(jsonObj).children;
+        const structure = [
+          {
+            label: this.isArray(jsonObj) ? '[' : '{',
+            value: this.data
+          },
+          {
+            label: this.isArray(jsonObj) ? ']' : '}'
+          }
+        ];
+        structure[0].children = this.transformObject(jsonObj).children;
+        return structure;
       }
     },
     methods: {
@@ -101,6 +122,16 @@
           duration: 1000
         });
       },
+      handleExpand(obj) {
+        if (this.isRoot(obj.label)) {
+          this.isRootNodeExpand = true;
+        }
+      },
+      handleCollapse(obj) {
+        if (this.isRoot(obj.label)) {
+          this.isRootNodeExpand = false;
+        }
+      },
       isObject(value) {
         return Object.prototype.toString.call(value).toLowerCase() === '[object object]';
       },
@@ -109,6 +140,20 @@
       },
       isValue(value) {
         return !this.isObject(value) && !this.isArray(value);
+      },
+      isRoot(value) {
+        return ['{', '}', '[', ']'].indexOf(value) !== -1;
+      },
+      getRootDisplayLabel({ expand }, { label }) {
+        if (this.isRootNodeExpand) {
+          return label;
+        }
+        if (['{', '['].indexOf(label) !== -1) {
+          const suffix = label === '{' ? '}' : ']';
+          return `${label} ... ${suffix}`;
+        } else {
+          return '';
+        }
       },
       collapseString(value) {
         if (typeof value !== 'string' ||
