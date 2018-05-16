@@ -114,7 +114,7 @@
     <div slot="header">
       Header
     </div>
-    <el-list-item v-for="item in simpleList">
+    <el-list-item v-for="item in simpleList" :key="item">
       {{ item }}
     </el-list-item>
     <div slot="footer">
@@ -126,7 +126,7 @@
     <div slot="header">
       Header
     </div>
-    <el-list-item v-for="item in simpleList">
+    <el-list-item v-for="item in simpleList" :key="item">
       {{ item }}
     </el-list-item>
     <div slot="footer">
@@ -138,7 +138,7 @@
     <div slot="header">
       Header
     </div>
-    <el-list-item v-for="item in simpleList">
+    <el-list-item v-for="item in simpleList" :key="item">
       {{ item }}
     </el-list-item>
     <div slot="footer">
@@ -171,7 +171,7 @@
 ```html
 <template>
   <el-list>
-    <el-list-item v-for="item in basicList">
+    <el-list-item v-for="item in basicList" :key="item.title">
       <el-list-item-meta :title="item.title" slot="meta">
         <span slot="avatar">
           <img :src="item.avatar" class="basic-list-avatar-image">
@@ -217,7 +217,7 @@
 ```html
 <template>
   <el-list load-more="加载更多" :loading.sync="listLoadingFlag" :loading-config="loadingConfig">
-    <el-list-item v-for="item in basicList">
+    <el-list-item v-for="item in basicList" :key="item.title">
       <el-list-item-meta :title="item.title" slot="meta">
         <span slot="avatar">
           <img :src="item.avatar" class="basic-list-avatar-image">
@@ -285,7 +285,7 @@
 ```html
 <template>
   <el-list item-layout="vertical">
-    <el-list-item v-for="item in basicList">
+    <el-list-item v-for="item in basicList" :key="item.title">
       <el-list-item-meta :title="item.title" slot="meta">
         <span slot="avatar">
           <img :src="item.avatar" class="basic-list-avatar-image">
@@ -359,7 +359,7 @@
 ```html
 <template>
   <el-list :grid="{ gutter: 16, column: 4 }">
-    <el-list-item v-for="item in basicGridList">
+    <el-list-item v-for="item in basicGridList" :key="item.title">
       <el-card :header="item.title" class="box-card">
         Card content
       </el-card>
@@ -404,7 +404,7 @@
 ```html
 <template>
   <el-list :grid="{ gutter: 16, xl: 8, lg: 6, md: 4, sm: 2, xs: 1 }">
-    <el-list-item v-for="item in basicGridList">
+    <el-list-item v-for="item in basicGridList" :key="item.title">
       <el-card :header="item.title" class="box-card">
         Card content
       </el-card>
