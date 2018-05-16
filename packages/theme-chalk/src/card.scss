@@ -24,6 +24,22 @@
     padding: #{$--card-padding - 2 $--card-padding};
     border-bottom: 1px solid $--card-border-color;
     box-sizing: border-box;
+    
+    &.is-tab {
+      padding-bottom: 0;
+    }
+    
+    .el-tabs__header {
+      margin-bottom: 0;
+      
+      .el-tabs__nav-wrap::after {
+        background-color: transparent;
+      }
+      
+      .el-tabs__item {
+        font-size: 16px;
+      }
+    }
   }
 
   @include e(body) {

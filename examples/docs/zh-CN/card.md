@@ -3,8 +3,33 @@
   export default {
     data() {
       return {
-        currentDate: dateUtil.format(new Date(), 'yyyy-MM-dd HH:mm')
+        currentDate: dateUtil.format(new Date(), 'yyyy-MM-dd HH:mm'),
+        tabList: [
+          {
+            label: 'article',
+            name: 'article'
+          },
+          {
+            label: 'app',
+            name: 'app'
+          },
+          {
+            label: 'project',
+            name: 'project'
+          }
+        ],
+        activeTabName: 'app',
+        tabContent: {
+          'artical': 'artical selected',
+          'app': 'app selected',
+          'project': 'project selected',
+        }
       };
+    },
+    methods: {
+      handleTabClick(tab) {
+        this.$message.info(`${tab.name}被点击。`);
+      }
     }
   }
 </script>
@@ -46,7 +71,9 @@
     width: 480px;
   }
 </style>
+
 ## Card 卡片
+
 将信息聚合在卡片容器中展示。
 
 ### 基础用法
@@ -210,9 +237,62 @@ export default {
 ```
 :::
 
+### 带标签的卡片
+
+可承载更多内容。
+
+:::demo
+```html
+<el-card :tab-list="tabList" @tab-click="handleTabClick" :active-tab-name.sync="activeTabName">
+  {{ activeTabName }}
+</el-card>
+
+<script>
+  export default {
+    data() {
+      return {
+        tabList: [
+          {
+            label: 'article',
+            name: 'article'
+          },
+          {
+            label: 'app',
+            name: 'app'
+          },
+          {
+            label: 'project',
+            name: 'project'
+          }
+        ],
+        activeTabName: 'app',
+        tabContent: {
+          'artical': 'artical selected',
+          'app': 'app selected',
+          'project': 'project selected',
+        }
+      };
+    },
+    methods: {
+      handleTabClick(tab) {
+        this.$message.info(`${tab.name}被点击。`);
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | header | 设置 header，也可以通过 `slot#header` 传入 DOM | string| — | — |
 | body-style | 设置 body 的样式| object| — | { padding: '20px' } |
 | shadow | 设置阴影显示时机 | string | always / hover / never | always |
+| tab-list | 标签标题列表 | array<{label, name}> | — | — |
+| active-tab-name | 当前激活标签的 name | string | — | — |
+
+### Events
+| 事件名称      | 说明    | 回调参数      |
+|---------- |-------- |---------- |
+| tab-click  | 标签被点击后触发的事件 | tab:被点击标签的值, event:点击事件 |

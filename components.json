@@ -36,6 +36,7 @@
   "form": "./packages/form/index.js",
   "form-item": "./packages/form-item/index.js",
   "tabs": "./packages/tabs/index.js",
+  "tab-nav": "./packages/tab-nav/index.js",
   "tab-pane": "./packages/tab-pane/index.js",
   "tag": "./packages/tag/index.js",
   "tree": "./packages/tree/index.js",

@@ -37,6 +37,7 @@ import BreadcrumbItem from '../packages/breadcrumb-item/index.js';
 import Form from '../packages/form/index.js';
 import FormItem from '../packages/form-item/index.js';
 import Tabs from '../packages/tabs/index.js';
+import TabNav from '../packages/tab-nav/index.js';
 import TabPane from '../packages/tab-pane/index.js';
 import Tag from '../packages/tag/index.js';
 import Tree from '../packages/tree/index.js';
@@ -116,6 +117,7 @@ const components = [
   Form,
   FormItem,
   Tabs,
+  TabNav,
   TabPane,
   Tag,
   Tree,
@@ -228,6 +230,7 @@ module.exports = {
   Form,
   FormItem,
   Tabs,
+  TabNav,
   TabPane,
   Tag,
   Tree,
