@@ -66,7 +66,7 @@
         :align="getColumnAlign(colKey)"
         :header-align="getUIProperty(colKey, 'ui:headerAlign', null)"
         :resizable="getUIProperty(colKey, 'ui:resizable', true)">
-        <template scope="scope">
+        <template slot-scope="scope">
           <slot
             v-if="isExistColumnSlots(colKey)"
             :name="getColumnSlotsName(colKey)"
@@ -78,7 +78,7 @@
         v-if="isControlColumnSlotExist"
         :min-width="resultControlColumnMinWidth"
         class-name="control-column">
-        <template scope="scope">
+        <template slot-scope="scope">
           <slot name="tableRowButton" :row="scope.row"></slot>
         </template>
       </el-table-column>

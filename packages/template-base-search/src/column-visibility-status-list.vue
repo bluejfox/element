@@ -3,7 +3,7 @@
     <el-checkbox :indeterminate="isIndeterminate"
       v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
     <el-row class="el-column-visibility-status-list">
-      <el-col :xs="24" :sm="24" :md="12" :lg="8" v-for="(value, key) in columns">
+      <el-col :xs="24" :sm="24" :md="12" :lg="8" v-for="(value, key) in columns" :key="key">
         <el-checkbox v-model="value.visibility" :disabled="value.disabled"
           @change="handleCheckedColumnChange">
           {{ value.title }}
