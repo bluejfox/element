@@ -8,11 +8,11 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 基于Vue和Element UI，结合其他优秀组件库（[Ant Design](https://ant.design/index-cn)，[Material Deisgn](https://material.angular.io/)等)，加速业务级应用页面开发。
 
 ## Feature
-* JSON Schema Dynamic Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dynamic-form)
-* Enterprise Base Search Template [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/template-base-search)
-* List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
-* JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
-* Card [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/card)
+* [New]JSON Schema Dynamic Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dynamic-form)
+* [New]Enterprise Base Search Template [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/template-base-search)
+* [New]List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
+* [New]JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
+* [Update]Card [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/card)
 _增加标签支持_
 
 ## Install
