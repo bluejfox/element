@@ -662,11 +662,17 @@ export default {
       this.userInput = initialValue;
     },
 
-    handleFocus() {
+    handleFocus(evt) {
       const type = this.type;
 
       if (HAVE_TRIGGER_TYPES.indexOf(type) !== -1 && !this.pickerVisible) {
         this.pickerVisible = true;
+      }
+      // 获得焦点的场合，选择日期/时间的表示文字
+      if (evt && evt.target.select) {
+        this.$nextTick(() => {
+          evt.target.select();
+        });
       }
       this.$emit('focus', this);
     },
@@ -813,14 +819,15 @@ export default {
       });
 
       this.picker.$on('select-range', (start, end, pos) => {
-        if (this.refInput.length === 0) return;
-        if (!pos || pos === 'min') {
-          this.refInput[0].setSelectionRange(start, end);
-          this.refInput[0].focus();
-        } else if (pos === 'max') {
-          this.refInput[1].setSelectionRange(start, end);
-          this.refInput[1].focus();
-        }
+        // 日期/时间输入框获得焦点的场合，改为自动选择日期/时间的全部文字
+        // if (this.refInput.length === 0) return;
+        // if (!pos || pos === 'min') {
+        //   this.refInput[0].setSelectionRange(start, end);
+        //   this.refInput[0].focus();
+        // } else if (pos === 'max') {
+        //   this.refInput[1].setSelectionRange(start, end);
+        //   this.refInput[1].focus();
+        // }
       });
     },
 
