@@ -229,14 +229,14 @@ Vue.prototype.$message = Message;
 
 ### 全局配置
 
-在引入 Setaria 时，可以传入一个全局配置对象。该对象目前仅支持 `size` 字段，用于改变组件的默认尺寸。按照引入 Setaria 的方式，具体操作如下：
+在引入 Setaria 时，可以传入一个全局配置对象。该对象目前支持 `size` 与 `zIndex` 字段。`size` 用于改变组件的默认尺寸，`zIndex` 设置弹框的初始 z-index（默认值：2000）。按照引入 Setaria 的方式，具体操作如下：
 
 完整引入 Setaria：
 
 ```js
 import Vue from 'vue';
 import Setaria from 'setaria-ui';
-Vue.use(Setaria, { size: 'small' });
+Vue.use(Setaria, { size: 'small', zIndex: 3000 });
 ```
 
 按需引入 Setaria：
@@ -245,21 +245,21 @@ Vue.use(Setaria, { size: 'small' });
 import Vue from 'vue';
 import { Button } from 'setaria-ui';
 
-Vue.prototype.$SETARIA = { size: 'small' };
+Vue.prototype.$SETARIA = { size: 'small', zIndex: 3000 };
 Vue.use(Button);
 ```
 
-按照以上设置，项目中所有拥有 `size` 属性的组件的默认尺寸均为 'small'。
+按照以上设置，项目中所有拥有 `size` 属性的组件的默认尺寸均为 'small'，弹框的初始 z-index 为 3000。
 
 ### 开始使用
 
-至此，一个基于 Vue 和 Element 的开发环境已经搭建完毕，现在就可以编写代码了。各个组件的使用方法请参阅它们各自的文档。
+至此，一个基于 Vue 和 Setaria 的开发环境已经搭建完毕，现在就可以编写代码了。各个组件的使用方法请参阅它们各自的文档。
 
 ### 使用 Nuxt.js
 
 我们还可以使用 [Nuxt.js](https://nuxtjs.org)：
 
 <div class="glitch-embed-wrap" style="height: 420px; width: 100%;">
-  <iframe src="https://glitch.com/embed/#!/embed/nuxt-with-setaria-ui?path=nuxt.config.js&previewSize=0&attributionHidden=true" alt="nuxt-with-setaria-ui on glitch" style="height: 100%; width: 100%; border: 0;"></iframe>
+  <iframe src="https://glitch.com/embed/#!/embed/nuxt-with-element?path=nuxt.config.js&previewSize=0&attributionHidden=true" alt="nuxt-with-element on glitch" style="height: 100%; width: 100%; border: 0;"></iframe>
 </div>
 

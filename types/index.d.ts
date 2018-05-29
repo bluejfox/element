@@ -1,4 +1,4 @@
-export * from './element-ui'
+export * from './setaria-ui'
 
-import * as ElementUI from './element-ui'
-export default ElementUI
+import * as SetariaUI from './setaria-ui'
+export default SetariaUI

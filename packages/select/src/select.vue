@@ -49,6 +49,7 @@
         :disabled="selectDisabled"
         :autocomplete="autoComplete"
         @focus="handleFocus"
+        @blur="softFocus = false"
         @click.stop
         @keyup="managePlaceholder"
         @keydown="resetInputState"
@@ -77,7 +78,7 @@
       :auto-complete="autoComplete"
       :size="selectSize"
       :disabled="selectDisabled"
-      :readonly="!filterable || multiple || !visible"
+      :readonly="inputReadonly"
       :validate-event="false"
       :class="{ 'is-focus': visible }"
       @focus="handleFocus"
@@ -91,6 +92,9 @@
       @paste.native="debouncedOnInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false">
+      <template slot="prefix" v-if="$slots.prefix">
+        <slot name="prefix"></slot>
+      </template>
       <i slot="suffix"
        :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"
        @click="handleIconClick"
@@ -147,6 +151,7 @@
   import { getValueByPath } from 'setaria-ui/src/utils/util';
   import { valueEquals } from 'setaria-ui/src/utils/util';
   import NavigationMixin from './navigation-mixin';
+  import { isKorean } from 'setaria-ui/src/utils/shared';
 
   const sizeMap = {
     'medium': 36,
@@ -181,6 +186,13 @@
       _elFormItemSize() {
         return (this.elFormItem || {}).elFormItemSize;
       },
+
+      inputReadonly() {
+        // trade-off for IE input readonly problem: https://github.com/ElemeFE/element/issues/10403
+        const isIE = !this.$isServer && !isNaN(Number(document.documentMode));
+        return !this.filterable || this.multiple || !isIE && !this.visible || this.readonly;
+      },
+
       iconClass() {
         let criteria = this.clearable &&
           !this.selectDisabled &&
@@ -251,6 +263,7 @@
         type: String,
         default: 'off'
       },
+      automaticDropdown: Boolean,
       size: String,
       disabled: Boolean,
       clearable: Boolean,
@@ -312,7 +325,9 @@
         previousQuery: null,
         inputHovering: false,
         currentPlaceholder: '',
-        isOnComposition: false
+        menuVisibleOnFocus: false,
+        isOnComposition: false,
+        isSilentBlur: false
       };
     },
 
@@ -416,11 +431,13 @@
 
     methods: {
       handleComposition(event) {
+        const text = event.target.value;
         if (event.type === 'compositionend') {
           this.isOnComposition = false;
-          this.handleQueryChange(event.target.value);
+          this.handleQueryChange(text);
         } else {
-          this.isOnComposition = true;
+          const lastCharacter = text[text.length - 1] || '';
+          this.isOnComposition = !isKorean(lastCharacter);
         }
       },
       handleQueryChange(val) {
@@ -547,6 +564,10 @@
 
       handleFocus(event) {
         if (!this.softFocus) {
+          if (this.automaticDropdown || this.filterable) {
+            this.visible = true;
+            this.menuVisibleOnFocus = true;
+          }
           this.$emit('focus', event);
         } else {
           this.softFocus = false;
@@ -559,7 +580,14 @@
       },
 
       handleBlur(event) {
-        this.$emit('blur', event);
+        setTimeout(() => {
+          if (this.isSilentBlur) {
+            this.isSilentBlur = false;
+          } else {
+            this.$emit('blur', event);
+          }
+        }, 50);
+        this.softFocus = false;
       },
 
       handleIconClick(event) {
@@ -645,7 +673,7 @@
         }, 300);
       },
 
-      handleOptionSelect(option) {
+      handleOptionSelect(option, byClick) {
         if (this.multiple) {
           const value = this.value.slice();
           const optionIndex = this.getValueIndex(value, option.value);
@@ -667,16 +695,20 @@
           this.emitChange(option.value);
           this.visible = false;
         }
+        this.isSilentBlur = byClick;
+        this.setSoftFocus();
+        if (this.visible) return;
         this.$nextTick(() => {
-          if (this.visible) return;
           this.scrollToOption(option);
-          this.setSoftFocus();
         });
       },
 
       setSoftFocus() {
         this.softFocus = true;
-        (this.$refs.input || this.$refs.reference).focus();
+        const input = this.$refs.input || this.$refs.reference;
+        if (input) {
+          input.focus();
+        }
       },
 
       getValueIndex(arr = [], value) {
@@ -699,7 +731,11 @@
 
       toggleMenu() {
         if (!this.selectDisabled) {
-          this.visible = !this.visible;
+          if (this.menuVisibleOnFocus) {
+            this.menuVisibleOnFocus = false;
+          } else {
+            this.visible = !this.visible;
+          }
           if (this.visible) {
             (this.$refs.input || this.$refs.reference).focus();
           }

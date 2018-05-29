@@ -28,6 +28,7 @@ export const toDate = function(date) {
 export const isDate = function(date) {
   if (date === null || date === undefined) return false;
   if (isNaN(new Date(date).getTime())) return false;
+  if (Array.isArray(date)) return false; // deal with `new Date([ new Date() ]) -> new Date()`
   return true;
 };
 
@@ -95,6 +96,7 @@ export const getStartDateOfMonth = function(year, month) {
 };
 
 export const getWeekNumber = function(src) {
+  if (!isDate(src)) return null;
   const date = new Date(src.getTime());
   date.setHours(0, 0, 0, 0);
   // Thursday in current week decides the year.
