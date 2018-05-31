@@ -86,6 +86,7 @@
           if (before && before.then) {
             before.then(() => {
               changeCurrentName();
+              this.$refs.nav && this.$refs.nav.removeFocus();
             });
           } else if (before !== false) {
             changeCurrentName();
