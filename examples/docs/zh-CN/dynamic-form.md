@@ -102,14 +102,16 @@
           "comment": {
             "ui:widget": "textarea",
             "ui:options": {
-              rows: 5
-            }
+              rows: 5,
+            },
+            "ui:colspan": 3
           },
           "gender": {
             "ui:widget": "radio"
           },
           "interest": {
-            "ui:widget": "checkbox"
+            "ui:widget": "checkbox",
+            "ui:colspan": 2
           },
           "profession": {
             "ui:options": {
@@ -300,12 +302,14 @@
 
 可用过传入ui-schema属性对表单的项目进行定制化。 
 
-请注意: ui-options中的属性为各组件的特殊属性，即只有该组件才具有的属性。disabled等不在此列。
+请注意: ui-options中的属性为各组件的独有属性，即只有该组件才具有的属性。disabled等不在此列。
 
 ::: demo 对于日期项目，可以通过设置type属性为array使用日期/日期时间范围
 ```html
 <div>
-  <el-dynamic-form ref="form" :model="form2" :schema="schema" :ui-schema="uiSchema" label-width="100px" @submit="onSubmit">
+  <el-dynamic-form ref="form" :model="form2" :schema="schema"
+    :ui-schema="uiSchema" label-width="100px" @submit="onSubmit"
+    :columns="3">
     <div slot="button">
       <el-button type="primary" native-type="submit">提交</el-button>
       <el-button @click="handleToggleHiddenField">显示/隐藏项目</el-button>
@@ -400,6 +404,9 @@
           }
         },
         uiSchema: {
+          "lastName": {
+            "ui:disabled": true
+          },
           "password": {
             "ui:widget": "password",
             "className": "password-class"
@@ -409,13 +416,14 @@
             "ui:options": {
               rows: 5
             },
-            "ui:disabled": true
+            "ui:colspan": 3
           },
           "gender": {
             "ui:widget": "radio"
           },
           "interest": {
-            "ui:widget": "checkbox"
+            "ui:widget": "checkbox",
+            "ui:colspan": 2
           },
           "profession": {
             "ui:options": {
@@ -464,7 +472,8 @@
 | ui:widget | 表单字段的组件类型 | string | password, textarea, select, checkbox, radio  |  — |
 | ui:disabled | 表单字段的组件是否可用 | boolean | - | false |
 | ui:hidden | 表单字段的组件是否可见 | boolean | - | false |
-| ui:options | 表单字段的组件特殊属性 | object | setaria组件特殊属性 | - |
+| ui:options | 表单字段的组件独有属性 | object | setaria组件独有属性 | - |
+| ui:colspan | 跨越的列数 | number | - | - |
 
 ### Form Events
 

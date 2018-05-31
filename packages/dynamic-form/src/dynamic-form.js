@@ -10,6 +10,7 @@ const UI_OPTIONS = 'ui:options';
 const UI_DISABLED = 'ui:disabled';
 const UI_HIDDEN = 'ui:hidden';
 const UI_FORMAT = 'ui:format';
+const UI_COLSPAN = 'ui:colspan';
 // 默认日期格式
 const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd';
 const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm:ss`;
@@ -279,6 +280,12 @@ export default {
               props.type = 'password';
             } else if (widgetType === 'textarea') {
               props.type = 'textarea';
+              const options = ui[UI_OPTIONS] || {};
+              if (typeof options.rows === 'number') {
+                const attrs = componentProps.attrs || {};
+                attrs.rows = options.rows;
+                componentProps.attrs = attrs;
+              }
             }
           }
           componentProps.style = {
@@ -299,9 +306,8 @@ export default {
         componentProps.props = props;
         componentProps.on = events.on;
         // 合并ui:options属性至组件属性中
-        const widgetCustomOption = ui[UI_OPTIONS] || {};
-        // 定义的options属性为次优先
-        const mergedProps = Object.assign({}, widgetCustomOption, componentProps.props);
+        // 用户自定义的options属性为最优先
+        const mergedProps = Object.assign({}, componentProps.props, ui[UI_OPTIONS] || {});
         componentProps.props = mergedProps;
         const formItem = h(
           'el-form-item',
@@ -318,7 +324,10 @@ export default {
           },
           [h(componentTagName, componentProps, componentChildren)]
         );
-        formItemArray.push(formItem);
+        formItemArray.push({
+          id: key,
+          component: formItem
+        });
       });
     }
     const formProps = {
@@ -336,13 +345,14 @@ export default {
     if (this.inline !== true) {
       // 自适应设置
       const rowArray = [];
-      let colArray = null;
+      let colArray = [];
+      let totalSpanCount = 0;
       formItemArray.forEach((formItem, index) => {
-        if (colArray === null) {
-          colArray = [];
-        }
-        const span = 24 / self.columns;
-        const column = h(
+        const itemUISchema = this.uiSchema[formItem.id] || {};
+        let uiColspan = itemUISchema[UI_COLSPAN];
+        uiColspan = uiColspan > self.columns ? self.columns : uiColspan;
+        const span = typeof uiColspan === 'number' ? (24 / self.columns) * uiColspan : 24 / self.columns;
+        let column = h(
           'el-col',
           {
             props: {
@@ -352,11 +362,14 @@ export default {
               xs: 24
             }
           },
-          [formItem]
+          [formItem.component]
         );
-        colArray.push(column);
-        if (((index + 1) % self.columns === 0 ||
-          index === formItemArray.length - 1) && index !== 0) {
+        totalSpanCount += span;
+        if (totalSpanCount <= 24) {
+          colArray.push(column);
+          column = null;
+        }
+        if (totalSpanCount >= 24 || index === formItemArray.length - 1) {
           const gutter = self.labelWidth === undefined || self.labelWidth === null ? 10 : 0;
           const row = h(
             'el-row',
@@ -368,7 +381,12 @@ export default {
             [...colArray]
           );
           rowArray.push(row);
-          colArray = null;
+          colArray = [];
+          totalSpanCount = 0;
+        }
+        if (column) {
+          colArray.push(column);
+          totalSpanCount += span;
         }
       });
       formComponents = rowArray;
