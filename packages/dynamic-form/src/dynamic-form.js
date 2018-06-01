@@ -347,8 +347,8 @@ export default {
       const rowArray = [];
       let colArray = [];
       let totalSpanCount = 0;
-      console.log(formItemArray);
-      formItemArray.forEach((formItem, index) => {
+      for (let index = 0; index < formItemArray.length; index += 1) {
+        const formItem = formItemArray[index];
         const itemUISchema = this.uiSchema[formItem.id] || {};
         let uiColspan = itemUISchema[UI_COLSPAN];
         uiColspan = uiColspan > self.columns ? self.columns : uiColspan;
@@ -368,10 +368,13 @@ export default {
         totalSpanCount += span;
         if (totalSpanCount <= 24) {
           colArray.push(column);
-          column = null;
+        }
+        // 已超过最大栅格数的场合，暂不处理当前元素
+        if (totalSpanCount > 24) {
+          index -= 1;
         }
         if (totalSpanCount >= 24 || index === formItemArray.length - 1) {
-          const gutter = self.labelWidth === undefined || self.labelWidth === null ? 10 : 0;
+          const gutter = (self.labelWidth === undefined || self.labelWidth === null) ? 10 : 0;
           const row = h(
             'el-row',
             {
@@ -385,11 +388,7 @@ export default {
           colArray = [];
           totalSpanCount = 0;
         }
-        if (column) {
-          colArray.push(column);
-          totalSpanCount += span;
-        }
-      });
+      }
       formComponents = rowArray;
     } else {
       formComponents = formItemArray.map(item => item.component);
