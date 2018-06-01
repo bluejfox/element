@@ -347,6 +347,7 @@ export default {
       const rowArray = [];
       let colArray = [];
       let totalSpanCount = 0;
+      console.log(formItemArray);
       formItemArray.forEach((formItem, index) => {
         const itemUISchema = this.uiSchema[formItem.id] || {};
         let uiColspan = itemUISchema[UI_COLSPAN];
@@ -390,6 +391,8 @@ export default {
         }
       });
       formComponents = rowArray;
+    } else {
+      formComponents = formItemArray.map(item => item.component);
     }
     return h(
       'el-form',
