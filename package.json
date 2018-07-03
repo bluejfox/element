@@ -19,6 +19,7 @@
     "build:umd": "node build/bin/build-locale.js",
     "clean": "rimraf lib && rimraf packages/*/lib && rimraf test/**/coverage",
     "deploy": "npm run deploy:build && gh-pages -d examples/setaria-ui && rm -rf examples/setaria-ui",
+    "deploy:theme": "npm run bootstrap && npm run build:theme && sh build/deploy-theme.sh",
     "deploy:build": "npm run build:file && cross-env NODE_ENV=production webpack --config build/webpack.demo.js && echo bluejfox.github.io/setaria-ui/>>examples/setaria-ui/CNAME",
     "dev": "npm run bootstrap && npm run build:file && cross-env NODE_ENV=development webpack-dev-server --config build/webpack.demo.js & node build/bin/template.js",
     "dev:play": "npm run build:file && cross-env NODE_ENV=development PLAY_ENV=true webpack-dev-server --config build/webpack.demo.js",
