@@ -263,14 +263,6 @@
       "path": "/changelog"
     },
     {
-      "name": "Element React",
-      "href": "https://eleme.github.io/element-react/"
-    },
-    {
-      "name": "Element Angular",
-      "href": "https://element-angular.faas.ele.me/"
-    },
-    {
       "name": "Development",
       "children": [
         {
@@ -511,14 +503,6 @@
     {
       "name": "Changelog",
       "path": "/changelog"
-    },
-    {
-      "name": "Element React",
-      "href": "https://eleme.github.io/element-react/"
-    },
-    {
-      "name": "Element Angular",
-      "href": "https://element-angular.faas.ele.me/"
     },
     {
       "name": "Development",

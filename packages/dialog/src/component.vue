@@ -1,6 +1,13 @@
 <template>
-  <transition name="dialog-fade">
-    <div class="el-dialog__wrapper" v-show="visible" @click.self="handleWrapperClick" :style="wrapperStyle" ref="dialogWrapper">
+  <transition
+    name="dialog-fade"
+    @after-leave="afterLeave">
+    <div
+      class="el-dialog__wrapper"
+      v-show="visible"
+      @click.self="handleWrapperClick"
+      :style="wrapperStyle"
+      ref="dialogWrapper">
       <div
         class="el-dialog"
         :class="[{ 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
@@ -204,6 +211,9 @@
       updatePopper() {
         this.broadcast('ElSelectDropdown', 'updatePopper');
         this.broadcast('ElDropdownMenu', 'updatePopper');
+      },
+      afterLeave() {
+        this.$emit('closed');
       }
     },
 

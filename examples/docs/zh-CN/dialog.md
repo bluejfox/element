@@ -349,8 +349,9 @@ Dialog 的内容是懒渲染的，即在第一次被打开之前，传入的默�
 ### Events
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
-| close  | Dialog 关闭的回调 | — |
-| open  | Dialog 打开的回调 | — |
 | drag-start  | Dialog 开始拖拽的回调 | event, pointer |
 | drag-move  | Dialog 拖拽过程中的回调 | event, pointer, moveVector |
 | drag-end  | Dialog 结束拖拽的回调 | event, pointer |
+| open  | Dialog 打开的回调 | — |
+| close  | Dialog 关闭的回调 | — |
+| closed | Dialog 关闭动画结束时的回调 | — |
