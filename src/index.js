@@ -77,6 +77,7 @@ import List from '../packages/list/index.js';
 import ListItem from '../packages/list-item/index.js';
 import ListItemMeta from '../packages/list-item-meta/index.js';
 import JsonViewer from '../packages/json-viewer/index.js';
+import Divider from '../packages/divider/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -154,6 +155,7 @@ const components = [
   ListItem,
   ListItemMeta,
   JsonViewer,
+  Divider,
   CollapseTransition
 ];
 
@@ -269,7 +271,8 @@ module.exports = {
   List,
   ListItem,
   ListItemMeta,
-  JsonViewer
+  JsonViewer,
+  Divider
 };
 
 module.exports.default = module.exports;

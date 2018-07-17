@@ -11,6 +11,7 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 - [New]JSON Schema Dynamic Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dynamic-form)
 - [New]Enterprise Base Search Template [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/template-base-search)
 - [New]List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
+- [New]Divider [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/divider)
 - [New]JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
 - [Update]Card [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/card)
   - 支持标签

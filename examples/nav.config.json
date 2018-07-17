@@ -251,6 +251,10 @@
             {
               "path": "/template-base-search",
               "title": "TemplateBaseSearch 检索页面模板"
+            },
+            {
+              "path": "/divider",
+              "title": "Divider 分割线"
             }
           ]
         }
