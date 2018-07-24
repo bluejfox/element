@@ -39,6 +39,7 @@
   <el-button type="info">信息按钮</el-button>
   <el-button type="warning">警告按钮</el-button>
   <el-button type="danger">危险按钮</el-button>
+  <el-button type="primary" href="https://www.163.com" target="_blank">a 链接跳转</el-button>
 </el-row>
 
 <el-row>
@@ -84,6 +85,7 @@
   <el-button type="info" disabled>信息按钮</el-button>
   <el-button type="warning" disabled>警告按钮</el-button>
   <el-button type="danger" disabled>危险按钮</el-button>
+  <el-button type="primary" href="https://www.163.com" target="_blank" disabled>a 链接</el-button>
 </el-row>
 
 <el-row>
@@ -105,6 +107,7 @@
 ```html
 <el-button type="text">文字按钮</el-button>
 <el-button type="text" disabled>文字按钮</el-button>
+<el-button type="text" href="https://www.163.com" target="_blank">链接</el-button>
 ```
 :::
 
@@ -120,6 +123,8 @@
 <el-button type="primary" icon="el-icon-delete"></el-button>
 <el-button type="primary" icon="el-icon-search">搜索</el-button>
 <el-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+<el-button type="primary" href="https://www.163.com" target="_blank"
+    icon="el-icon-download"></el-button>
 ```
 :::
 
@@ -138,6 +143,8 @@
   <el-button type="primary" icon="el-icon-edit"></el-button>
   <el-button type="primary" icon="el-icon-share"></el-button>
   <el-button type="primary" icon="el-icon-delete"></el-button>
+  <el-button type="primary" href="https://www.163.com" target="_blank"
+    icon="el-icon-download"></el-button>
 </el-button-group>
 ```
 :::
@@ -171,6 +178,8 @@ Button 组件提供除了默认值以外的三种尺寸，可以在不同场景�
   <el-button size="medium" round>中等按钮</el-button>
   <el-button size="small" round>小型按钮</el-button>
   <el-button size="mini" round>超小按钮</el-button>
+  <el-button href="https://www.163.com" target="_blank"
+    size="mini" round>a 链接</el-button>
 </el-row>
 ```
 :::

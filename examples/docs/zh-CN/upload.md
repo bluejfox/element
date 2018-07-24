@@ -399,59 +399,6 @@
 ```
 :::
 
-### 手动上传 - 只获取文件内容
-
-在只获取文件内容，不上传文件的场合，可以使用`after-select`钩子来对用户上传的文件大小或格式进行控制。
-
-::: demo
-```html
-<el-upload
-  class="upload-demo"
-  ref="upload"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :on-change="handleFilesChange"
-  :file-list="fileList"
-  :auto-upload="false"
-  :after-select="handleAfterSelect"
-  :multiple="true">
-  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-</el-upload>
-<script>
-  export default {
-    data() {
-      return {
-        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
-      };
-    },
-    methods: {
-      submitUpload() {
-        this.$refs.upload.submit();
-      },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleFilesChange(file, fileList) {
-        console.log(file, fileList);
-      },
-      handleAfterSelect(file) {
-        const isLt500KB = file.size / 1024 < 500;
-        if (!isLt500KB) {
-          this.$message.error('上传头像图片大小不能超过 500KB!');
-        }
-        return isLt500KB;
-      }
-    }
-  }
-</script>
-```
-:::
-
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -479,8 +426,6 @@
 | disabled | 是否禁用 | boolean | — | false |
 | limit | 最大允许上传个数 |  number | — | — |
 | on-exceed | 文件超出个数限制时的钩子 | function(files, fileList) | — | - |
-| file-output-type | [FileReader](https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader)支持的类型 | string | DataUrl, ArrayBuffer, BinaryString, Text | DataUrl |
-| after-select | 可选参数, 用户选择文件后的钩子 | function | - | - |
 
 ### Methods
 | 方法名      | 说明          | 参数 |

@@ -10,7 +10,8 @@ export default {
   props: {
     type: String,
     action: {
-      type: String
+      type: String,
+      required: true
     },
     name: {
       type: String,
@@ -26,7 +27,6 @@ export default {
     onSuccess: Function,
     onError: Function,
     beforeUpload: Function,
-    afterSelect: Function,
     drag: Boolean,
     onPreview: {
       type: Function,
@@ -45,12 +45,7 @@ export default {
     },
     disabled: Boolean,
     limit: Number,
-    onExceed: Function,
-    // FileReader支持的类型
-    fileOutputType: {
-      type: String,
-      default: 'DataUrl'
-    }
+    onExceed: Function
   },
 
   data() {
@@ -82,33 +77,7 @@ export default {
       if (postFiles.length === 0) { return; }
 
       postFiles.forEach(rawFile => {
-        // 不上传文件的场合
-        if (!this.action) {
-          if (!this.afterSelect) {
-            this.readFile(rawFile).then((data) => {
-              this.onStart(rawFile, data);
-            });
-          } else {
-            const after = this.afterSelect(rawFile);
-            if (after && after.then) {
-              after.then((f) => {
-                this.readFile(f).then((data) => {
-                  this.onStart(rawFile, data);
-                });
-              }).catch((f) => {
-                this.readFile(f).then((data) => {
-                  this.onStart(rawFile, data);
-                });
-              });
-            } else if (after === true) {
-              this.readFile(rawFile).then((data) => {
-                this.onStart(rawFile, data);
-              });
-            }
-          }
-        } else {
-          this.onStart(rawFile);
-        }
+        this.onStart(rawFile);
         if (this.autoUpload) this.upload(rawFile);
       });
     },
@@ -195,31 +164,6 @@ export default {
         this.$refs.input.value = null;
         this.$refs.input.click();
       }
-    },
-    /**
-     * 读取文件并使用指定的格式生成内容
-     * @param  {File} file 文件
-     * @return {*}    文件内容
-     */
-    readFile(file) {
-      const reader = new FileReader();
-      if (this.fileOutputType === 'DataUrl') {
-        reader.readAsDataURL(file);
-      } else if (this.fileOutputType === 'ArrayBuffer') {
-        reader.readAsArrayBuffer(file);
-      } else if (this.fileOutputType === 'BinaryString') {
-        reader.readAsBinaryString(file);
-      } else if (this.fileOutputType === 'Text') {
-        reader.readAsText(file);
-      }
-      return new Promise((resolve, reject) => { // eslint-disable-line
-        reader.onload = () => {
-          resolve(reader.result);
-        };
-        reader.onerror = (err) => {
-          reject(err);
-        };
-      });
     },
     handleKeydown(e) {
       if (e.target !== e.currentTarget) return;

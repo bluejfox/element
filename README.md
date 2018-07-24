@@ -13,6 +13,8 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 - [New]List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
 - [New]Divider [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/divider)
 - [New]JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
+- [Update]Button [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/button)
+  - 新增href, target属性支持a 链接功能
 - [Update]Card [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/card)
   - 支持标签
 - [Update]Dialog [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dialog)
