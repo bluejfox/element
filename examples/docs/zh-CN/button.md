@@ -197,3 +197,5 @@ Button 组件提供除了默认值以外的三种尺寸，可以在不同场景�
 | icon  | 图标类名 | string   |  —  |  —  |
 | autofocus  | 是否默认聚焦 | boolean   |  —  |  false  |
 | native-type | 原生 type 属性 | string | button / submit / reset | button |
+| href | 点击跳转的地址，指定此属性 button 的行为和 a 链接一致 | string | — | — |
+| target | 相当于 a 链接的 target 属性，href 存在时生效 | string | — | — |
