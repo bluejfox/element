@@ -1,8 +1,11 @@
+import Locale from 'setaria-ui/src/mixins/locale';
 import merge from 'setaria-ui/src/utils/merge';
 import { getComponentName } from 'setaria-ui/src/utils/vdom';
 
 export default {
   name: 'ElList',
+
+  mixins: [Locale],
 
   componentName: 'ElList',
 
@@ -29,7 +32,8 @@ export default {
     loading: Boolean,
     loadingConfig: Object,
     itemLayout: String,
-    grid: Object
+    grid: Object,
+    emptyText: String
   },
 
   data() {
@@ -123,8 +127,14 @@ export default {
                 ))
               }
             </el-row>
+          ) : listItemChildren.length > 0 ? (
+            this._l(listItemChildren, node => node)
           ) : (
-            this._l(this.$slots.default, node => node)
+            <div class="el-list__empty-text">
+              {
+                this.$slots.empty ? this.$slots.empty : (this.emptyText || this.t('el.list.emptyText'))
+              }
+            </div>
           )
         }
         {

@@ -452,6 +452,7 @@
 | loading  | 当卡片内容还在加载中时，可以用 loading 展示一个占位,支持 .sync 修饰符  | boolean   |  —  |  false  |
 | loading-config  | 加载组件的配置信息    | object   |  参考 Loading 加载 组件  |  —  |
 | grid  | 列表栅格配置  | object   |  —  |  —  |
+| empty-text  | 空数据时显示的文本内容，也可以通过 slot="empty" 设置  | string   |  —  |  暂无数据  |
 
 ### List Grid Props
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |

@@ -107,6 +107,9 @@ export default {
     },
     jsonviewer: {
       childrenSizeUnit: '个项目'
+    },
+    list: {
+      emptyText: '暂无数据'
     }
   }
 };

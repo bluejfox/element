@@ -12,6 +12,11 @@
   color: $--color-text-regular;
   font-size: $--font-size-base;
   
+  @include e(empty-text) {
+    text-align: center;
+    color: $--color-text-secondary;
+  }
+  
   @include when(split) {
     @include b(list-item) {
       border-bottom: 1px solid #e8e8e8;
