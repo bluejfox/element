@@ -2,7 +2,7 @@
   <a
     v-if="href"
     v-bind="anchorProps"
-    class="el-button"
+    class="el-button el-button-anchor"
     @click="handleAnchorClick"
     :disabled="buttonDisabled || loading"
     :class="[

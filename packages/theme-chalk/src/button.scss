@@ -4,6 +4,10 @@
 @import "mixins/mixins";
 @import "mixins/utils";
 
+@include b(button-anchor) {
+  text-decoration: none;
+}
+
 @include b(button) {
   display: inline-block;
   line-height: 1;
@@ -49,7 +53,7 @@
       margin-left: 5px;
     }
   }
-
+  
   @include when(plain) {
     &:hover,
     &:focus {
