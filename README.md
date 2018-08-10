@@ -19,6 +19,8 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
   - 支持标签
 - [Update]Dialog [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dialog)
   - 支持拖动
+- [Update]Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/form)
+  - 新增wrapper-width属性支持表单组件自适应样式
 
 ## Install
 ```shell

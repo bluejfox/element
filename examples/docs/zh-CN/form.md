@@ -867,6 +867,48 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 ```
 :::
 
+### 自适应布局样式
+
+:::demo 可通过设置 `labelWidth` 和 `wrapperWidth`实现自适应布局样式
+```html
+<el-form :model="numberValidateForm" ref="numberValidateForm" class="demo-ruleForm" @submit="onAutoValidSubmit" :rules="autoValidRules">
+  <el-form-item label="年龄" :label-width="{span: 8, xs: 24}" :wrapper-width="{span: 16, xs: 24}" prop="age">
+    <el-input v-model="numberValidateForm.age" auto-complete="off"></el-input>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" native-type="submit">提交</el-button>
+    <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+  </el-form-item>
+</el-form>
+
+<script>
+  export default {
+    data() {
+      return {
+        numberValidateForm: {
+          age: ''
+        },
+        autoValidRules: {
+          age: [
+            { required: true, message: '年龄不能为空'},
+            { pattern: /^[0-9]*$/, message: '年龄必须为数字值'}
+          ]
+        },
+      };
+    },
+    methods: {
+      onAutoValidSubmit() {
+        console.log('onAutoValidSubmit');
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
+  };
+</script>
+```
+:::
+
 ### Form Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
@@ -875,7 +917,8 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 | rules    | 表单验证规则 | object | — | — |
 | inline    | 行内表单模式 | boolean | — | false |
 | label-position | 表单域标签的位置 | string |  right/left/top            | right |
-| label-width | 表单域标签的宽度，作为 Form 直接子元素的 form-item 会继承该值 | string | — | — |
+| label-width | 表单域标签的宽度，作为 Form 直接子元素的 form-item 会继承该值，若设置为 object, 同 `<el-col>` 组件，可设置 `span` 和 `offset` 等值 | string / object | — | — |
+| wrapper-width | 需要为输入控件设置布局样式时，使用该属性，用法同 `label-width` | object | — | — |
 | label-suffix | 表单域标签的后缀 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | inline-message  | 是否以行内形式展示校验信息 | boolean | — | false |

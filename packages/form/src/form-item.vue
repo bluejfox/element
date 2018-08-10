@@ -4,29 +4,13 @@
       'is-error': validateState === 'error',
       'is-validating': validateState === 'validating',
       'is-success': validateState === 'success',
-      'is-required': isRequired || required
+      'is-required': isRequired || required,
+      'el-row': responsiveMode
     },
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
-    <label :for="labelFor" class="el-form-item__label" v-bind:style="labelStyle" v-if="label || $slots.label">
-      <slot name="label">{{label + form.labelSuffix}}</slot>
-    </label>
-    <div class="el-form-item__content" v-bind:style="contentStyle">
-      <slot></slot>
-      <transition name="el-zoom-in-top">
-        <div
-          v-if="validateState === 'error' && showMessage && form.showMessage"
-          class="el-form-item__error"
-          :class="{
-            'el-form-item__error--inline': typeof inlineMessage === 'boolean'
-              ? inlineMessage
-              : (elForm && elForm.inlineMessage || false)
-          }"
-        >
-          {{validateMessage}}
-        </div>
-      </transition>
-    </div>
+    <form-label/>
+    <form-wrapper/>
   </div>
 </template>
 <script>
@@ -50,9 +34,92 @@
 
     inject: ['elForm'],
 
+    components: {
+      formLabel: {
+        render(h) {
+          const {
+            form,
+            label,
+            labelFor,
+            labelStyle,
+            labelWidth,
+            responsiveMode,
+            $slots
+          } = this.$parent;
+          const labelSlot = $slots.label;
+          const prop = {
+            for: labelFor,
+            style: labelStyle
+          };
+          const labelComponent = (label || labelSlot) ? (
+            <label
+              class="el-form-item__label"
+              {...prop}>
+              { labelSlot ? (
+                labelSlot
+              ) : label + form.labelSuffix}
+            </label>
+          ) : null;
+          return responsiveMode ? (
+            <el-col
+              {...{ props: labelWidth }}>
+              { labelComponent }
+            </el-col>
+          ) : labelComponent;
+        }
+      },
+      formWrapper: {
+        render(h) {
+          const {
+            contentStyle,
+            elForm,
+            form,
+            inlineMessage,
+            responsiveMode,
+            showMessage,
+            validateMessage,
+            validateState,
+            wrapperWidth,
+            $slots
+          } = this.$parent;
+          const defaultSlot = $slots.default;
+          const isShowMessage = validateState === 'error' && showMessage && form.showMessage;
+          const validateClass = {
+            'el-form-item__error': true,
+            'el-form-item__error--inline': typeof inlineMessage === 'boolean'
+              ? inlineMessage : (elForm && elForm.inlineMessage || false)
+          };
+          const wrapperComponent = (
+            <div
+              class="el-form-item__content"
+              style={contentStyle}>
+              { defaultSlot }
+              <transition name="el-zoom-in-top">
+                {
+                  isShowMessage ? (
+                    <div
+                      class={validateClass}>
+                      { validateMessage }
+                    </div>
+                  ) : null
+                }
+              </transition>
+            </div>
+          );
+          return responsiveMode ? (
+            <el-col
+              {...{ props: wrapperWidth }}>
+              { wrapperComponent }
+            </el-col>
+          ) : wrapperComponent;
+        }
+      }
+    },
+
     props: {
       label: String,
-      labelWidth: String,
+      labelWidth: [String, Object],
+      wrapperWidth: Object,
       prop: String,
       required: {
         type: Boolean,
@@ -157,6 +224,9 @@
       },
       sizeClass() {
         return this.elFormItemSize || (this.$ELEMENT || {}).size;
+      },
+      responsiveMode() {
+        return this.labelWidth && typeof this.labelWidth === 'object';
       }
     },
     data() {
