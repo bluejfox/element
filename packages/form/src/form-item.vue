@@ -187,19 +187,16 @@
         }
         return parent;
       },
-      fieldValue: {
-        cache: false,
-        get() {
-          const model = this.form.model;
-          if (!model || !this.prop) { return; }
+      fieldValue() {
+        const model = this.form.model;
+        if (!model || !this.prop) { return; }
 
-          let path = this.prop;
-          if (path.indexOf(':') !== -1) {
-            path = path.replace(/:/, '.');
-          }
-
-          return getPropByPath(model, path, true).v;
+        let path = this.prop;
+        if (path.indexOf(':') !== -1) {
+          path = path.replace(/:/, '.');
         }
+
+        return getPropByPath(model, path, true).v;
       },
       isRequired() {
         let rules = this.getRules();
@@ -294,10 +291,6 @@
         } else {
           prop.o[prop.k] = this.initialValue;
         }
-        /* Select 的值被代码改变时不会触发校验，
-           这里需要强行触发一次，刷新 validateDisabled 的值，
-           确保 Select 下一次值改变时能正确触发校验 */
-        this.broadcast('ElSelect', 'fieldReset');
 
         this.broadcast('ElTimeSelect', 'fieldReset', this.initialValue);
       },
