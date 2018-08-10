@@ -19,6 +19,7 @@ const createElm = function() {
  * @param  {Object} vm
  */
 exports.destroyVM = function(vm) {
+  vm.$destroy && vm.$destroy();
   vm.$el &&
   vm.$el.parentNode &&
   vm.$el.parentNode.removeChild(vm.$el);
@@ -92,4 +93,16 @@ exports.triggerClick = function(elm, ...opts) {
   exports.triggerEvent(elm, 'mouseup', ...opts);
 
   return elm;
+};
+
+/**
+ * 触发 keydown 事件
+ * @param {Element} elm
+ * @param {keyCode} int
+ */
+exports.triggerKeyDown = function(el, keyCode) {
+  const evt = document.createEvent('Events');
+  evt.initEvent('keydown', true, true);
+  evt.keyCode = keyCode;
+  el.dispatchEvent(evt);
 };

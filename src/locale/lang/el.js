@@ -1,7 +1,7 @@
 export default {
   el: {
     colorpicker: {
-      confirm: 'OK',
+      confirm: 'Εντάξει',
       clear: 'Καθαρισμός'
     },
     datepicker: {
@@ -9,13 +9,17 @@ export default {
       today: 'Σήμερα',
       cancel: 'Ακύρωση',
       clear: 'Καθαρισμός',
-      confirm: 'OK',
+      confirm: 'Εντάξει',
       selectDate: 'Επιλέξτε ημέρα',
       selectTime: 'Επιλέξτε ώρα',
       startDate: 'Ημερομηνία Έναρξης',
       startTime: 'Ωρα Έναρξης',
       endDate: 'Ημερομηνία Λήξης',
       endTime: 'Ωρα Λήξης',
+      prevYear: 'Προηγούμενο Έτος',
+      nextYear: 'Επόμενο Έτος',
+      prevMonth: 'Προηγούμενος Μήνας',
+      nextMonth: 'Επόμενος Μήνας',
       year: 'Έτος',
       month1: 'Ιανουάριος',
       month2: 'Φεβρουάριος',
@@ -62,6 +66,7 @@ export default {
     },
     cascader: {
       noMatch: 'Δεν βρέθηκαν αποτελέσματα',
+      loading: 'Φόρτωση',
       placeholder: 'Επιλογή'
     },
     pagination: {
@@ -72,11 +77,12 @@ export default {
     },
     messagebox: {
       title: 'Μήνυμα',
-      confirm: 'OK',
+      confirm: 'Εντάξει',
       cancel: 'Ακύρωση',
       error: 'Άκυρη εισαγωγή'
     },
     upload: {
+      deleteTip: 'Πάτησε Διαγραφή για αφαίρεση',
       delete: 'Διαγραφή',
       preview: 'Προεπισκόπηση',
       continue: 'Συνέχεια'
@@ -86,7 +92,7 @@ export default {
       confirmFilter: 'Επιβεβαίωση',
       resetFilter: 'Επαναφορά',
       clearFilter: 'Όλα',
-      sumText: 'Sum' // to be translated
+      sumText: 'Σύνολο'
     },
     tree: {
       emptyText: 'Χωρίς Δεδομένα'
@@ -94,9 +100,9 @@ export default {
     transfer: {
       noMatch: 'Δεν βρέθηκαν αποτελέσματα',
       noData: 'Χωρίς δεδομένα',
-      titles: ['List 1', 'List 2'], // to be translated
-      filterPlaceholder: 'Enter keyword', // to be translated
-      noCheckedFormat: '{total} items', // to be translated
+      titles: ['Λίστα 1', 'Λίστα 2'],
+      filterPlaceholder: 'Αναζήτηση',
+      noCheckedFormat: '{total} Αντικείμενα',
       hasCheckedFormat: '{checked}/{total} checked' // to be translated
     }
   }
