@@ -5,7 +5,7 @@
       'is-validating': validateState === 'validating',
       'is-success': validateState === 'success',
       'is-required': isRequired || required,
-      'el-row': responsiveMode
+      'el-row': responsiveMode && form.labelPosition !== 'top'
     },
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
@@ -54,18 +54,25 @@
           const labelComponent = (label || labelSlot) ? (
             <label
               class="el-form-item__label"
+              style={{ float: responsiveMode && form.labelPosition === 'right' ? 'right' : '' }}
               {...prop}>
               { labelSlot ? (
                 labelSlot
               ) : label + form.labelSuffix}
             </label>
           ) : null;
-          return responsiveMode ? (
+          let responsiveLabelComponent = (
             <el-col
               {...{ props: labelWidth }}>
               { labelComponent }
             </el-col>
-          ) : labelComponent;
+          );
+          responsiveLabelComponent = form.labelPosition === 'top' ? (
+            <el-row>
+              { responsiveLabelComponent }
+            </el-row>
+          ) : responsiveLabelComponent;
+          return responsiveMode ? responsiveLabelComponent : labelComponent;
         }
       },
       formWrapper: {
@@ -106,12 +113,18 @@
               </transition>
             </div>
           );
-          return responsiveMode ? (
+          let reponsiveWrapperComponent = (
             <el-col
               {...{ props: wrapperWidth }}>
               { wrapperComponent }
             </el-col>
-          ) : wrapperComponent;
+          );
+          reponsiveWrapperComponent = form.labelPosition === 'top' ? (
+            <el-row>
+              { reponsiveWrapperComponent }
+            </el-row>
+          ) : reponsiveWrapperComponent;
+          return responsiveMode ? reponsiveWrapperComponent : wrapperComponent;
         }
       }
     },

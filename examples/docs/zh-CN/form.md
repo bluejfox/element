@@ -871,7 +871,19 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 
 :::demo 可通过设置 `labelWidth` 和 `wrapperWidth`实现自适应布局样式
 ```html
-<el-form :model="numberValidateForm" ref="numberValidateForm" class="demo-ruleForm" @submit="onAutoValidSubmit" :rules="autoValidRules">
+<el-radio-group v-model="labelPosition" size="small">
+  <el-radio-button label="left">左对齐</el-radio-button>
+  <el-radio-button label="right">右对齐</el-radio-button>
+  <el-radio-button label="top">顶部对齐</el-radio-button>
+</el-radio-group>
+<div style="margin: 20px;"></div>
+<el-form
+  :model="numberValidateForm"
+  :label-position="labelPosition"
+  ref="numberValidateForm"
+  class="demo-ruleForm"
+  @submit="onAutoValidSubmit"
+  :rules="autoValidRules">
   <el-form-item label="年龄" :label-width="{span: 8, xs: 24}" :wrapper-width="{span: 16, xs: 24}" prop="age">
     <el-input v-model="numberValidateForm.age" auto-complete="off"></el-input>
   </el-form-item>
@@ -885,6 +897,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
   export default {
     data() {
       return {
+        labelPosition: 'right',
         numberValidateForm: {
           age: ''
         },
