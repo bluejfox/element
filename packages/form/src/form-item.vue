@@ -10,7 +10,9 @@
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
     <form-label/>
-    <form-wrapper/>
+    <form-wrapper>
+      <slot></slot>
+    </form-wrapper>
   </div>
 </template>
 <script>
@@ -86,10 +88,9 @@
             showMessage,
             validateMessage,
             validateState,
-            wrapperWidth,
-            $slots
+            wrapperWidth
           } = this.$parent;
-          const defaultSlot = $slots.default;
+          const $slots = this.$slots;
           const isShowMessage = validateState === 'error' && showMessage && form.showMessage;
           const validateClass = {
             'el-form-item__error': true,
@@ -100,7 +101,7 @@
             <div
               class="el-form-item__content"
               style={contentStyle}>
-              { defaultSlot }
+              { $slots.default }
               <transition name="el-zoom-in-top">
                 {
                   isShowMessage ? (
