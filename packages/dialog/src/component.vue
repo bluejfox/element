@@ -21,7 +21,7 @@
           @click="handleClose">
           <i class="el-dialog__close el-icon el-icon-close"></i>
         </button>
-        <div class="el-dialog__header">
+        <div class="el-dialog__header" v-if="$slots.title || title !== ''">
           <slot name="title">
             <span class="el-dialog__title">{{ title }}</span>
           </slot>
