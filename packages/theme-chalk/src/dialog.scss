@@ -37,17 +37,22 @@
 
   @include e(headerbtn) {
     position: absolute;
-    top: $--dialog-padding-primary;
-    right: $--dialog-padding-primary;
+    top: 0;
+    right: 0;
     padding: 0;
     background: transparent;
     border: none;
     outline: none;
     cursor: pointer;
     font-size: $--message-close-size;
+    z-index: 10;
 
     .el-dialog__close {
       color: $--color-info;
+      width: 54px;
+      height: 54px;
+      line-height: 62px;
+      vertical-align: baseline;
     }
 
     &:focus, &:hover {

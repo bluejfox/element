@@ -13,18 +13,18 @@
         :class="[{ 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
         ref="dialog"
         :style="style">
+        <button
+          type="button"
+          class="el-dialog__headerbtn"
+          aria-label="Close"
+          v-if="showClose"
+          @click="handleClose">
+          <i class="el-dialog__close el-icon el-icon-close"></i>
+        </button>
         <div class="el-dialog__header">
           <slot name="title">
             <span class="el-dialog__title">{{ title }}</span>
           </slot>
-          <button
-            type="button"
-            class="el-dialog__headerbtn"
-            aria-label="Close"
-            v-if="showClose"
-            @click="handleClose">
-            <i class="el-dialog__close el-icon el-icon-close"></i>
-          </button>
         </div>
         <div class="el-dialog__body" v-if="rendered"><slot></slot></div>
         <div class="el-dialog__footer" v-if="$slots.footer">
