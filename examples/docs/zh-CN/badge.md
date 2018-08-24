@@ -110,6 +110,41 @@
 ```
 :::
 
+### 状态点
+用于表示状态的小圆点。
+
+:::demo 设置`status` 和 `text` 属性，即可实现一个用于表示状态的小圆点。
+
+```html
+<el-badge status="success">
+</el-badge>
+<el-badge status="error">
+</el-badge>
+<el-badge status="default">
+</el-badge>
+<el-badge status="processing">
+</el-badge>
+<el-badge status="warning">
+</el-badge>
+<el-badge class="not-a-wrapper item" status="success" text="Success">
+</el-badge>
+<el-badge class="not-a-wrapper" status="error" text="Error">
+</el-badge>
+<el-badge class="not-a-wrapper" status="default" text="Default">
+</el-badge>
+<el-badge class="not-a-wrapper" status="processing" text="Processing">
+</el-badge>
+<el-badge class="not-a-wrapper" status="warning" text="Warning">
+</el-badge>
+
+<style>
+.not-a-wrapper {
+  display: table;
+}
+</style>
+```
+:::
+
 <style scoped>
   .share-button {
     width: 36px;
@@ -129,6 +164,10 @@
   .item {
     margin-right: 40px;
   }
+  
+  .not-a-wrapper {
+    display: table;
+  }
 </style>
 
 ### Attributes
@@ -138,3 +177,5 @@
 | max          |  最大值，超过最大值会显示 '{max}+'，要求 value 是 Number 类型    | number  |         —              |     —    |
 | is-dot       | 小圆点    | boolean  |  —  |  false |
 | hidden | 隐藏 badge | boolean | — | false |
+| status | 设置 Badge 为状态点 | Enum{ 'success', 'processing, 'default', 'error', 'warning' } | — | '' |
+| text | 在设置了 status 的前提下有效，设置状态点的文本 | string | — | '' |

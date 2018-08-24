@@ -13,14 +13,16 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 - [New]List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
 - [New]Divider [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/divider)
 - [New]JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
+- [Update]Badge [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/badge)
+  - 添加 `status`, `text` 属性支持状态点功能
 - [Update]Button [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/button)
-  - 新增href, target属性支持a 链接功能
+  - 新增 `href`, `target` 属性支持a 链接功能
 - [Update]Card [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/card)
   - 支持标签
 - [Update]Dialog [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dialog)
   - 支持拖动
 - [Update]Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/form)
-  - 新增wrapper-width属性支持表单组件自适应样式
+  - 新增 `wrapper-width` 属性支持表单组件自适应样式
 
 ## Install
 ```shell
