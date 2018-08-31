@@ -32,7 +32,7 @@ export default {
       type: String,
       validator(value) {
         // 这个值必须匹配下列字符串中的一个
-        return ['success', 'processing', 'default', 'error', 'warning'].indexOf(value) !== -1;
+        return ['success', 'processing', 'default', 'error', 'warning', ''].indexOf(value) !== -1;
       },
       default: ''
     },
