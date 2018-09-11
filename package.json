@@ -1,6 +1,6 @@
 {
   "name": "setaria-ui",
-  "version": "1.4.16",
+  "version": "1.4.17",
   "element-version": "2.4.6",
   "description": "A Component Library for Vue.js.",
   "main": "lib/setaria-ui.common.js",
