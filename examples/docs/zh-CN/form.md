@@ -422,7 +422,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 ```html
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="活动名称" prop="name">
-    <el-input v-model="ruleForm.name"></el-input>
+    <el-input id="name" v-model="ruleForm.name"></el-input>
   </el-form-item>
   <el-form-item label="活动区域" prop="region">
     <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
@@ -444,7 +444,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
     </el-col>
   </el-form-item>
   <el-form-item label="即时配送" prop="delivery">
-    <el-switch v-model="ruleForm.delivery"></el-switch>
+    <el-switch id="delivery" v-model="ruleForm.delivery"></el-switch>
   </el-form-item>
   <el-form-item label="活动性质" prop="type">
     <el-checkbox-group v-model="ruleForm.type">

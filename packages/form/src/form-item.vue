@@ -49,15 +49,14 @@
             $slots
           } = this.$parent;
           const labelSlot = $slots.label;
-          const prop = {
-            for: labelFor,
-            style: labelStyle
-          };
+          if (labelStyle.float === null || labelStyle.float === undefined) {
+            labelStyle.float = responsiveMode && form.labelPosition === 'right' ? 'right' : '';
+          }
           const labelComponent = (label || labelSlot) ? (
             <label
               class="el-form-item__label"
-              style={{ float: responsiveMode && form.labelPosition === 'right' ? 'right' : '' }}
-              {...prop}>
+              style={ labelStyle }
+              for={ labelFor }>
               { labelSlot ? (
                 labelSlot
               ) : label + form.labelSuffix}
