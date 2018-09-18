@@ -29,7 +29,8 @@
                   class="el-date-range-picker__editor"
                   :value="minVisibleDate"
                   @input.native="handleDateInput($event, 'min')"
-                  @change.native="handleDateChange($event, 'min')" />
+                  @change.native="handleDateChange($event, 'min')"
+                  @focus="handleMinDateInputFocus" />
               </span>
               <span class="el-date-range-picker__time-picker-wrap" v-clickoutside="handleMinTimeClose">
                 <el-input
@@ -38,7 +39,7 @@
                   :placeholder="t('el.datepicker.startTime')"
                   class="el-date-range-picker__editor"
                   :value="minVisibleTime"
-                  @focus="minTimePickerVisible = true"
+                  @focus="handleMinTimeInputFocus"
                   @change.native="handleTimeChange($event, 'min')" />
                 <time-picker
                   ref="minTimePicker"
@@ -60,7 +61,8 @@
                   :value="maxVisibleDate"
                   :readonly="!minDate"
                   @input.native="handleDateInput($event, 'max')"
-                  @change.native="handleDateChange($event, 'max')" />
+                  @change.native="handleDateChange($event, 'max')"
+                  @focus="handleMaxDateInputFocus" />
               </span>
               <span class="el-date-range-picker__time-picker-wrap" v-clickoutside="handleMaxTimeClose">
                 <el-input
@@ -70,7 +72,7 @@
                   :placeholder="t('el.datepicker.endTime')"
                   class="el-date-range-picker__editor"
                   :value="maxVisibleTime"
-                  @focus="minDate && (maxTimePickerVisible = true)"
+                  @focus="handleMaxTimeInputFocus"
                   :readonly="!minDate"
                   @change.native="handleTimeChange($event, 'max')" />
                 <time-picker
@@ -475,6 +477,37 @@
         }
       },
 
+      handleMinDateInputFocus(event) {
+        const target = event.target;
+        if (target) {
+          target.select();
+        }
+      },
+
+      handleMinTimeInputFocus(event) {
+        const target = event.target;
+        if (target) {
+          target.select();
+        }
+        this.minTimePickerVisible = true;
+      },
+
+      handleMaxDateInputFocus(event) {
+        const target = event.target;
+        if (target) {
+          target.select();
+        }
+      },
+
+      handleMaxTimeInputFocus(event) {
+        const target = event.target;
+        if (target) {
+          target.select();
+        }
+        if (this.minDate) {
+          this.maxTimePickerVisible = true;
+        }
+      },
       handleTimeChange(event, type) {
         const value = event.target.value;
         const parsedValue = parseDate(value, this.timeFormat);

@@ -24,13 +24,14 @@
                 :placeholder="t('el.datepicker.selectDate')"
                 :value="visibleDate"
                 size="small"
+                @focus="handleDateInputFocus"
                 @input="val => userInputDate = val"
                 @change="handleVisibleDateChange" />
             </span>
             <span class="el-date-picker__editor-wrap" v-clickoutside="handleTimePickClose">
               <el-input
                 ref="input"
-                @focus="timePickerVisible = true"
+                @focus="handleTimeInputFocus"
                 :placeholder="t('el.datepicker.selectTime')"
                 :value="visibleTime"
                 size="small"
@@ -450,6 +451,14 @@
         }
       },
 
+      handleTimeInputFocus(event) {
+        const target = event.target;
+        if (target) {
+          target.select();
+        }
+        this.timePickerVisible = true;
+      },
+
       handleVisibleTimeChange(value) {
         const time = parseDate(value, this.timeFormat);
         if (time) {
@@ -458,6 +467,13 @@
           this.$refs.timepicker.value = this.date;
           this.timePickerVisible = false;
           this.emit(this.date, true);
+        }
+      },
+
+      handleDateInputFocus(event) {
+        const target = event.target;
+        if (target) {
+          target.select();
         }
       },
 
