@@ -21,6 +21,8 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
   - 支持标签
 - [Update]Dialog [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dialog)
   - 支持拖动
+- [Update]DateTimePicker [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/datetime-picker)
+  - 新增日期和时间输入框获得焦点时自动选中日期和时间
 - [Update]Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/form)
   - 新增 `wrapper-width` 属性支持表单组件自适应样式
 
