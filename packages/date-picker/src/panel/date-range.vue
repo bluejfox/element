@@ -30,16 +30,17 @@
                   :value="minVisibleDate"
                   @input.native="handleDateInput($event, 'min')"
                   @change.native="handleDateChange($event, 'min')"
-                  @focus="handleMinDateInputFocus" />
+                  @focus="$event.target.select()" />
               </span>
               <span class="el-date-range-picker__time-picker-wrap" v-clickoutside="handleMinTimeClose">
                 <el-input
                   size="small"
+                  ref="minTimeInput"
                   :disabled="rangeState.selecting"
                   :placeholder="t('el.datepicker.startTime')"
                   class="el-date-range-picker__editor"
                   :value="minVisibleTime"
-                  @focus="handleMinTimeInputFocus"
+                  @focus="minTimePickerVisible = true"
                   @change.native="handleTimeChange($event, 'min')" />
                 <time-picker
                   ref="minTimePicker"
@@ -62,7 +63,7 @@
                   :readonly="!minDate"
                   @input.native="handleDateInput($event, 'max')"
                   @change.native="handleDateChange($event, 'max')"
-                  @focus="handleMaxDateInputFocus" />
+                  @focus="$event.target.select()" />
               </span>
               <span class="el-date-range-picker__time-picker-wrap" v-clickoutside="handleMaxTimeClose">
                 <el-input
@@ -72,7 +73,7 @@
                   :placeholder="t('el.datepicker.endTime')"
                   class="el-date-range-picker__editor"
                   :value="maxVisibleTime"
-                  @focus="handleMaxTimeInputFocus"
+                  @focus="minDate && (maxTimePickerVisible = true)"
                   :readonly="!minDate"
                   @change.native="handleTimeChange($event, 'max')" />
                 <time-picker
@@ -368,6 +369,15 @@
             this.$refs.minTimePicker.date = this.minDate;
             this.$refs.minTimePicker.value = this.minDate;
             this.$refs.minTimePicker.adjustSpinners();
+            // 解决时间为空，组件自动设置当前时间后，值无法被选中的问题
+            // 实现方式并不好，需要完善
+            if (this.minVisibleTime === '') {
+              setTimeout(() => {
+                this.selectMinTimeInput();
+              }, 100);
+            } else {
+              this.selectMinTimeInput();
+            }
           });
         }
       },
@@ -378,6 +388,7 @@
             this.$refs.maxTimePicker.date = this.maxDate;
             this.$refs.maxTimePicker.value = this.maxDate;
             this.$refs.maxTimePicker.adjustSpinners();
+            this.selectMaxTimeInput();
           });
         }
       },
@@ -477,37 +488,6 @@
         }
       },
 
-      handleMinDateInputFocus(event) {
-        const target = event.target;
-        if (target) {
-          target.select();
-        }
-      },
-
-      handleMinTimeInputFocus(event) {
-        const target = event.target;
-        if (target) {
-          target.select();
-        }
-        this.minTimePickerVisible = true;
-      },
-
-      handleMaxDateInputFocus(event) {
-        const target = event.target;
-        if (target) {
-          target.select();
-        }
-      },
-
-      handleMaxTimeInputFocus(event) {
-        const target = event.target;
-        if (target) {
-          target.select();
-        }
-        if (this.minDate) {
-          this.maxTimePickerVisible = true;
-        }
-      },
       handleTimeChange(event, type) {
         const value = event.target.value;
         const parsedValue = parseDate(value, this.timeFormat);
@@ -657,6 +637,14 @@
             ? !this.disabledDate(value[0]) && !this.disabledDate(value[1])
             : true
         );
+      },
+
+      selectMinTimeInput() {
+        this.$refs.minTimeInput.$el.querySelector('.el-input__inner').select();
+      },
+
+      selectMaxTimeInput() {
+        this.$refs.maxInput.$el.querySelector('.el-input__inner').select();
       }
     },
 

@@ -24,14 +24,14 @@
                 :placeholder="t('el.datepicker.selectDate')"
                 :value="visibleDate"
                 size="small"
-                @focus="handleDateInputFocus"
+                @focus="$event.target.select()"
                 @input="val => userInputDate = val"
                 @change="handleVisibleDateChange" />
             </span>
             <span class="el-date-picker__editor-wrap" v-clickoutside="handleTimePickClose">
               <el-input
                 ref="input"
-                @focus="handleTimeInputFocus"
+                @focus="timePickerVisible = true"
                 :placeholder="t('el.datepicker.selectTime')"
                 :value="visibleTime"
                 size="small"
@@ -205,7 +205,20 @@
       },
 
       timePickerVisible(val) {
-        if (val) this.$nextTick(() => this.$refs.timepicker.adjustSpinners());
+        if (val) {
+          this.$nextTick(() => {
+            this.$refs.timepicker.adjustSpinners();
+            // 解决时间为空，组件自动设置当前时间后，值无法被选中的问题
+            // 实现方式并不好，需要完善
+            if (this.visibleTime === '') {
+              setTimeout(() => {
+                this.selectTimeInput();
+              }, 100);
+            } else {
+              this.selectTimeInput();
+            }
+          });
+        }
       },
 
       selectionMode(newVal) {
@@ -451,14 +464,6 @@
         }
       },
 
-      handleTimeInputFocus(event) {
-        const target = event.target;
-        if (target) {
-          target.select();
-        }
-        this.timePickerVisible = true;
-      },
-
       handleVisibleTimeChange(value) {
         const time = parseDate(value, this.timeFormat);
         if (time) {
@@ -467,13 +472,6 @@
           this.$refs.timepicker.value = this.date;
           this.timePickerVisible = false;
           this.emit(this.date, true);
-        }
-      },
-
-      handleDateInputFocus(event) {
-        const target = event.target;
-        if (target) {
-          target.select();
         }
       },
 
@@ -502,6 +500,10 @@
         // if default-value is set, return it
         // otherwise, return now (the moment this method gets called)
         return this.defaultValue ? new Date(this.defaultValue) : new Date();
+      },
+
+      selectTimeInput() {
+        this.$refs.input.$el.querySelector('.el-input__inner').select();
       }
     },
 
