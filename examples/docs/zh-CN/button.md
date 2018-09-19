@@ -145,6 +145,14 @@
   <el-button type="primary" icon="el-icon-delete"></el-button>
   <el-button type="primary" href="https://www.163.com" target="_blank"
     icon="el-icon-download"></el-button>
+  <el-dropdown>
+    <el-button type="primary">...</el-button>
+    <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item command="a">选项一</el-dropdown-item>
+      <el-dropdown-item command="b">选项二</el-dropdown-item>
+      <el-dropdown-item command="c">选项三</el-dropdown-item>
+    </el-dropdown-menu>
+  </el-dropdown>
 </el-button-group>
 ```
 :::
