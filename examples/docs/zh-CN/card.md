@@ -283,6 +283,39 @@ export default {
 ```
 :::
 
+### 内部卡片
+
+可以放在普通卡片内部，展示多层级结构的信息。
+
+:::demo
+```html
+<el-card header="Card title">
+  <p class="title" style="margin-top: 0">
+    Group Title
+  </p>
+  <el-card type="inner">
+    <div slot="header" class="clearfix" style="display: flex;">
+      <div style="flex: 1; display: flex; align-items: center;">Inner Card title</div>
+      <div>
+        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+      </div>
+    </div>
+    Inner Card content
+  </el-card>
+  <el-card type="inner" style="margin-top: 24px">
+    <div slot="header" class="clearfix" style="display: flex;">
+      <div style="flex: 1; display: flex; align-items: center;">Inner Card title</div>
+      <div>
+        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+      </div>
+    </div>
+    Inner Card content
+  </el-card>
+</el-card>
+
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -291,6 +324,7 @@ export default {
 | shadow | 设置阴影显示时机 | string | always / hover / never | always |
 | tab-list | 标签标题列表 | array<{label, name}> | — | — |
 | active-tab-name | 当前激活标签的 name | string | — | — |
+| type | 卡片类型，可设置为 inner 或 不设置 | string | — | — |
 
 ### Events
 | 事件名称      | 说明    | 回调参数      |

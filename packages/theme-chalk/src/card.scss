@@ -45,4 +45,19 @@
   @include e(body) {
     padding: $--card-padding;
   }
+  
+  &.el-card--inner {
+    font-size: 14px;
+    
+    @include e(header) {
+      background-color: $--background-color-light;
+      padding-top: $--card-inner-head-top-padding;
+      padding-bottom: $--card-inner-head-bottom-padding;
+    }
+    
+    @include e(body) {
+      padding-top: $--card-inner-body-top-padding;
+      padding-bottom: $--card-inner-body-bottom-padding;
+    }
+  }
 }

@@ -53,6 +53,8 @@ $--link-hover-color: $--color-primary !default;
 /* Background
 -------------------------- */
 $--background-color-base: #f5f7fa !default;
+/* background of header and selected item */
+$--background-color-light: #fafafa !default;
 
 /* Border
 -------------------------- */
@@ -573,6 +575,10 @@ $--badge-size: 18px !default;
 $--card-border-color: $--border-color-lighter !default;
 $--card-border-radius: 4px !default;
 $--card-padding: 20px !default;
+$--card-inner-head-top-padding: 12px !default;
+$--card-inner-head-bottom-padding: 12px !default;
+$--card-inner-body-top-padding: 16px !default;
+$--card-inner-body-bottom-padding: 16px !default;
 
 /* Slider
 --------------------------*/

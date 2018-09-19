@@ -1,5 +1,8 @@
 <template>
-  <div class="el-card" :class="shadow ? 'is-' + shadow + '-shadow' : 'is-always-shadow'">
+  <div class="el-card" :class="[
+    shadow ? 'is-' + shadow + '-shadow' : 'is-always-shadow',
+    type ? `el-card--${type}` : ''
+  ]">
     <div :class="['el-card__header', tabList ? 'is-tab' : '']" v-if="$slots.header || header || tabList">
       <slot name="header">{{ header }}</slot>
       <div class="el-tabs__header is-top" v-if="tabList">
@@ -25,7 +28,8 @@
         type: String
       },
       activeTabName: null,
-      tabList: null
+      tabList: null,
+      type: String
     },
     methods: {
       handleTabClick(tab, ev) {

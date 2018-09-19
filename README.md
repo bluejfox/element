@@ -19,6 +19,7 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
   - 新增 `href`, `target` 属性支持a 链接功能
 - [Update]Card [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/card)
   - 支持标签
+  - 新增 `type` 属性，优化卡片嵌套时的表现形式
 - [Update]Dialog [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dialog)
   - 支持拖动
 - [Update]DateTimePicker [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/datetime-picker)
