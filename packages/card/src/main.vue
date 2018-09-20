@@ -10,9 +10,15 @@
           :active-tab-name="activeTabName"></tab-nav>
       </div>
     </div>
-    <div class="el-card__body" :style="bodyStyle">
+    <div class="el-card__cover" v-if="$slots.cover">
+      <slot name="cover"></slot>
+    </div>
+    <div class="el-card__body" :style="bodyStyle" v-if="$slots.default">
       <slot></slot>
     </div>
+    <ul class="el-card__actions" v-if="$slots.actions">
+      <slot name="actions"></slot>
+    </ul>
   </div>
 </template>
 
@@ -21,6 +27,12 @@
   
   export default {
     name: 'ElCard',
+    componentName: 'ElCard',
+    provide() {
+      return {
+        elCard: this
+      };
+    },
     props: {
       header: {},
       bodyStyle: {},
@@ -30,6 +42,19 @@
       activeTabName: null,
       tabList: null,
       type: String
+    },
+    data() {
+      return {
+        actionItemList: []
+      };
+    },
+    created() {
+      this.$on('el.card.addActionItem', (actionItem) => {
+        if (actionItem) {
+          this.actionItemList.push(actionItem);
+          console.log(actionItem);
+        }
+      });
     },
     methods: {
       handleTabClick(tab, ev) {

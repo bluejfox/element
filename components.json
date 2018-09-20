@@ -76,5 +76,7 @@
   "list-item": "./packages/list-item/index.js",
   "list-item-meta": "./packages/list-item-meta/index.js",
   "json-viewer": "./packages/json-viewer/index.js",
-  "divider": "./packages/divider/index.js"
+  "divider": "./packages/divider/index.js",
+  "card-action-item": "./packages/card-action-item/index.js",
+  "card-meta": "./packages/card-meta/index.js"
 }

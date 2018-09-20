@@ -1,4 +1,5 @@
 @import "mixins/mixins";
+@import "mixins/utils";
 @import "common/var";
 
 @include b(card) {
@@ -41,9 +42,57 @@
       }
     }
   }
+  
+  @include e(cover) {
+    & > * {
+      width: 100%;
+      display: block;
+    }
+    
+    img {
+      border-radius: $--card-border-radius $--card-border-radius 0 0;
+    }
+  }
 
   @include e(body) {
     padding: $--card-padding;
+    
+    .el-card-meta {
+      margin: -4px 0;
+      @include utils-clearfix;
+  
+      .el-card-meta__avatar {
+        padding-right: 16px;
+        float: left;
+        
+        & > img {
+          width: 32px;
+          height: 32px;
+          display: block;
+        }
+      }
+  
+      .el-card-meta__detail {
+        overflow: hidden;
+        > div:not(:last-child) {
+          margin-bottom: 8px;
+        }
+        
+        .el-card-meta__detail-title {
+          font-size: 16px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          color: $--color-text-primary;
+          font-weight: 500;
+        }
+    
+        .el-card-meta__detail-description {
+          font-size: $--font-size-base;
+          color: $--color-text-secondary;
+        }
+      }
+    }
   }
   
   &.el-card--inner {
@@ -58,6 +107,57 @@
     @include e(body) {
       padding-top: $--card-inner-body-top-padding;
       padding-bottom: $--card-inner-body-bottom-padding;
+    }
+  }
+  
+  @include e(actions) {
+    border-top: 1px solid $--card-border-color;
+    background-color: $--color-white;
+    @include utils-clearfix;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    & > li {
+      float: left;
+      text-align: center;
+      margin: 12px 0;
+      color: $--color-text-secondary;
+      box-sizing: border-box;
+
+      & > span {
+        display: inline-block;
+        font-size: 14px;
+        cursor: pointer;
+        line-height: 22px;
+        min-width: 32px;
+        position: relative;
+
+        &:hover {
+          color: $--color-primary;
+          transition: color .3s;
+        }
+
+        & > i {
+          font-size: 16px;
+          line-height: 22px;
+        }
+
+        a {
+          color: $--color-text-secondary;
+          line-height: 22px;
+          display: inline-block;
+          width: 100%;
+
+          &:hover {
+            color: $--color-primary;
+          }
+        }
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid $--card-border-color;
+      }
     }
   }
 }

@@ -78,6 +78,8 @@ import ListItem from '../packages/list-item/index.js';
 import ListItemMeta from '../packages/list-item-meta/index.js';
 import JsonViewer from '../packages/json-viewer/index.js';
 import Divider from '../packages/divider/index.js';
+import CardActionItem from '../packages/card-action-item/index.js';
+import CardMeta from '../packages/card-meta/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -156,6 +158,8 @@ const components = [
   ListItemMeta,
   JsonViewer,
   Divider,
+  CardActionItem,
+  CardMeta,
   CollapseTransition
 ];
 
@@ -272,7 +276,9 @@ module.exports = {
   ListItem,
   ListItemMeta,
   JsonViewer,
-  Divider
+  Divider,
+  CardActionItem,
+  CardMeta
 };
 
 module.exports.default = module.exports;

@@ -316,6 +316,38 @@ export default {
 ```
 :::
 
+### 支持更多内容配置
+
+一种支持封面、头像、标题和描述信息的卡片。
+
+:::demo
+```html
+<el-card style="width: 300px">
+  <img
+    slot="cover"
+    alt="example"
+    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png">
+  <el-card-meta title="Card Title" description="This is the description">
+    <img
+      slot="avatar"
+      src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
+  </el-card-meta>
+  <template slot="actions">
+    <el-card-action-item>
+      <i class="el-icon-setting"></i>
+    </el-card-action-item>
+    <el-card-action-item>
+      <i class="el-icon-edit"></i>
+    </el-card-action-item>
+    <el-card-action-item>
+      <i class="el-icon-more"></i>
+    </el-card-action-item>
+  </template>
+</el-card>
+
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -330,3 +362,32 @@ export default {
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
 | tab-click  | 标签被点击后触发的事件 | tab:被点击标签的值, event:点击事件 |
+
+### Slot
+
+| name | 说明 |
+|------|--------|
+| — | Card 的内容 |
+| cover | Card 封面 |
+| actions | Card 操作组，位置在Card 底部 |
+
+### Card-Meta Attributes
+
+| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
+|---------- |-------------- |---------- |--------------------------------  |-------- |
+| title | 标题内容，也可以通过 `slot#title` 传入 DOM | string | — | — |
+| description | 描述内容，也可以通过 `slot#description` 传入 DOM | string | — | — |
+
+### Card-Meta Slot
+
+| name | 说明 |
+|------|--------|
+| avatar | 头像/图标 |
+| title | 标题内容 |
+| description | 描述内容 |
+
+### Card-Action-Item Slot
+
+| name | 说明 |
+|------|--------|
+| - | 操作组项 的内容 |
