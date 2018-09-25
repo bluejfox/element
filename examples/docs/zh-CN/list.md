@@ -403,7 +403,7 @@
 
 ```html
 <template>
-  <el-list :grid="{ gutter: 16, xl: 8, lg: 6, md: 4, sm: 2, xs: 1 }">
+  <el-list :grid="{ gutter: 16, lg: 6, md: 4, sm: 2, xs: 1 }">
     <el-list-item v-for="item in basicGridList" :key="item.title">
       <el-card :header="item.title" class="box-card">
         Card content

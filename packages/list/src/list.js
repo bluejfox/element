@@ -116,12 +116,12 @@ export default {
               {
                 this._l(listItemChildren, node => (
                   <el-col
-                    span={ typeof this.grid.column === 'number' ? 24 / this.grid.column : -1 }
-                    xl={ typeof this.grid.xl === 'number' ? 24 / this.grid.xl : -1 }
-                    lg={ typeof this.grid.xl === 'number' ? 24 / this.grid.lg : -1 }
-                    md={ typeof this.grid.xl === 'number' ? 24 / this.grid.md : -1 }
-                    sm={ typeof this.grid.xl === 'number' ? 24 / this.grid.sm : -1 }
-                    xs={ typeof this.grid.xl === 'number' ? 24 / this.grid.xs : -1 }>
+                    span={ typeof this.grid.column === 'number' ? 24 / this.grid.column : undefined }
+                    xl={ typeof this.grid.xl === 'number' ? 24 / this.grid.xl : {} }
+                    lg={ typeof this.grid.lg === 'number' ? 24 / this.grid.lg : {} }
+                    md={ typeof this.grid.md === 'number' ? 24 / this.grid.md : {} }
+                    sm={ typeof this.grid.sm === 'number' ? 24 / this.grid.sm : {} }
+                    xs={ typeof this.grid.xs === 'number' ? 24 / this.grid.xs : {} }>
                     { node }
                   </el-col>
                 ))
