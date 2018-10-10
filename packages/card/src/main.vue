@@ -52,7 +52,6 @@
       this.$on('el.card.addActionItem', (actionItem) => {
         if (actionItem) {
           this.actionItemList.push(actionItem);
-          console.log(actionItem);
         }
       });
     },
