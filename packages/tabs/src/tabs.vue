@@ -46,14 +46,27 @@
       },
       currentName(value) {
         if (this.$refs.nav) {
-          this.$nextTick(_ => {
-            this.$refs.nav.scrollToActiveTab();
+          this.$nextTick(() => {
+            this.$refs.nav.$nextTick(_ => {
+              this.$refs.nav.scrollToActiveTab();
+            });
           });
         }
       }
     },
 
     methods: {
+      calcPaneInstances() {
+        if (this.$slots.default) {
+          const paneSlots = this.$slots.default.filter(vnode => vnode.tag &&
+            vnode.componentOptions && vnode.componentOptions.Ctor.options.name === 'ElTabPane');
+          // update indeed
+          const panes = paneSlots.map(({ componentInstance }) => componentInstance);
+          if (!(panes.length === this.panes.length && panes.every((pane, index) => pane === this.panes[index]))) {
+            this.panes = panes;
+          }
+        }
+      },
       handleTabClick(tab, tabName, event) {
         if (tab.disabled) return;
         let isSwitchTab = false;
@@ -96,19 +109,9 @@
         } else {
           changeCurrentName();
         }
-      },
-      addPanes(item) {
-        const index = this.$slots.default.indexOf(item.$vnode);
-        this.panes.splice(index, 0, item);
-      },
-      removePanes(item) {
-        const panes = this.panes;
-        const index = panes.indexOf(item);
-        if (index > -1) {
-          panes.splice(index, 1);
-        }
       }
     },
+
     render(h) {
       let {
         type,
@@ -171,10 +174,19 @@
         </div>
       );
     },
+  
     created() {
       if (!this.currentName) {
         this.setCurrentName('0');
       }
+    },
+
+    mounted() {
+      this.calcPaneInstances();
+    },
+
+    updated() {
+      this.calcPaneInstances();
     }
   };
 </script>

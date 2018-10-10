@@ -5,7 +5,8 @@
       'is-validating': validateState === 'validating',
       'is-success': validateState === 'success',
       'is-required': isRequired || required,
-      'el-row': responsiveMode && form.labelPosition !== 'top'
+      'el-row': responsiveMode && form.labelPosition !== 'top',
+      'is-no-asterisk': elForm && elForm.hideRequiredAsterisk
     },
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
@@ -96,6 +97,14 @@
             'el-form-item__error--inline': typeof inlineMessage === 'boolean'
               ? inlineMessage : (elForm && elForm.inlineMessage || false)
           };
+          const errorScopeSlot = $slots.error
+            ? this.$scopedSlots.error({ error: validateMessage })
+            : (
+              <div
+                class={validateClass}>
+                { validateMessage }
+              </div>
+            );
           const wrapperComponent = (
             <div
               class="el-form-item__content"
@@ -103,12 +112,7 @@
               { $slots.default }
               <transition name="el-zoom-in-top">
                 {
-                  isShowMessage ? (
-                    <div
-                      class={validateClass}>
-                      { validateMessage }
-                    </div>
-                  ) : null
+                  isShowMessage ? errorScopeSlot : null
                 }
               </transition>
             </div>
@@ -277,7 +281,7 @@
           this.validateMessage = errors ? errors[0].message : '';
 
           callback(this.validateMessage, invalidFields);
-          this.elForm && this.elForm.$emit('validate', this.prop, !errors);
+          this.elForm && this.elForm.$emit('validate', this.prop, !errors, this.validateMessage || null);
         });
       },
       clearValidate() {

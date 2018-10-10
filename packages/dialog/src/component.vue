@@ -1,6 +1,7 @@
 <template>
   <transition
     name="dialog-fade"
+    @after-enter="afterEnter"
     @after-leave="afterLeave">
     <div
       class="el-dialog__wrapper"
@@ -211,6 +212,9 @@
       updatePopper() {
         this.broadcast('ElSelectDropdown', 'updatePopper');
         this.broadcast('ElDropdownMenu', 'updatePopper');
+      },
+      afterEnter() {
+        this.$emit('opened');
       },
       afterLeave() {
         this.$emit('closed');

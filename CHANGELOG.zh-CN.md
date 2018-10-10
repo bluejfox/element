@@ -1,5 +1,58 @@
 ## 更新日志
 
+### 1.4.26
+*2018-10-10*
+
+同步至Element-UI 2.4.8版本
+
+### 新特性
+
+- Dialog
+  - 新增 `opened` 事件，#12828
+- Form
+  - 新增 `slot-scope` 展示表单校验信息，#12715 （by @YamenSharaf）
+  - Form 的 validate 事件参数中新增校验的信息，#12860 （by @YamenSharaf）
+- Input
+  - 新增 `autocomplete` 属性，废弃 `auto-complete` 属性，#12514 （by @axetroy）
+
+### 修复
+
+- Cascader
+  - 修复 Input 未高亮的问题，#12341
+  - 修复选择值不正确的问题，#12508 （by @huangjinqiang）
+- ColorPicker
+  - 修复取色光标位置不正确的问题，#12376 （by @cnwhy）
+- DatePicker
+  - 修复未触发表单检验的问题，#12328，#12348
+  - 修复多选时报错的问题，#12347
+  - 修复选择时间时 spinner 位置不正确的问题，#12415 （by @rang-ali）
+  - 修复输入框自动填充的问题，#12521 （by @abdallanayer）
+  - 修复没有校验用户输入时间的合法性问题，#12898
+- Dropdown
+  - 修复 Dropdown 在 ButtonGroup 中样式问题，#12819 （by @bluejfox）
+- Form
+  - 修复Form在嵌套时 label 显示不正确的问题，#12748
+- Menu
+  - 调整 Submenu 的样式，#12457
+  - 修复 Submenu 选中后没有高亮的问题，#12479
+- Pagination
+  - 修复输入框值不正确的问题，#12525
+  - 调整触发事件的顺序，#12530
+- Select
+  - 修复在单选时 Input 高度变化的问题，#12719
+- Switch
+  - 修复Switch 聚焦时不显示轮廓，#12771
+- Table
+  - 修复 `filter` 不显示的问题，#12539
+  - 修复表头的 `render-header` 属性不生效的问题，#12914
+- Tab
+  - 修复 Tabpane 顺序不正确的问题，#12346
+  - 修复 TabNav 显示顺序不正确的问题，#12846
+  - 修复 Tabs 没有滑动到选中 tab 的问题，#12948
+- Tree
+  - 修复无法删除节点的问题，#12684
+  - 修复 Tree 节点在拖拽时标识符不显示的问题，#12854
+
 ### 1.4.25
 *2018-09-25*
 
