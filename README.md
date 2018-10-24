@@ -13,6 +13,7 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 - [New]List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
 - [New]Divider [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/divider)
 - [New]JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
+- [New]Avatar [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/avatar)
 - [Update]Badge [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/badge)
   - 添加 `status`, `text` 属性支持状态点功能
 - [Update]Button [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/button)

@@ -80,6 +80,7 @@ import JsonViewer from '../packages/json-viewer/index.js';
 import Divider from '../packages/divider/index.js';
 import CardActionItem from '../packages/card-action-item/index.js';
 import CardMeta from '../packages/card-meta/index.js';
+import Avatar from '../packages/avatar/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -160,6 +161,7 @@ const components = [
   Divider,
   CardActionItem,
   CardMeta,
+  Avatar,
   CollapseTransition
 ];
 
@@ -278,7 +280,8 @@ module.exports = {
   JsonViewer,
   Divider,
   CardActionItem,
-  CardMeta
+  CardMeta,
+  Avatar
 };
 
 module.exports.default = module.exports;

@@ -1,0 +1,59 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@mixin avatar-size($size, $font-size) {
+  width: $size;
+  height: $size;
+  line-height: $size;
+  border-radius: 50%;
+
+  & > * {
+    line-height: $size;
+  }
+
+  @include m(icon) {
+    font-size: $font-size;
+  }
+}
+
+@include b(avatar) {
+  font-size: $--size-base;
+  font-variant: tabular-nums;
+  color: $--color-text-regular;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline-block;
+  text-align: center;
+  background: $--avatar-background-color;
+  color: $--avatar-color;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+  
+  @include avatar-size($--avatar-size-base, $--avatar-font-size-base);
+  
+  @include m(medium) {
+    @include avatar-size($--avatar-size-md, $--avatar-font-size-md);
+  }
+  
+  @include m(small) {
+    @include avatar-size($--avatar-size-sm, $--avatar-font-size-sm);
+  }
+  
+  @include m(square) {
+    border-radius: $--avatar-border-radius;
+  }
+  
+  @include m(image) {
+    background-color: transparent;
+    
+    & > img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+}

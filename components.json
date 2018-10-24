@@ -78,5 +78,6 @@
   "json-viewer": "./packages/json-viewer/index.js",
   "divider": "./packages/divider/index.js",
   "card-action-item": "./packages/card-action-item/index.js",
-  "card-meta": "./packages/card-meta/index.js"
+  "card-meta": "./packages/card-meta/index.js",
+  "avatar": "./packages/avatar/index.js"
 }
