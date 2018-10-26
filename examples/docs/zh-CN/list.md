@@ -173,12 +173,10 @@
   <el-list>
     <el-list-item v-for="item in basicList" :key="item.title">
       <el-list-item-meta :title="item.title" slot="meta">
-        <span slot="avatar">
-          <img :src="item.avatar" class="basic-list-avatar-image">
-        </span>
-        <span slot="description">
+        <el-avatar :src="item.avatar" slot="avatar" size="medium"></el-avatar>
+        <div slot="description">
           {{ item.description }}
-        </span>
+        </div>
       </el-list-item-meta>
     </el-list-item>
   </el-list>
@@ -360,7 +358,7 @@
 <template>
   <el-list :grid="{ gutter: 16, column: 4 }">
     <el-list-item v-for="item in basicGridList" :key="item.title">
-      <el-card :header="item.title" class="box-card">
+      <el-card :header="item.title">
         Card content
       </el-card>
     </el-list-item>
@@ -405,7 +403,7 @@
 <template>
   <el-list :grid="{ gutter: 16, lg: 6, md: 4, sm: 2, xs: 1 }">
     <el-list-item v-for="item in basicGridList" :key="item.title">
-      <el-card :header="item.title" class="box-card">
+      <el-card :header="item.title">
         Card content
       </el-card>
     </el-list-item>

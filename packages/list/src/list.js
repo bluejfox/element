@@ -98,6 +98,7 @@ export default {
           [
             'el-list',
             this.border && this.listSize ? 'el-list--' + this.listSize : '',
+            { 'is-grid': this.grid },
             { 'is-bordered': this.border },
             { 'is-split': this.split },
             { 'is-vertical': this.itemLayout === 'vertical' }
