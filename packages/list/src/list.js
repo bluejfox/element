@@ -55,7 +55,8 @@ export default {
         this.$nextTick(() => {
           let loadingConfig = {
             target: this.$refs.loading,
-            spinner: 'el-icon-loading'
+            spinner: 'el-icon-loading',
+            background: 'transparent'
           };
           if (this.loadingConfig) {
             loadingConfig = merge(loadingConfig, this.loadingConfig);
@@ -131,7 +132,7 @@ export default {
           ) : listItemChildren.length > 0 ? (
             this._l(listItemChildren, node => node)
           ) : (
-            <div class="el-list__empty-text">
+            <div class="el-list__empty-text" v-show={!this.loading}>
               {
                 this.$slots.empty ? this.$slots.empty : (this.emptyText || this.t('el.list.emptyText'))
               }
