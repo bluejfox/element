@@ -6,8 +6,14 @@
         v-show="!hidden && (content || content === 0 || isDot)"
         v-text="content"
         class="el-badge__content"
-        :class="{ 'is-fixed': $slots.default, 'is-dot': isDot }"
-        v-if="status == ''">
+        v-if="status == ''"
+        :class="[
+          'el-badge__content--' + type,
+          {
+            'is-fixed': $slots.default,
+            'is-dot': isDot
+          }
+        ]">
       </sup>
       <span
         class="el-badge__status-dot"
@@ -36,7 +42,13 @@ export default {
       },
       default: ''
     },
-    text: String
+    text: String,
+    type: {
+      type: String,
+      validator(val) {
+        return ['primary', 'success', 'warning', 'info', 'danger'].indexOf(val) > -1;
+      }
+    }
   },
 
   computed: {

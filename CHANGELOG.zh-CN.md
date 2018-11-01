@@ -1,5 +1,43 @@
 ## 更新日志
 
+### 1.4.29
+*2018-11-01*
+
+同步至Element-UI 2.4.9版本
+
+### 新特性
+
+- Alert
+  - 新增 `title slot`，#13082（by @Kingwl）
+- Badge
+  - 新增 `type` 属性，#12991
+- Select
+  - 多选时可以清除 Select 已选中的值，#13049（by @ZSkycat）
+- Table
+  - 用户可以使用 scoped-slot 来自定义表头，#13012（by @ivanseidel）
+
+### 修复
+
+- Form
+  - `clearValidate` 方法参数支持字符串，#12990 （by @codinglobster）
+- InputNumber
+  - 当 InputNumber 控制按钮不显示时，调整了边距，#13052
+- List
+  - 加载时不显示 `Empty` 内容
+  - loading区域背景色改为透明
+- Select
+  - 修复 IE 下 Select 输入框不能输入的问题，#13034（by @GaliMU）
+  - Select 多选时，选项不换行，#12329 （by @akki-jat）
+  - Select 下拉列表展开后，箭头图标也可以正确显示，#12353（by @firesh）
+  - 修复 Select 的 size 属性不生效的问题，#13070
+- Tab
+  - 修复最后一个 TabNav 不能删除的问题，#13039
+  - 修复 TabNav 中 label 显示不正确的问题，#13178
+- Table
+  - 修复 Table 中的 tooltip 内容不正确的问题，#13159（by @elfman）
+- Upload
+  - 优化 Upload 文件列表删除时的动画，#12987
+
 ### 1.4.28
 *2018-10-26*
 

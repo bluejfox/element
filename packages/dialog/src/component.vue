@@ -10,6 +10,9 @@
       :style="wrapperStyle"
       ref="dialogWrapper">
       <div
+        role="dialog"
+        aria-modal="true"
+        :aria-label="title || 'dialog'"
         class="el-dialog"
         :class="[{ 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
         ref="dialog"
