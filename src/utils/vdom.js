@@ -9,5 +9,6 @@ export function getFirstComponentChild(children) {
 };
 
 export function getComponentName(node) {
-  return isVNode(node) ? node.componentOptions.Ctor.options.componentName : '';
+  return isVNode(node) && node.componentOptions
+    ? node.componentOptions.Ctor.options.componentName : '';
 }
