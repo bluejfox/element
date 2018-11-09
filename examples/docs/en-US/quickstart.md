@@ -250,7 +250,7 @@ Partial import Element：
 import Vue from 'vue';
 import { Button } from 'setaria-ui';
 
-Vue.prototype.$SETARIA = { size: 'small', zIndex: 3000 };
+Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 Vue.use(Button);
 ```
 
