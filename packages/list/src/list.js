@@ -22,7 +22,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'medium'
+      default: ''
     },
     split: {
       type: Boolean,
@@ -45,7 +45,7 @@ export default {
 
   computed: {
     listSize() {
-      return this.size !== 'medium' ? this.size : '';
+      return this.size || (this.$ELEMENT || {}).size;
     }
   },
 
@@ -92,13 +92,14 @@ export default {
 
   render(h) {
     const listItemChildren = this.getListItemChildren();
+    const { listSize } = this;
     return (
       <div
         ref="list"
         class={
           [
             'el-list',
-            this.border && this.listSize ? 'el-list--' + this.listSize : '',
+            this.listSize ? 'el-list--' + this.listSize : '',
             { 'is-grid': this.grid },
             { 'is-bordered': this.border },
             { 'is-split': this.split },
@@ -146,7 +147,7 @@ export default {
               {
                 (this.loadMore && !this.$slots['load-more']) ? (
                   <span>
-                    <el-button plain size="medium"
+                    <el-button plain size={listSize}
                       onClick={ this.handleLoadMoreDefaultButtonClick }>
                       { this.loadMore }
                     </el-button>

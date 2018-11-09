@@ -105,7 +105,7 @@
 
 ### 简单列表
 
-:::demo 列表拥有大、中、小三种尺寸。通过设置 size 为 large/small 分别把按钮设为大、小尺寸。若不设置 size，则尺寸为中。可通过设置 header 和 footer，来自定义列表头部和尾部。
+:::demo 列表拥有大、中、小三种尺寸。通过设置 size 为 medoum/small 分别把按钮设为中、小尺寸。若不设置 size，则尺寸为大。可通过设置 header 和 footer，来自定义列表头部和尾部。
 
 ```html
 <template>
@@ -121,8 +121,8 @@
       Footer
     </div>
   </el-list>
-  <h3>Small</h3>
-  <el-list border size="small">
+  <h3>Medium</h3>
+  <el-list border size="medium">
     <div slot="header">
       Header
     </div>
@@ -133,8 +133,8 @@
       Footer
     </div>
   </el-list>
-  <h3>Large</h3>
-  <el-list border size="large">
+  <h3>small</h3>
+  <el-list border size="small">
     <div slot="header">
       Header
     </div>
@@ -357,7 +357,9 @@
 ```html
 <template>
   <el-list :grid="{ gutter: 16, column: 4 }">
-    <el-list-item v-for="item in basicGridList" :key="item.title">
+    <el-list-item v-for="item in basicGridList" :key="item.title" :style="{
+      padding: 0,
+    }">
       <el-card :header="item.title">
         Card content
       </el-card>
@@ -402,7 +404,9 @@
 ```html
 <template>
   <el-list :grid="{ gutter: 16, lg: 6, md: 4, sm: 2, xs: 1 }">
-    <el-list-item v-for="item in basicGridList" :key="item.title">
+    <el-list-item v-for="item in basicGridList" :key="item.title" :style="{
+      padding: 0,
+    }">
       <el-card :header="item.title">
         Card content
       </el-card>
@@ -444,7 +448,7 @@
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | border  | 是否展示边框    | boolean   |  —  | false   |
-| size  | list 的尺寸    | string   |  large / middle / small | middle   |
+| size  | list 的尺寸    | string   |  medium / small | - |
 | split  | 是否展示分割线    | boolean   |  —  | true   |
 | load-more  | 加载更多（同时设置了插槽的场合，优先显示插槽）    | string   |  —  |  —  |
 | loading  | 当卡片内容还在加载中时，可以用 loading 展示一个占位,支持 .sync 修饰符  | boolean   |  —  |  false  |
