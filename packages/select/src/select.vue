@@ -292,10 +292,6 @@
           return t('el.select.placeholder');
         }
       },
-      readonly: {
-        type: Boolean,
-        default: false
-      },
       defaultFirstOption: Boolean,
       reserveKeyword: Boolean,
       valueKey: {
