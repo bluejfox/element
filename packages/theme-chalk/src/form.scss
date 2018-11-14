@@ -123,11 +123,20 @@
   }
 
   @include when(required) {
+    @include share-rule(label-required-pseudo) {
+      content: '*';
+      color: $--color-danger;
+      margin-right: 4px;
+    }
+    
     @include pseudo('not(.is-no-asterisk)') {
       & > .el-form-item__label:before {
-        content: '*';
-        color: $--color-danger;
-        margin-right: 4px;
+        @include extend-rule(label-required-pseudo);
+      }
+      & > .el-col {
+        & > .el-form-item__label:before {
+          @include extend-rule(label-required-pseudo);
+        }
       }
     }
   }
