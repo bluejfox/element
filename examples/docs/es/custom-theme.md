@@ -1,5 +1,10 @@
 ## Tema personalizado
-Element utiliza la metodología BEM en CSS con la finalidad de que puedas sobrescribir los estilos fácilmente. Pero, si necesita remplazar estilos a gran escala, por ejemplo, cambiar el color del tema de azul a naranja o verde, quizás reemplazarlos uno a uno no sea lo más adecuado, para ello hay 3 maneras de modificar los estilos.
+Element utiliza la metodología BEM en CSS con la finalidad de que puedas sobrescribir los estilos fácilmente. Pero, si necesita remplazar estilos a gran escala, por ejemplo, cambiar el color del tema de azul a naranja o verde, quizás reemplazarlos uno a uno no sea lo más adecuado, para ello hay 4 maneras de modificar los estilos.
+
+### Theme Roller
+Use [Online Theme Roller](./#/es/theme) para personalizar el diseño de las  variables globales y componentes, y vea el resultado en tiempo real. Puede generar un completo paquete de estilos basado en un nuevo tema que puede bajar directamente (para importar los archivos del nuevo estilo al proyecto por favor vea la sección 'Importar un tema personalizado').
+
+También puede usar [Theme Roller Chrome Extension](https://chrome.google.com/webstore/detail/element-theme-roller/lifkjlojflekabbmlddfccdkphlelmim), para personalizar un tema y ver el resultado en tiempo real en cualquier sitio desarrollado con Element.<img src="https://shadow.elemecdn.com/app/sns-client/element-theme-editor2.e16c6a01-806d-11e9-bc23-21435c54c509.png" style="width: 100%;margin: 30px auto 0;display: block;">
 
 ### Cambiando el color del tema
 Si lo que se busca es cambiar el color del tema de Element, se recomienda utilizar el [sitio de visualización de temas](https://elementui.github.io/theme-chalk-preview/#/en-US). Element utiliza un color azul brillante y amigable como tema principal. Al cambiarlo, puede hacer que Element este más conectado visualmente a proyectos específicos.
@@ -29,7 +34,7 @@ Vue.use(Element)
 ```
 
 :::tip
-Nota es necesario sobreescribir la ruta de la fuente por una ruta relativa de las fuentes de Element.
+Nota es necesario sobrescribir la ruta de la fuente por una ruta relativa de las fuentes de Element.
 :::
 
 ### CLI para generar temas
@@ -51,7 +56,7 @@ npm i https://github.com/ElementUI/theme-chalk -D
 ```
 
 #### <strong>Inicializar archivo de variables</strong>
-Después de haber instalado correctamente los paquetes, el comando `et` estará disponible en su CLI (si instalo el paquete de manera local, utilize `node_modules/.bin/et` en su lugar). Ejecute `-i` para inicializar un archivo de variables, puede especificar un nombre distinto, pero por defecto, el archivo se llama `element-variables.scss`. También puede especificar un directorio distinto.
+Después de haber instalado correctamente los paquetes, el comando `et` estará disponible en su CLI (si instalo el paquete de manera local, utilice `node_modules/.bin/et` en su lugar). Ejecute `-i` para inicializar un archivo de variables, puede especificar un nombre distinto, pero por defecto, el archivo se llama `element-variables.scss`. También puede especificar un directorio distinto.
 
 ```shell
 et -i [custom output file]
@@ -87,7 +92,7 @@ $--color-primary: red;
 ```
 
 #### <strong>Construyendo el tema</strong>
-Después de haber modificado el archivo de variables, utilizaremos el comando `et` para construir nuestro tema. Puedes activar el modo `watch` agregando el parámetro `-w`. Y, si desea personalizar el nombre del archivo, debes agregar el parámetro `-c` seguido del nombre.
+Después de haber modificado el archivo de variables, utilizaremos el comando `et` para construir nuestro tema. Puedes activar el modo `watch` agregando el parámetro `-w`. Y, si desea personalizar el nombre del archivo, debes agregar el parámetro `-c` seguido del nombre. Por defecto, el archivo de tema construido es colocado dentro de `./theme`. Puede especificar un directorio distinto utilizando el parámetro `-o`. 
 ```shell
 et
 
@@ -95,8 +100,9 @@ et
 > ✔ build element theme
 ```
 
+### Uso de los temas personalizados
 #### <strong>Importar un tema personalizado</strong>
-Por defecto, el archivo de tema construido es colocado dentro de `./theme`. Puede especificar un directorio distinto utilizando el parámetro `-o`. Importar su propio tema es igual a como si importará el tema por defecto, únicamente tiene que importar el archivo que se construyó:
+Importar su propio tema es igual que importar el tema por defecto, sol que esta vez se deben importar los archivos construidos con "Online Theme Roller" o "CLI tool":
 
 ```javascript
 import '../theme/index.css'
@@ -110,12 +116,15 @@ Vue.use(ElementUI)
 Si esta utilizando `babel-plugin-component` para importar bajo demanda, solo debe modificar el archivo `.babelrc` y especificar en la propiedad `styleLibraryName` la ruta en donde se encuentra localizado su tema personalizado relativo a `.babelrc`. **Nota** el carácter `~` es obligatorio:
 ```json
 {
-  "plugins": [["component", [
-    {
-      "libraryName": "element-ui",
-      "styleLibraryName": "~theme"
-    }
-  ]]]
+  "plugins": [
+    [
+      "component",
+      {
+        "libraryName": "element-ui",
+        "styleLibraryName": "~theme"
+      }
+    ]
+  ]
 }
 ```
 
