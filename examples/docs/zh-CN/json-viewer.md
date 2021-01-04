@@ -1,20 +1,3 @@
-<style>
-  .demo-json-viewer.demo-zh-CN {
-  }
-</style>
-<script>
-  module.exports = {
-    data() {
-      return {
-        jsonData1: '{"string": "this is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test stringthis is a test string","integer": 42,"obj":{\"a\": 1},"array":[{"a":"1"}, 2], "boolean": true, "null": null, "emptyobj": {}, "emptyarray": []}'
-      };
-    },
-    watch: {
-    },
-    methods: {
-    }
-  };
-</script>
 ## Json Viewer
 参考自[react-json-view](https://github.com/mac-s-g/react-json-view)
 

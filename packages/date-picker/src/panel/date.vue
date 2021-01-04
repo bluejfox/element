@@ -97,6 +97,7 @@
               :value="value"
               :default-value="defaultValue ? new Date(defaultValue) : null"
               :date="date"
+              :cell-class-name="cellClassName"
               :disabled-date="disabledDate">
             </date-table>
             <year-table
@@ -159,8 +160,9 @@
     nextMonth,
     changeYearMonthAndClampDate,
     extractDateFormat,
-    extractTimeFormat
-  } from '../util';
+    extractTimeFormat,
+    timeWithinRange
+  } from 'setaria-ui/src/utils/date-util';
   import Clickoutside from 'setaria-ui/src/utils/clickoutside';
   import Locale from 'setaria-ui/src/mixins/locale';
   import ElInput from 'setaria-ui/packages/input';
@@ -236,13 +238,16 @@
         const format = timeFormat => {this.$refs.timepicker.format = timeFormat;};
         const value = value => {this.$refs.timepicker.value = value;};
         const date = date => {this.$refs.timepicker.date = date;};
+        const selectableRange = selectableRange => {this.$refs.timepicker.selectableRange = selectableRange;};
 
         this.$watch('value', value);
         this.$watch('date', date);
+        this.$watch('selectableRange', selectableRange);
 
         format(this.timeFormat);
         value(this.value);
         date(this.date);
+        selectableRange(this.selectableRange);
       },
 
       handleClear() {
@@ -347,9 +352,14 @@
 
       handleDatePick(value) {
         if (this.selectionMode === 'day') {
-          this.date = this.value
+          let newDate = this.value
             ? modifyDate(this.value, value.getFullYear(), value.getMonth(), value.getDate())
             : modifyWithTimeString(value, this.defaultTime);
+          // change default time while out of selectableRange
+          if (!this.checkDateWithinRange(newDate)) {
+            newDate = modifyDate(this.selectableRange[0][0], value.getFullYear(), value.getMonth(), value.getDate());
+          }
+          this.date = newDate;
           this.emit(this.date, this.showTime);
         } else if (this.selectionMode === 'week') {
           this.emit(value.date);
@@ -373,7 +383,7 @@
       changeToNow() {
         // NOTE: not a permanent solution
         //       consider disable "now" button in the future
-        if (!this.disabledDate || !this.disabledDate(new Date())) {
+        if ((!this.disabledDate || !this.disabledDate(new Date())) && this.checkDateWithinRange(new Date())) {
           this.date = new Date();
           this.emit(this.date);
         }
@@ -460,7 +470,7 @@
 
       handleVisibleTimeChange(value) {
         const time = parseDate(value, this.timeFormat);
-        if (time) {
+        if (time && this.checkDateWithinRange(time)) {
           this.date = modifyDate(time, this.year, this.month, this.monthDate);
           this.userInputTime = null;
           this.$refs.timepicker.value = this.date;
@@ -487,7 +497,7 @@
           typeof this.disabledDate === 'function'
             ? !this.disabledDate(value)
             : true
-        );
+        ) && this.checkDateWithinRange(value);
       },
 
       getDefaultValue() {
@@ -498,6 +508,12 @@
 
       selectTimeInput() {
         this.$refs.input.$el.querySelector('.el-input__inner').select();
+      },
+
+      checkDateWithinRange(date) {
+        return this.selectableRange.length > 0
+          ? timeWithinRange(date, this.selectableRange, this.format || 'HH:mm:ss')
+          : true;
       }
     },
 
@@ -518,6 +534,8 @@
         visible: false,
         currentView: 'date',
         disabledDate: '',
+        cellClassName: '',
+        selectableRange: [],
         firstDayOfWeek: 7,
         showWeekNumber: false,
         timePickerVisible: false,

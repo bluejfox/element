@@ -33,7 +33,7 @@ export default {
       month10: 'October',
       month11: 'November',
       month12: 'December',
-      // week: 'week',
+      week: 'week',
       weeks: {
         sun: 'Sun',
         mon: 'Mon',
@@ -67,7 +67,8 @@ export default {
     cascader: {
       noMatch: 'No matching data',
       loading: 'Loading',
-      placeholder: 'Select'
+      placeholder: 'Select',
+      noData: 'No data'
     },
     pagination: {
       goto: 'Go to',
@@ -107,6 +108,16 @@ export default {
     },
     list: {
       emptyText: 'No Data'
+    },
+    image: {
+      error: 'FAILED'
+    },
+    pageHeader: {
+      title: 'Back' // to be translated
+    },
+    popconfirm: {
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
     }
   }
 };

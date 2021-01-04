@@ -1,13 +1,13 @@
 import Vue from 'vue'
 
-/** ElementUI component common definition */
-export declare class ElementUIComponent extends Vue {
+/** SetariaUI component common definition */
+export declare class SetariaUIComponent extends Vue {
   /** Install component into Vue */
   static install (vue: typeof Vue): void
 }
 
 /** Component size definition for button, input, etc */
-export type ElementUIComponentSize = 'large' | 'medium' | 'small' | 'mini'
+export type SetariaUIComponentSize = 'large' | 'medium' | 'small' | 'mini'
 
 /** Horizontal alignment */
-export type ElementUIHorizontalAlignment = 'left' | 'center' | 'right'
+export type SetariaUIHorizontalAlignment = 'left' | 'center' | 'right'

@@ -62,7 +62,7 @@
     modifyDate,
     clearMilliseconds,
     timeWithinRange
-  } from '../util';
+  } from 'setaria-ui/src/utils/date-util';
   import Locale from 'setaria-ui/src/mixins/locale';
   import TimeSpinner from '../basic/time-spinner';
 

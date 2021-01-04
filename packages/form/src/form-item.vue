@@ -10,10 +10,35 @@
     },
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
-    <form-label/>
-    <form-wrapper>
-      <slot></slot>
-    </form-wrapper>
+    <label-wrap
+      :is-auto-width="labelStyle && labelStyle.width === 'auto'"
+      :update-all="form.labelWidth === 'auto'">
+      <label :for="labelFor" class="el-form-item__label" :style="labelStyle" v-if="label || $slots.label">
+        <slot name="label">{{label + form.labelSuffix}}</slot>
+      </label>
+    </label-wrap>
+    <div class="el-form-item__content" :style="contentStyle">
+      <form-wrapper>
+        <slot></slot>
+      </form-wrapper>
+      <transition name="el-zoom-in-top">
+        <slot
+          v-if="validateState === 'error' && showMessage && form.showMessage"
+          name="error"
+          :error="validateMessage">
+          <div
+            class="el-form-item__error"
+            :class="{
+              'el-form-item__error--inline': typeof inlineMessage === 'boolean'
+                ? inlineMessage
+                : (elForm && elForm.inlineMessage || false)
+            }"
+          >
+            {{validateMessage}}
+          </div>
+        </slot>
+      </transition>
+    </div>
   </div>
 </template>
 <script>
@@ -21,7 +46,7 @@
   import emitter from 'setaria-ui/src/mixins/emitter';
   import objectAssign from 'setaria-ui/src/utils/merge';
   import { noop, getPropByPath } from 'setaria-ui/src/utils/util';
-
+  import LabelWrap from './label-wrap';
   export default {
     name: 'ElFormItem',
 
@@ -38,6 +63,8 @@
     inject: ['elForm'],
 
     components: {
+      // use this component to calculate auto width
+      LabelWrap,
       formLabel: {
         render(h) {
           const {
@@ -187,7 +214,13 @@
         if (this.form.labelPosition === 'top' || this.form.inline) return ret;
         if (!label && !this.labelWidth && this.isNested) return ret;
         const labelWidth = this.labelWidth || this.form.labelWidth;
-        if (labelWidth) {
+        if (labelWidth === 'auto') {
+          if (this.labelWidth === 'auto') {
+            ret.marginLeft = this.computedLabelWidth;
+          } else if (this.form.labelWidth === 'auto') {
+            ret.marginLeft = this.elForm.autoLabelWidth;
+          }
+        } else {
           ret.marginLeft = labelWidth;
         }
         return ret;
@@ -249,7 +282,8 @@
         validateMessage: '',
         validateDisabled: false,
         validator: {},
-        isNested: false
+        isNested: false,
+        computedLabelWidth: ''
       };
     },
     methods: {
@@ -309,6 +343,11 @@
           prop.o[prop.k] = this.initialValue;
         }
 
+        // reset validateDisabled after onFieldChange triggered
+        this.$nextTick(() => {
+          this.validateDisabled = false;
+        });
+
         this.broadcast('ElTimeSelect', 'fieldReset', this.initialValue);
       },
       getRules() {
@@ -343,6 +382,20 @@
         }
 
         this.validate('change');
+      },
+      updateComputedLabelWidth(width) {
+        this.computedLabelWidth = width ? `${width}px` : '';
+      },
+      addValidateEvents() {
+        const rules = this.getRules();
+
+        if (rules.length || this.required !== undefined) {
+          this.$on('el.form.blur', this.onFieldBlur);
+          this.$on('el.form.change', this.onFieldChange);
+        }
+      },
+      removeValidateEvents() {
+        this.$off();
       }
     },
     mounted() {
@@ -357,12 +410,7 @@
           value: initialValue
         });
 
-        let rules = this.getRules();
-
-        if (rules.length || this.required !== undefined) {
-          this.$on('el.form.blur', this.onFieldBlur);
-          this.$on('el.form.change', this.onFieldChange);
-        }
+        this.addValidateEvents();
       }
     },
     beforeDestroy() {

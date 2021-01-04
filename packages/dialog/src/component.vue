@@ -11,10 +11,10 @@
       ref="dialogWrapper">
       <div
         role="dialog"
+        :key="key"
         aria-modal="true"
         :aria-label="title || 'dialog'"
-        class="el-dialog"
-        :class="[{ 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
+        :class="['el-dialog', { 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
         ref="dialog"
         :style="style">
         <button
@@ -112,12 +112,14 @@
       dragable: {
         type: Boolean,
         default: true
-      }
+      },
+      destroyOnClose: Boolean
     },
 
     data() {
       return {
-        closed: false
+        closed: false,
+        key: 0
       };
     },
 
@@ -136,6 +138,11 @@
         } else {
           this.$el.removeEventListener('scroll', this.updatePopper);
           if (!this.closed) this.$emit('close');
+          if (this.destroyOnClose) {
+            this.$nextTick(() => {
+              this.key++;
+            });
+          }
         }
       }
     },

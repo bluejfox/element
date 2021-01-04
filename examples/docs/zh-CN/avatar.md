@@ -1,190 +1,147 @@
-<script>
-  export default {
-    data() {
-      const userList = ['U', 'Lucy', 'Tom', 'Edward'];
-      const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
-      return {
-        userList,
-        colorList,
-        user: userList[3],
-        color: colorList[3],
-      }
-    },
-    methods: {
-      handleChangeUser() {
-        const index = this.userList.indexOf(this.user);
-        const targetIndex = index < this.userList.length - 1 ? index + 1 : 0;
-        this.user = this.userList[targetIndex];
-        this.color = this.colorList[targetIndex];
-      },
-    }
-  }
-</script>
-<style scoped>
-  .avatar {
-    margin-top: 16px;
-    margin-right: 16px;
-  }
-  .avatar-badge {
-    margin-top: 24px;
-    margin-right: 24px;
-  }
-</style>
-
 ## Avatar 头像
 
-用来代表用户或事物，支持图片、图标或字符展示。
-
-参考自Ant Design的[Avatar 头像](https://ant.design/components/avatar-cn/)
+用图标、图片或者字符的形式展示用户或事物信息。
 
 ### 基本用法
 
-头像有三种尺寸，两种形状可选。
+通过 `shape` 和 `size` 设置头像的形状和大小。
 
 :::demo
 ```html
 <template>
-  <div>
-    <el-avatar icon="el-icon-message" class="avatar">
-    </el-avatar>
-    <el-avatar icon="el-icon-message" size="medium" class="avatar">
-    </el-avatar>
-    <el-avatar icon="el-icon-message" size="small" class="avatar">
-    </el-avatar>
-  </div>
-  <div>
-    <el-avatar icon="el-icon-message" shape="square" class="avatar">
-    </el-avatar>
-    <el-avatar icon="el-icon-message" shape="square" size="medium" class="avatar">
-    </el-avatar>
-    <el-avatar icon="el-icon-message" shape="square" size="small" class="avatar">
-    </el-avatar>
-  </div>
+  <el-row class="demo-avatar demo-basic">
+    <el-col :span="12">
+      <div class="sub-title">circle</div>
+      <div class="demo-basic--circle">
+        <div class="block"><el-avatar :size="50" :src="circleUrl"></el-avatar></div>
+        <div class="block" v-for="size in sizeList" :key="size">
+          <el-avatar :size="size" :src="circleUrl"></el-avatar>
+        </div>
+      </div>
+    </el-col>  
+    <el-col :span="12">
+      <div class="sub-title">square</div>
+      <div class="demo-basic--circle">
+        <div class="block"><el-avatar shape="square" :size="50" :src="squareUrl"></el-avatar></div>
+        <div class="block" v-for="size in sizeList" :key="size">
+          <el-avatar shape="square" :size="size" :src="squareUrl"></el-avatar>
+        </div>
+      </div>
+    </el-col> 
+  </el-row>
 </template>
-
-<style scoped>
-  .avatar {
-    margin-top: 16px;
-    margin-right: 16px;
-  }
-</style>
-```
-:::
-
-### 类型
-
-支持三种类型：图片、Icon 以及字符，其中 Icon 和字符型可以自定义图标颜色及背景色。
-
-:::demo
-```html
-<template>
-  <el-avatar icon="el-icon-message" class="avatar">
-  </el-avatar>
-  <el-avatar class="avatar" text="U">
-  </el-avatar>
-  <el-avatar class="avatar" text="USER1">
-  </el-avatar>
-  <el-avatar
-    src="https://png.pngtree.com/svg/20161217/avatar__181424.png"
-    alt="头像"
-    class="avatar">
-  </el-avatar>
-  <el-avatar
-    :style="{ color: '#f56a00', backgroundColor: '#fde3cf' }"
-    class="avatar"
-    text="U"></el-avatar>
-  <el-avatar
-    :style="{ backgroundColor: '#87d068' }"
-    icon="el-icon-message"
-    class="avatar"></el-avatar>
-</template>
-
-<style scoped>
-  .avatar {
-    margin-top: 16px;
-    margin-right: 16px;
-  }
-</style>
-```
-:::
-
-### 自动调整字符大小
-
-对于字符型的头像，当字符串较长时，字体大小可以根据头像宽度自动调整。
-
-:::demo
-```html
-<template>
-  <div>
-    <el-avatar
-      :style="{
-        'backgroundColor': color
-      }"
-      :text="user">
-    </el-avatar>
-    <el-button size="small" @click="handleChangeUser" style="margin-left: 8px;">Change</el-button>
-  </div>
-</template>
-
 <script>
   export default {
-    data() {
-      const userList = ['U', 'Lucy', 'Tom', 'Edward'];
-      const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
+    data () {
       return {
-        userList,
-        colorList,
-        user: userList[3],
-        color: colorList[3],
+        circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+        sizeList: ["large", "medium", "small"]
       }
-    },
-    methods: {
-      handleChangeUser() {
-        const index = this.userList.indexOf(this.user);
-        const targetIndex = index < this.userList.length - 1 ? index + 1 : 0;
-        this.user = this.userList[targetIndex];
-        this.color = this.colorList[targetIndex];
-      },
     }
   }
 </script>
+
 ```
 :::
 
-### 带徽标的头像
+### 展示类型
 
-通常用于消息提示。
+支持三种类型：图标、图片和字符
 
 :::demo
 ```html
 <template>
-  <div>
-    <el-badge :value="12" class="avatar-badge">
-      <el-avatar icon="el-icon-message" shape="square" size="medium">
-      </el-avatar>
-    </el-badge>
-    
-    <el-badge is-dot class="avatar-badge">
-      <el-avatar icon="el-icon-message" shape="square" size="medium">
-      </el-avatar>
-    </el-badge>
+  <div class="demo-type">
+    <div>
+      <el-avatar icon="el-icon-user-solid"></el-avatar>
+    </div>
+    <div>
+      <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+    </div>
+    <div>
+      <el-avatar> user </el-avatar>
+    </div>
   </div>
 </template>
+```
+:::
+
+### 图片加载失败的 fallback 行为
+
+当展示类型为图片的时候，图片加载失败的 fallback 行为
+
+:::demo
+```html
+<template>
+  <div class="demo-type">
+    <el-avatar :size="60" src="https://empty" @error="errorHandler">
+      <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
+    </el-avatar>
+  </div>
+</template>
+<script>
+  export default {
+    methods: {
+      errorHandler() {
+        return true
+      }
+    }
+  }
+</script>
+
+```
+:::
+
+### 图片如何适应容器框
+
+当展示类型为图片的时候，使用 `fit` 属性定义图片如何适应容器框，同原生 [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)。
+
+:::demo
+```html
+<template>
+  <div class="demo-fit">
+    <div class="block" v-for="fit in fits" :key="fit">
+        <span class="title">{{ fit }}</span>
+        <el-avatar shape="square" :size="100" :fit="fit" :src="url"></el-avatar>
+    </div>
+  </div>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      }
+    }
+  }
+</script>
+
 ```
 :::
 
 ### Attributes
-| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| icon | 图标类名，第一优先（同时定义了`icon`, `src`, `text`的场合，将忽略`src`和`text`） | string | Setaria-UI内置的[图标类名](/#/zh-CN/component/icon) | — |
-| src | 图片类头像的资源地址，第二优先 | string | — | — |
-| text | 文本内容，第三优先 | string | — | — |
-| shape | 指定头像的形状 | string | circle/square | circle |
-| size | 设置头像的大小 | string | medium/small | — |
-| alt | 图像无法显示时的替代文本 | string | — | — |
-| img-load-error | 图片加载失败的事件，返回 false 会关闭组件默认的 fallback 行为 | Function | — | — |
+
+| 参数              | 说明                             | 类型            | 可选值 | 默认值 |
+| ----------------- | -------------------------------- | --------------- | ------ | ------ |
+| icon              | 设置头像的图标类型，参考 Icon 组件   | string          |        |        |
+| size              | 设置头像的大小                     | number/string | number / large / medium / small | large  |
+| shape             | 设置头像的形状  | string |    circle / square     |   circle  |
+| src               | 图片头像的资源地址 | string |        |      |
+| srcSet            | 以逗号分隔的一个或多个字符串列表表明一系列用户代理使用的可能的图像 | string |        |      |
+| alt               | 描述图像的替换文本 | string |        |      |
+| fit               | 当展示类型为图片的时候，设置图片如何适应容器框 | string |    fill / contain / cover / none / scale-down    |   cover   |
 
 
 ### Events
-| 事件名称 | 说明 | 回调参数 |
-|---------- |-------- |---------- |
+
+| 事件名 | 说明               | 回调参数 |
+| ------ | ------------------ | -------- |
+| error  | 图片类头像加载失败的回调， 返回 false 会关闭组件默认的 fallback 行为 |(e: Event)  |
+
+### Slot
+
+| 名称	 | 说明               |  
+| ------ | ------------------ | 
+| default  | 自定义头像展示内容 |

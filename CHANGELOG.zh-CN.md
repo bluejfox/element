@@ -1,5 +1,400 @@
 ## 更新日志
 
+### 1.5.0
+*2021-01-04*
+
+同步至Element-UI 2.14.1版本
+
+#### 新特性
+
+- Alert
+  - 新增高饱和度主题 (#15041 by @island205)
+- Autocomplete
+  - 添加 change 事件 (#17913 by @sxzz)
+  - 添加 `highlight-first-item` 属性，控制是否默认突出显示远程搜索建议中的第一项 (by @YamenSharaf in #14269)
+  - 新增 `clear` 事件，#12171(by arthurdenner) #13326
+- Avatar
+  - 新增 `Avatar` 组件 (#16144 by @luckyCao)
+- Backtop
+  - 新增 Backtop 组件 (#15541 by @iamkun)
+- Calendar
+  - 新增 Calendar 组件 (#14908 by @ziyoung)
+  - 支持 `first-day-of-week` 配置 (#16047 by @ziyoung)
+- Cascader
+  - 新增多选模式和 filter-method 方法 (#15611 by @SimonaliaChen)
+  - 新增 `visible-change` 事件，#13415
+- Carousel
+  - 新增 direction 属性，支持垂直方向切换 (#15122 by @ziyoung)
+  - 新增 `loop` 属性，#13217
+- Collapse
+  - CollapseItem 支持禁用 (#15076 by @ziyoung)
+- DatePicker
+  - 支持字符串常量 (#15525 by island205)
+  - 支持 monthrange 类型 (#14487 by @zxyRealm)
+  - 新增 `validate-event` 属性 (by @ziyoung in #13531)
+- DateTimePicker
+  - `pickerOptions` 支持 `selectableRange` 选项 (by @eeeeeeeason)
+- Drawer
+  - 新增抽屉组件 (#16577 by @JeremyWuuuuu)
+- Divider
+  - 新增 Divider 组件 (#15055 by @island205)
+- DropdownItem
+  - `el-dropdown-item` 支持添加 icon (by @gabrielboliveira in #14088)
+- Form
+  - `validateField` 方法可以接收参数，#13319
+- Icon
+  - 支持 font-display 属性的配置 (#16805 by @iamfaizalandyka)
+  - 新增图标 (#15214 by @iamkun)
+- Image
+  - 新增 Image 组件 (#15117 by @SimonaliaChen)
+  - 支持 attrs 和 listeners (#15578 by @VanMess)
+- InfiniteScroll
+  - 新增 InfiniteScroll 指令 (#15567 by @iamkun)
+- Input
+  - 新增 `show-word-count` 属性 (#15075 by @luckyCao)
+  - 添加 `show-password` 属性，支持配置显示密码按钮 (by @phshy0607 in #13966)
+- InputNumber
+  - 新增 `step-strictly` 属性 (#15050 by @luckyCao)
+  - 新增 `select` 方法，#13286 (by @st-sloth)
+- Link
+  - 新增 Link 组件 (#15052 by @iamkun)
+- Message
+  - 信息依次展示 (#15639 by @island205)
+- PageHeader
+  - 新增 PageHeader 组件 (#15714 by @ziyoung)
+- Pagination
+  - 新增 hide-on-single-page 属性 (#15096 by @ziyoung)
+- Popover
+  - 添加 close-delay 属性 (#16671 by @LachlanStuart)
+- Rate
+  - 支持通过对象自定义 colors 与 icon-classes 属性 (#15051 by @SimonaliaChen)
+- Select
+  - 添加 slot `empty` (by @elfman in #13785)
+- Slider
+  - 新增 marks 属性 (#15133 by @luckyCao)
+- Table
+  - Tree Table 支持 tree-props，default-expand-all，expand-row-keys 属性, toggle-row-expansion 方法，expand-change 事件 (#15709 by @ziyoung)
+  - 增加对树形结构数据的支持 (#14632 by @ziyoung)
+- Tabs
+  - 卡片模式下标题左对齐 (#15695 by @luckyCao)
+- Tag
+  - 新增 effect 属性 (#15725 by @SimonaliaChen)
+  - 新增 `click` 事件 (by @licdream in #14106)
+- Theme
+  - 增加 Chrome 插件: Element Theme Extension (#16686 by @iamkun)
+  - 新增 popup 背景配置 (#15412 by @iamkun)
+- Timeline
+  - 添加 Timeline 组件 (by @jikkai in #14248)
+- Tooltip, Dropdown, Popover
+  - 新增 tabindex 属性 (#15167 by @ziyoung)
+- Tree
+  - 新增 `iconClass` 与 `currentNodeKey` 属性，#13337 #13197 (by @isnifer)
+- Upload:
+  - 支持自定义缩略图模版 (#13192 by @victorzhuk)
+
+#### 非兼容性更新
+
+- Form
+  - 移除输入框的成功状态 (#16159 by @ziyoung)
+- Popconfirm
+  - 事件名称修改为 `confirm`, `cancel` (#20240 by @hugiron)
+  - 新增 Popconfirm 组件 (#17548 by @iamkun)
+- Rate
+  - 禁用情况下，显示小位数 (#15089 by @haoranyu)
+- Select
+  - 过滤情况下，placeholder 为选中选项的 label (#14989 by @ibufu)
+- Table
+  - 修复 row 事件的参数顺序 (by @jikkai in #12086)
+
+#### 修复：
+
+- Alert
+  - 更新 typescript 定义文件 (#15186 by @ziyoung)
+  - 组件对通过 slot 传入的 description 也应用默认样式类 (by @iamkun in #14488)
+- Autocomplete
+  - 修复 'change event' 错误 (#19200 by @sxzz)
+  - 修复类型为 textarea 时建议错误问题 (#18478 by @Roojay)
+  - 修正下拉框最后一行显示不完整的问题 (by @ziyoung in #13597)
+  - 修正下拉框箭头 (by @liuchuzhang in #13762)
+- Avatar
+  - 修复图片不居中的问题 (#16489 by @luckyCao)
+- BackTop
+  - 平滑过渡动画 (by @lon)
+- Calendar
+  - 导入 el-button 和 el-button-group (#17376 by @masongzhi)
+  - 修复日期的显示问题 (#16772 by @ubitoffee)
+  - 修复在夏令时的显示问题 (#17208 by @iamkun)
+  - 更新显示正确的 header 的逻辑 (#16354 by @ziyoung)
+  - 修复星期展示错误 (#15399 by @qingdengyue)
+  - 修复十月展示问题 (#15394 by @qingdengyue)
+- Carousel
+  - 修复 console.warn 文案拼写错误 (#18264 by @IceFox)
+  - 修复 change 的触发时机 (#16705 by @iamkun)
+  - 组件销毁时释放内部 Timer (by @elfman in #13820)
+- Cascader
+  - 修复 TypeScript 3.7 的兼容问题 (#17881 by @CarterLi)
+  - 修复 CascaderPanel 的显示问题 (#16716 by @zhangHongEn)
+  - 禁用状态下，关闭按钮不显示 (#16224 by @yyjjqq94)
+  - 修复一级菜单更新问题 (#16399 by @luckyCao)
+  - 懒加载时设默认值 (#16420 by @luckyCao)
+  - 修复当节点值重复时的显示问题 (#15935 by @junyiz)
+  - 对外暴露 getCheckedNodes 和修复 options 改变会影响选中的问题 (#16709 by @SimonaliaChen)
+  - 移除已废弃的计算属性的 cache 属性 (by @iamkun in #13737)
+  - 修正 TypeScript 中 CascaderOption 类型定义 (by @NateScarlet in #13613)
+  - 修正图标覆盖文字的问题 (by @ziyoung in #13596)
+- Checkbox
+  - 修复 CSS 样式问题 (#16006 by @Hazlank)
+  - 改进显示样式 (by @PanJiaChen)
+- ColorPicker
+  - 修复十六进制颜色字符串解析问题 (#14793 by @iamkun)
+- DatePicker
+  - 修复选择最小日期的 bug (#17191 by @smk0621)
+  - 给 picker-option 添加 className 属性 (#16632 by @iamkun)
+  - 修复 first-day-of-week 的计算 (#14523 by @sinchang)
+  - 修复 WeekPicker value-format 的问题 (#13754 by @wacky6)
+  - 修正 TimeSpinner 中缺失的 v-for `key` 属性 (by @Ende93 in #13547)
+  - 修正周选择器在跨年时的高亮行为 (by @suyi91 in #13883)
+- DateTimePicker
+  - 修复时间选择滚动条的问题 (#16854 by @jesse-li)
+- Dialog
+  - 添加 SCSS 变量 (#16365 by @haoranyu)
+  - 增加 destroyOnClose 属性 (#16455 by @ziyoung)
+  - 修复内容不换行的问题 (#15027 by @iamkun)
+  - 可以设置背景色 (#14939 by @ziyoung)
+- Directive
+  - RepeatClick: 使用 Date.now 提升性能 (#14776 by @pavelmash)
+- Divider
+  - 支持自定义类 (#17078 by @island205)
+- Drawer
+  - 修复 drawer-append-to-body 失效的 bug (#16953 by @JeremyWuuuuu)
+- Dropdown
+  - 更新类型文件 (#17550 by @iamkun)
+  - 更新 split-button 默认颜色 (#15931 by @JuniorTour)
+  - 修复样式 (#14907 by @doing123)
+  - 兼容 Vue 2.6 新 v-slot 语法 (#14832 by @ziyoung)
+  - 修复样式问题 (by @hetech in #14452)
+- Form
+  - ValidateField 的回调应为可选项 (#17314 by @CarterLi)
+  - 修复 form-item 的高度错误 (#15457 by @SimonaliaChen)
+  - 修复 resetFields 问题 (15181 by @luckyCao)
+  - 修复动态表单校验规则不生效的问题 (#14985 by @luckyCao)
+  - 修复 label 的样式 (#14969 by @ziyoung)
+  - 当 required 为 true 时，显示星号 (#15144 by @ziyoung)
+  - 修复 `label-width` 为 `auto` 的样式 (#14955 by @ziyoung)
+  - `label-width` 支持自动宽度 (#14944 by @ziyoung)
+  - Form 禁用时不显示 Input 的 clear 图标，#13208
+- Icon
+  - 更新 Select 与 Cascader 的 icon (#15264 by @SimonaliaChen)
+  - 更新 icon (#15258 by @iamkun)
+- Image
+  - 更新错误状态 (#19194 by @lhx6538665)
+  - 修复当 preview-src-list 属性不包含 src 时图片预览大图展示为空的问题 (#18975) (#19130 by @luckyCao)
+  - 修复第二次图片预览时快捷键失效问题 (#18983) (#19156 by @luckyCao)
+  - 修复 preview-src-list 为空时点击图片会给 body 添加 overflow: scroll 的问题 (#18967 by @inooNgt)
+  - 优化用户体验 (#16985 by @luckyCao)
+  - 优化大图片展示问题 (#16796 by @luckyCao)
+  - 修复 Image 组件 SSR 兼容性 (#16737 by @luckyCao)
+  - 增加大图预览 (#16333 by @luckyCao)
+  - 修复 ssr 问题和 object-fit 的兼容性 (#15346 by @SimonaliaChen)
+- InfiniteScroll
+  - 跳过不可见元素触发 (#17553 by @iamkun)
+  - 更新命名和说明 (#16698 by @iamkun)
+  - 更新包名 (#16125 by @iamkun)
+- Input
+  - 修复韩语输入问题 (#15069 by @MoonHyuk)
+  - 触发清除按钮的点击事件 (#16576 by @a631807682)
+  - 修复 show-word-count 样式问题 (#15359 by @lvjiaxuan)
+  - 修复删除图标样式 (#15354 by @YiiGuxing)
+  - 当类型改变时更新 DOM (#14889 by @wacky6)
+  - Fix regression (#14572 by @wacky6)
+  - 修复 textarea 时的 DOM 节点引用 (by @laomu1988 @island205 in #13803)
+- Link
+  - 修复图标 class 问题 (#15752 by @iamkun)
+- Loading
+  - 修复 Dom 不更新的问题 (#15123 by @FAKER-A)
+- InputNumber
+  - 正确计算 inputNumberDisabled (#18439 by @ashuser-pendo)
+- Menu
+  - 修复 NavigationDuplicated 在 vue-router@^3.1.0 的报错 (#17269 by @iamkun)
+  - 修复 `popper-append-to-body` 设置后，子菜单无法收起的问题 (#15391 by @PanJiaChen)
+  - 如果 defaultIndex 不存在，activeIndex 应该为空 (#14074 by @hoythan)
+  - 修复浏览器标签切换引起的 focus 问题 (by @liupl in #13976)
+- Message
+  - 修复关闭的 offsetHeight（#17564） (#17852 by @gzwgq222)
+  - 类型定义中添加 `offset` 属性 (#16027 by @matjaz)
+  - 修复 typescript 定义文件 (#14968 by @agoni1212)
+- MessageBox
+  - 修复图表位置 (#17410 by @nullptru)
+  - 修复 `distinguishCancelAndClose` 行为与文档不符的问题 (#15438 by @qingdengyue)
+  - 修复 TS 定义 (by @NateScarlet in #14278)
+- NavMenu
+  - 修复点击 el-submenu 多次触发 childMenu 问题 (#14443 by @PanJiaChen)
+- Notification
+  - 不修改传入的 option (#16704 by @iamkun)
+  - 修复标题不换行的问题 (#15008 by @iamkun)
+- Pagination
+  - 修复 slot 未更新的问题 (#14711 by @lucyhao)
+  - 输入框的值不会小于 1 (by @elfman in #13727)
+- Popover
+  - 兼容 Vue 2.6 新 v-slot 语法 (#20424 by @iamkun)
+  - 修正 hover 的触发行为 (by @goldengecko in #13104)
+  - 修正弹出框的内存泄漏 (by @qpxtWhite in #13988)
+- Progress
+  - 修复参数错误的问题 (#19985 by @Caaalabash)
+  - 增加 strokeLinecap 属性 (#17552 by @iamkun)
+- PopupManager
+  - 修复无法复写 `z-index` 的问题 (#15738 by @luckyCao)
+- Radio
+  - 修复 value 不更新的问题 (#14809 by @OverTree)
+  - 改进显示样式 (by @ohhoney1)
+- RadioGroup
+  - is 指定时，不产生非法的 HTML 片段 (#17070 by @nullptru)
+- Scrollbar
+  - 修复 FireFox 双滚动条的 bug (#18091 by @iamkun)
+  - 修复点击鼠标右键导致拖动的问题 (by @xifeiwu in #14196)
+- Select
+  - 修复测试用例  (by @msidolphin)
+  - 修复空 tag 的 bug (17199 by @luckyCao)
+  - 过滤时，不收起下拉框 (#17205 by @luckyCao)
+  - 修复内存泄漏问题 (#16463 by @island205)
+  - 修复 `initialInputHeight` 问题 (#15989 by @yyjjqq94)
+  - 修复输入中文时 `default-first-option` 的行为问题 (#15431 by @VanMess)
+  - `import` 重复 (#16215 by @lengband)
+  - 回滚清除时，设置 value 为 null 的修改 (#15447 by @iamkun)
+  - 修复当 value 为 undefined 或者 null 的报错 (#15022 by @luckyCao)
+  - 清空时设置 value 为 null (#14322 by @aaronfulkerson)
+  - 修复多次点击 Select 才显示下拉列表的问题，#13268
+- Slider
+  - 补充 `input` 事件文档 (#15588 by @VanMess)
+  - 修复点击时样式问题 (#15561 by @luckyCao)
+  - 修复可访问性问题 (#14792 by @erezsob)
+  - 修正源代码缩进 (by @wacky6 in #13955)
+- Steps
+  - 修复 #14502 (#14596 by @sinchang)
+  - 修复简单模式下的样式 (#14610 by @sinchang)
+- Style
+  - 修复媒体查询 sm-only, md-only, lg-only 问题 (#14611 by @sinchang)
+  - 调整小屏幕（xs）媒体查询断点，#13468 （by @alekoshen712）
+- Submenu
+  - 修复 append-to-body 问题 (#16289 by @a631807682)
+- Switch
+  - 修复事件重复触发问题 (#15178 by @FAKER-A)
+  - 添加 `validate-event` 属性，设置改变 Switch 状态时是否触发表单的校验 (by @hetech in #14426)
+- Table
+  - 头部可自定义 (#17291 by @ziyoung)
+  - 更新头部样式 (#17284 by @ziyoung)
+  - 修复时候 filter 之后高度问题 (#17348 by @ziyoung)
+  - 修复 row-style 失效的 bug (#17002 by @a631807682)
+  - 修复头部消失的 bug (#17341 by @ziyoung)
+  - 在表头拖拽后阻止 click 事件的触发 (#16850 by @ziyoung)
+  - 修复表头 display 为 none 造成浏览器崩溃的问题 (#16956 by @luckyCao)
+  - 修复没有数据的时表格高度问题 (#16861 by @ziyoung)
+  - 调用 toggleExpansion 不再抛出异常 (#16304 by @yyjjqq94)
+  - 挂载时不再触发 sort-change 事件 (#17113 by @a631807682)
+  - 修复 setCurrentRow 方法不生效的问题 (#16879 by @ziyoung)
+  - 修复当数据异步加载时，expand-row-keys 不生效的问题 (#16899 by @ziyoung)
+  - 把 toggleAllSelection 设置为 Table 示例的属性 (#17137 by @ziyoung)
+  - 修复 tree table 数据更新问题 (#16481 by @island205)
+  - 排序 icon 问题修复 (#15439 by @bezany)
+  - 修复 `append` slot 存在时布局错位问题 (#16332 by @ziyoung)
+  - 修复 `showOverflowTooltip` 更新无效的问题 (#16295 by @a631807682)
+  - 修复 `FilterPanel` 中 `Scrollbar` 未注册问题  (#16246 by @ziyoung)
+  - 修复加载 icon 不显示的问题 (#15868 by @ziyoung)
+  - 修复复杂表格中 hover 行背景色问题 (#15504 by @cnlon)
+  - 修复 `current-row-key` 和选择事件的问题 (#15983 by @ziyoung)
+  - `height` 属性接受更多单位 (#16013 by @ziyoung)
+  - 修复 `reserve-selection` 无效的问题 (#16135 by @ziyoung)
+  - 修复排序条件为空时的排序问题 (#15012 by @joelxr)
+  - 修复懒加载时加载数据的 bug (#15101 by @ziyoung)
+  - 在合并单元格时，修复单元格的宽度计算不正确的问题 (#15196 by @ziyoung)
+  - 提升表格的性能 (#14868 by @ziyoung)
+  - 初始化时不再触发 sort-change 事件 (#14625 by @PeanutWatson)
+  - 让 height 与 max-height 属性的行为保持一致 (#14660 by @arthurdenner)
+  - 修复当有展开列时 `defaultExpandAll` 的行为 (#14935 by @ziyoung)
+  - Table footer 与 body 的对齐一致 (#14730 by @ziyoung)
+  - 修复多 Table 实例共享 `toggleAllSelection` 方法，造成无法切换问题 (by @letanure in #14075)
+  - 改进点击排序箭头时的行为 (by @ohhoney1 in #12890)
+  - 修正 IE10+ 中 “暂无数据” 提示的垂直布局 (by @imzjy in #13638)
+  - 修正文档中 `index` 的类型说明 (by @ilovefafa in #13628)
+  - 修正多级表头使用 `fixed` 属性时，表尾合计行的显示样式 (by @luckyCao in #13914)
+  - data 改变时，高亮行会继续保留，#13200
+  - header slot 可以接收参数，#13263
+  - `clearFilter` 方法支持参数，#13176
+  - 单元格内没有内容时不再创建 Tooltip，#13152 (by @rongxingsun)
+- Tabs
+  - 修复 TabItem 位置不正确的问题 (#16520 by @victorting)
+  - 修复高亮的 Tab 不在可视区的问题 (#17033 by @nullptru)
+  - 修复 padding 问题 (#15461 by @SimonaliaChen)
+  - Fix issue where Promise rejection was hitting application (#14816 by @ffxsam)
+  - slot 改变时，重新渲染 (#15238 by @ziyoung)
+  - 阴影样式使用全局主颜色 (#14558 by @Richard-Choooou)
+  - 当 label 改变时触发更新 (#14496 by @akki-jat)
+  - 修复样式问题 (by @hetech in #14452)
+  - 修正自动滚动 (by @iamkun in #13696)
+  - 通过面板名称查找面板 (by @iamkun in #13705)
+  - 使用 `paneName` 计算面板样式 (by @iamkun in #13733)
+- Tag
+  - 修复阻止冒泡问题 (#15150 by @infjer)
+- Theme
+  - 添加无圆角变量 (#15256 by @iamkun)
+- Timeline
+  - 修复逆序问题 (#16091 by @ziyoung)
+- TimePicker
+  - 滚动后设置正确的位置 (#16868 by @mattheyan)
+- Tooltip
+  - 修复自定义 tabindex 不生效问题 (#15619 by @SimonaliaChen)
+  - 当初始值为 true 时默认显示 (#14826 by @ziyoung)
+- Transfer
+  - 修复和 Form 组件一起使用时错误的行高问题 (#18917 by @Hanx)
+  - 修复样式问题 (#17206 by @iamkun)
+- Tree
+  - 增加 font-size 样式 (#17094 by @spengjie)
+  - 修复文字与复选框之间的距离 (#16799 by @Hazlank)
+  - 更新类型定义为泛类型 (#15934 by @JeremyWuuuuu)
+  - 修复设置节点 isCurrent 的为 false 的问题 (#15870 by @kkkisme)
+  - 当 `currentKey` 为 `null` 时取消对树节点的高亮 (#15668 by @yyjjqq94)
+  - 修复多实例共享数据的问题 #15538 (#15615 by @VanMess)
+  - 当前节点被删除后，选中的节点也应该删除 (#14604 by @sinchang)
+  - 提升性能 (#14881 by @ChenZhuoSteve)
+  - 恢复 pr #13349 (#14847 by @ziyoung)
+  - 与 Table 统一占位文样式 (by @ColinCll in #14331)
+  - 修正 `showCheckbox` 不能影响子节点的问题 (by @KidneyFlower)
+  - 更新文档和 TypeScript 定义 (by @ziyoung in #13540)
+  - 修复 `defaultCheckedKeys` 导致显示的错误，#13349 (by @dive2Pro)
+- Type
+  - 修复 Loading 定义文件 (#15635 by @iamkun)
+  - 修复 Icon 定义文件 (#15634 by @iamkun)
+  - 修复 Link 定义文件 (#15402 by @iamkun)
+- Upload
+  - 更新 `fileList` 的类型定义 (#15716 by @underfin)
+  - 修复 Upload 的背景颜色 (#15039 by @iamkun)
+  - `list-type` 改变时，保留 `url` 属性 (by @elfman in #13771)
+
+#### 优化：
+
+- Alert
+- Cascader
+  - 重构 (#15611 by @SimonaliaChen)
+- DatePicker
+  - 添加月、年高亮的样式（by @Debiancc in #14211）
+- Input
+  - 简化内部实现，遵循单向数据流；修复若干相关 Bug (by @wacky6 in #13471)
+- InputNumber
+  -移除多余的 `parseFloat` (by @JuniorTour in #14172)
+- Menu
+  - 支持 `el-menu-item` 不添加 index (by @georgyfarniev in #13298)
+- Table
+  - 移除无用的 DOM 操作 (by @elfman in #13643)
+- Tag
+  - 兼容 IE (#16334 by @ziyoung)
+- Upload
+  - 代码优化 (by @elfman in #13973)
+- Popup
+  - 移除无用代码 (by @KAionro in #14413)
+- 其他
+  - 升级到 webpack@4 (by @jikkai in #14173)
+  - 更新 Axure 文件，增加新组件 (by @ziyoung in #13773)
+
 ### 1.4.33
 *2018-11-14*
 

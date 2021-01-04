@@ -81,6 +81,17 @@ import Divider from '../packages/divider/index.js';
 import CardActionItem from '../packages/card-action-item/index.js';
 import CardMeta from '../packages/card-meta/index.js';
 import Avatar from '../packages/avatar/index.js';
+import Timeline from '../packages/timeline/index.js';
+import TimelineItem from '../packages/timeline-item/index.js';
+import Link from '../packages/link/index.js';
+import Image from '../packages/image/index.js';
+import Calendar from '../packages/calendar/index.js';
+import Backtop from '../packages/backtop/index.js';
+import InfiniteScroll from '../packages/infinite-scroll/index.js';
+import PageHeader from '../packages/page-header/index.js';
+import CascaderPanel from '../packages/cascader-panel/index.js';
+import Drawer from '../packages/drawer/index.js';
+import Popconfirm from '../packages/popconfirm/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -162,6 +173,16 @@ const components = [
   CardActionItem,
   CardMeta,
   Avatar,
+  Timeline,
+  TimelineItem,
+  Link,
+  Image,
+  Calendar,
+  Backtop,
+  PageHeader,
+  CascaderPanel,
+  Drawer,
+  Popconfirm,
   CollapseTransition
 ];
 
@@ -173,6 +194,7 @@ const install = function(Vue, opts = {}) {
     Vue.component(component.name, component);
   });
 
+  Vue.use(InfiniteScroll);
   Vue.use(Loading.directive);
 
   Vue.prototype.$ELEMENT = {
@@ -195,7 +217,7 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue);
 }
 
-module.exports = {
+export default {
   version: '1.4.33',
   locale: locale.use,
   i18n: locale.i18n,
@@ -281,7 +303,16 @@ module.exports = {
   Divider,
   CardActionItem,
   CardMeta,
-  Avatar
+  Avatar,
+  Timeline,
+  TimelineItem,
+  Link,
+  Image,
+  Calendar,
+  Backtop,
+  InfiniteScroll,
+  PageHeader,
+  CascaderPanel,
+  Drawer,
+  Popconfirm
 };
-
-module.exports.default = module.exports;

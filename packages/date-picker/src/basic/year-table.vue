@@ -45,7 +45,7 @@
 
 <script type="text/babel">
   import { hasClass } from 'setaria-ui/src/utils/dom';
-  import { isDate, range, nextDate, getDayCountOfYear } from '../util';
+  import { isDate, range, nextDate, getDayCountOfYear } from 'setaria-ui/src/utils/date-util';
   import { arrayFindIndex, coerceTruthyValueToArray } from 'setaria-ui/src/utils/util';
 
   const datesInYear = year => {

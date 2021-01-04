@@ -31,7 +31,7 @@
 </template>
 
 <script type="text/babel">
-  import { limitTimeRange, isDate, clearMilliseconds, timeWithinRange } from '../util';
+  import { limitTimeRange, isDate, clearMilliseconds, timeWithinRange } from 'setaria-ui/src/utils/date-util';
   import Locale from 'setaria-ui/src/mixins/locale';
   import TimeSpinner from '../basic/time-spinner';
 

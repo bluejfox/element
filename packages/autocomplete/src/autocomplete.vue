@@ -10,9 +10,11 @@
     <el-input
       ref="input"
       v-bind="[$props, $attrs]"
-      @input="handleChange"
+      @input="handleInput"
+      @change="handleChange"
       @focus="handleFocus"
       @blur="handleBlur"
+      @clear="handleClear"
       @keydown.up.native.prevent="highlight(highlightedIndex - 1)"
       @keydown.down.native.prevent="highlight(highlightedIndex + 1)"
       @keydown.enter.native="handleKeyEnter"
@@ -89,6 +91,10 @@
       popperClass: String,
       popperOptions: Object,
       placeholder: String,
+      clearable: {
+        type: Boolean,
+        default: false
+      },
       disabled: Boolean,
       name: String,
       size: String,
@@ -121,6 +127,10 @@
       popperAppendToBody: {
         type: Boolean,
         default: true
+      },
+      highlightFirstItem: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -144,7 +154,10 @@
     },
     watch: {
       suggestionVisible(val) {
-        this.broadcast('ElAutocompleteSuggestions', 'visible', [val, this.$refs.input.$refs.input.offsetWidth]);
+        let $input = this.getInput();
+        if ($input) {
+          this.broadcast('ElAutocompleteSuggestions', 'visible', [val, $input.offsetWidth]);
+        }
       }
     },
     methods: {
@@ -168,12 +181,13 @@
           }
           if (Array.isArray(suggestions)) {
             this.suggestions = suggestions;
+            this.highlightedIndex = this.highlightFirstItem ? 0 : -1;
           } else {
             console.error('[Element Error][Autocomplete]autocomplete suggestions must be an array');
           }
         });
       },
-      handleChange(value) {
+      handleInput(value) {
         this.$emit('input', value);
         this.suggestionDisabled = false;
         if (!this.triggerOnFocus && !value) {
@@ -182,6 +196,9 @@
           return;
         }
         this.debouncedGetData(value);
+      },
+      handleChange(value) {
+        this.$emit('change', value);
       },
       handleFocus(event) {
         this.activated = true;
@@ -192,6 +209,10 @@
       },
       handleBlur(event) {
         this.$emit('blur', event);
+      },
+      handleClear() {
+        this.activated = false;
+        this.$emit('clear');
       },
       close(e) {
         this.activated = false;
@@ -239,7 +260,11 @@
           suggestion.scrollTop -= highlightItem.scrollHeight;
         }
         this.highlightedIndex = index;
-        this.$el.querySelector('.el-input__inner').setAttribute('aria-activedescendant', `${this.id}-item-${this.highlightedIndex}`);
+        let $input = this.getInput();
+        $input.setAttribute('aria-activedescendant', `${this.id}-item-${this.highlightedIndex}`);
+      },
+      getInput() {
+        return this.$refs.input.getInput();
       }
     },
     mounted() {
@@ -247,7 +272,7 @@
       this.$on('item-click', item => {
         this.select(item);
       });
-      let $input = this.$el.querySelector('.el-input__inner');
+      let $input = this.getInput();
       $input.setAttribute('role', 'textbox');
       $input.setAttribute('aria-autocomplete', 'list');
       $input.setAttribute('aria-controls', 'id');

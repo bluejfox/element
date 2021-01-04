@@ -3,7 +3,9 @@
 
 Fork自[element-ui](https://github.com/ElemeFE/element)
 
-**同步至Element-UI 2.4.9**
+**同步至Element-UI 2.14.1**
+
+**建议使用node8进行本地开发，使用Node9+以上版本在执行初始化构建时可能会出现编译错误**
 
 基于Vue和Element UI，结合其他优秀组件库（[Ant Design](https://ant.design/index-cn)，[Material Deisgn](https://material.angular.io/)等)，加速业务级应用页面开发。
 

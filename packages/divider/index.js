@@ -1,8 +1,8 @@
-import ElDivider from './src/divider';
+import Divider from './src/main';
 
 /* istanbul ignore next */
-ElDivider.install = function(Vue) {
-  Vue.component(ElDivider.name, ElDivider);
+Divider.install = function(Vue) {
+  Vue.component(Divider.name, Divider);
 };
 
-export default ElDivider;
+export default Divider;

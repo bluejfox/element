@@ -79,5 +79,16 @@
   "divider": "./packages/divider/index.js",
   "card-action-item": "./packages/card-action-item/index.js",
   "card-meta": "./packages/card-meta/index.js",
-  "avatar": "./packages/avatar/index.js"
+  "avatar": "./packages/avatar/index.js",
+  "timeline": "./packages/timeline/index.js",
+  "timeline-item": "./packages/timeline-item/index.js",
+  "link": "./packages/link/index.js",
+  "image": "./packages/image/index.js",
+  "calendar": "./packages/calendar/index.js",
+  "backtop": "./packages/backtop/index.js",
+  "infinite-scroll": "./packages/infinite-scroll/index.js",
+  "page-header": "./packages/page-header/index.js",
+  "cascader-panel": "./packages/cascader-panel/index.js",
+  "drawer": "./packages/drawer/index.js",
+  "popconfirm": "./packages/popconfirm/index.js"
 }

@@ -30,7 +30,7 @@ export default {
   name: 'ElBadge',
 
   props: {
-    value: {},
+    value: [String, Number],
     max: Number,
     isDot: Boolean,
     hidden: Boolean,

@@ -96,7 +96,7 @@
     height: $--transfer-item-height;
     line-height: $--transfer-item-height;
     padding-left: 15px;
-    display: block;
+    display: block !important;
 
     & + .el-transfer-panel__item {
       margin-left: 0;
@@ -155,7 +155,7 @@
   .el-transfer-panel__header {
     height: $--transfer-panel-header-height;
     line-height: $--transfer-panel-header-height;
-    background: $--transfer-panel-header-background;
+    background: $--transfer-panel-header-background-color;
     margin: 0;
     padding-left: 15px;
     border-bottom: 1px solid $--transfer-border-color;

@@ -1,19 +1,3 @@
-<script>
-  export default {
-    data() {
-      return {
-        active: 0
-      };
-    },
-
-    methods: {
-      next() {
-        if (this.active++ > 2) this.active = 0;
-      }
-    }
-  }
-</script>
-
 ## Steps
 
 Guide the user to complete tasks in accordance with the process. Its steps can be set according to the actual application scenario and the number of the steps can't be less than 2.
@@ -22,7 +6,7 @@ Guide the user to complete tasks in accordance with the process. Its steps can b
 
 Simple step bar.
 
-:::demo Set `active` attribute with `Number` type, which indicates the index of steps and starts from 0. You can set `space` attribute when the width of the step needs to be fixed which accepts `Boolean` type. The unit of the `space` attribute is `px`. If not set, it is responsive. Setting the `finish-status` attribute can change the state of the steps that have been completed.
+:::demo Set `active` attribute with `Number` type, which indicates the index of steps and starts from 0. You can set `space` attribute when the width of the step needs to be fixed which accepts `Number` type. The unit of the `space` attribute is `px`. If not set, it is responsive. Setting the `finish-status` attribute can change the state of the steps that have been completed.
 
 ```html
 <el-steps :active="active" finish-status="success">
@@ -66,7 +50,7 @@ Shows the status of the step for each step.
 ```
 :::
 
-### Center 
+### Center
 
 Title and desription can be centered.
 

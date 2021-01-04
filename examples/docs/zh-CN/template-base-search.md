@@ -1,130 +1,3 @@
-<script>
-  export default {
-    data() {
-      return {
-        // 检索条件对象
-        condition: {
-          name: '',
-          theFetchStart: 0,
-          theFetchSize: 10
-        },
-        // 检索条件表单Schema定义
-        conditionSchema: {
-          name: {
-            type: 'string',
-            title: '用户姓名'
-          }
-        },
-        // 检索结果一览Schema定义
-        resultSchema: {
-          name: {
-            type: 'string',
-            title: '姓名'
-          },
-          gender: {
-            type: 'string',
-            title: '性别'
-          },
-          birth: {
-            type: 'string',
-            title: '出生日期',
-            format: 'date'
-          },
-          mobile: {
-            type: 'integer',
-            title: '手机号'
-          },
-          activeFlag: {
-            type: 'string',
-            title: '状态'
-          }
-        },
-        resultUiSchema: {
-          name: {
-            'ui:resizable': false
-          },
-          birth: {
-            'ui:minWidth': '120px'
-          },
-          mobile: {
-            'ui:minWidth': '120px',
-            'ui:headerAlign': 'left'
-          }
-        },
-        // 检索结果一览数据对象
-        tableData: [],
-        // 检索结果一览每页数据数量
-        pageSize: 10,
-        // 选中的行
-        selectionRows: [],
-      };
-    },
-    methods: {
-      /**
-       * 检索结果一览数据取得事件处理
-       * @event
-       */
-      doGetResult(val, currentPage) {
-        this.condition.theFetchStart = (currentPage === 1) ? 0 :
-          (currentPage - 1) * this.condition.theFetchSize;
-        return new Promise((resolve) => {
-          let ret = null;
-          if (currentPage === 1) {
-            ret = [
-              {
-                name: '管理员',
-                gender: '男',
-                mobile: '13910000001',
-                birth: '1979-03-08',
-                activeFlag: '有效'
-              },
-              {
-                name: '赵三',
-                gender: '男',
-                mobile: '13910000002',
-                birth: '1982-08-19',
-                activeFlag: '无效'
-              }
-            ];
-          }
-          resolve(ret);
-        });
-      },
-      doShowNoExistDataError() {
-        this.$message('没有更多的数据了。');
-      },
-      doUpdate({ name }) {
-        this.$message(`修改 ${name} 数据。`);
-      },
-      doSelectionChange(val) {
-        this.selectionRows = val;
-        console.log(this.selectionRows);
-      },
-      doHandleMultiTableData(val) {
-        const nameArray = [];
-        val.forEach(i => nameArray.push(i.name));
-        this.$message(`已选择 ${nameArray.join(',')}`);
-      },
-    }
-  }
-</script>
-
-<style>
-  .extra-search-button {
-    margin-left: 10px;
-  }
-  .extra-search-button .el-button {
-    width: 80px;
-  }
-  .button-separator {
-    color: #bfcbd9;
-    margin: 0 3px;
-  }
-  .invalid {
-    color: red;
-  }
-</style>
-
 ## TemplateBaseSearch 检索页面模板
 
 通过定义检索条件和检索结果的结构，可以快速构建一个常用的检索页面。
@@ -262,7 +135,12 @@
       doSelectionChange(val) {
         this.selectionRows = val;
         console.log(this.selectionRows);
-      }
+      },
+      doHandleMultiTableData(val) {
+        const nameArray = [];
+        val.forEach(i => nameArray.push(i.name));
+        this.$message(`已选择 ${nameArray.join(',')}`);
+      },
     }
   }
 </script>
