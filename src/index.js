@@ -70,7 +70,7 @@ import Header from '../packages/header/index.js';
 import Aside from '../packages/aside/index.js';
 import Main from '../packages/main/index.js';
 import Footer from '../packages/footer/index.js';
-import DynamicForm from '../packages/dynamic-form/index.js';
+import JsonForm from '../packages/json-form/index.js';
 import TemplateBaseSearch from '../packages/template-base-search/index.js';
 import SimplePagination from '../packages/simple-pagination/index.js';
 import List from '../packages/list/index.js';
@@ -92,6 +92,7 @@ import PageHeader from '../packages/page-header/index.js';
 import CascaderPanel from '../packages/cascader-panel/index.js';
 import Drawer from '../packages/drawer/index.js';
 import Popconfirm from '../packages/popconfirm/index.js';
+import Ellipsis from '../packages/ellipsis/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -162,7 +163,7 @@ const components = [
   Aside,
   Main,
   Footer,
-  DynamicForm,
+  JsonForm,
   TemplateBaseSearch,
   SimplePagination,
   List,
@@ -183,6 +184,7 @@ const components = [
   CascaderPanel,
   Drawer,
   Popconfirm,
+  Ellipsis,
   CollapseTransition
 ];
 
@@ -218,7 +220,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '1.4.33',
+  version: '1.5.0',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -293,7 +295,7 @@ export default {
   Aside,
   Main,
   Footer,
-  DynamicForm,
+  JsonForm,
   TemplateBaseSearch,
   SimplePagination,
   List,
@@ -314,5 +316,6 @@ export default {
   PageHeader,
   CascaderPanel,
   Drawer,
-  Popconfirm
+  Popconfirm,
+  Ellipsis
 };

@@ -10,12 +10,12 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
 基于Vue和Element UI，结合其他优秀组件库（[Ant Design](https://ant.design/index-cn)，[Material Deisgn](https://material.angular.io/)等)，加速业务级应用页面开发。
 
 ## Feature
-- [New]JSON Schema Dynamic Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dynamic-form)
-- [New]Enterprise Base Search Template [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/template-base-search)
+- [New]JSON Schema Dynamic Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-form)
+  - 基于标准Json Schema格式数据生成表单
+- [New]Ellipsis [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/ellipsis)
+  - 文本省略组件
 - [New]List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
-- [New]Divider [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/divider)
 - [New]JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
-- [New]Avatar [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/avatar)
 - [Update]Badge [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/badge)
   - 添加 `status`, `text` 属性支持状态点功能
 - [Update]Button [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/button)
@@ -26,10 +26,6 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
   - 新增支持封面、头像、标题和描述信息的卡片
 - [Update]Dialog [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/dialog)
   - 支持拖动
-- [Update]DateTimePicker [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/datetime-picker)
-  - 新增日期和时间输入框获得焦点时自动选中日期和时间
-- [Update]Form [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/form)
-  - 新增 `wrapper-width` 属性支持表单组件自适应样式
 
 ## Install
 ```shell

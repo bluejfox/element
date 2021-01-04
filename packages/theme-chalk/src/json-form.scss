@@ -1,0 +1,24 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(json-form) {
+  
+  @include b(json-form-item) {
+    &.is-hidden {
+      display: none;
+    }
+    
+    .el-json-form__component {
+      width: 100%;
+    }
+    
+    .el-form-item__label {
+      .el-json-form__label-inner {
+        display: inline-block;
+        .label-inner__ellipsis {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

@@ -137,8 +137,8 @@
               "title": "Form 表单"
             },
             {
-              "path": "/dynamic-form",
-              "title": "DynamicForm 动态表单"
+              "path": "/json-form",
+              "title": "JsonForm Json表单"
             }
           ]
         },
@@ -303,6 +303,10 @@
             {
               "path": "/drawer",
               "title": "Drawer 抽屉"
+            },
+            {
+              "path": "/ellipsis",
+              "title": "Ellipsis 文本自动省略号"
             }
           ]
         }

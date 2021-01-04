@@ -164,7 +164,7 @@
 
 ### Condition-UI-Schema Attributes
 
-同Dynamic-Form的UI-Schema Attributes
+同Json-Form的UI-Schema Attributes
 
 ### Result-UI-Schema Attributes
 

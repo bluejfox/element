@@ -239,3 +239,23 @@ export function objToArray(obj) {
   }
   return isEmpty(obj) ? [] : [obj];
 }
+
+export const isSingleByteChar = function(char) {
+  const charCode = char.charCodeAt(0);
+  return charCode >= 0 && charCode <= 128;
+};
+
+export const cutStrByFullLength = function(str = '', maxLength) {
+  let showLength = 0;
+  return str.split('').reduce((pre, cur) => {
+    if (isSingleByteChar(cur)) {
+      showLength += 1;
+    } else {
+      showLength += 2;
+    }
+    if (showLength <= maxLength) {
+      return pre + cur;
+    }
+    return pre;
+  }, '');
+};

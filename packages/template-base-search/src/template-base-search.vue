@@ -1,6 +1,6 @@
 <template>
   <div class="el-template-base-search">
-    <el-dynamic-form
+    <el-json-form
       :inline="true"
       :model="condition"
       :schema="internalConditionSchema"
@@ -13,7 +13,7 @@
           <i class="el-icon-search"></i> 检索
         </el-button>
       </span>
-    </el-dynamic-form>
+    </el-json-form>
     <el-alert
       :title="rowSelectedTip"
       type="info"

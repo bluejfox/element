@@ -1,5 +1,16 @@
 ## 更新日志
 
+### 1.5.1
+*2021-01-04*
+
+#### 新特性
+
+- Ellipsis
+  - 新增Ellipsis文本自动省略组件
+- JsonForm
+  - 新增JsonForm组件，替换原有的 `DynamicForm`
+  - `ui-schema` 内新增 `ui:nativeOn` 属性用于绑定原生事件
+
 ### 1.5.0
 *2021-01-04*
 

@@ -5,7 +5,6 @@
       'is-validating': validateState === 'validating',
       'is-success': validateState === 'success',
       'is-required': isRequired || required,
-      'el-row': responsiveMode && form.labelPosition !== 'top',
       'is-no-asterisk': elForm && elForm.hideRequiredAsterisk
     },
     sizeClass ? 'el-form-item--' + sizeClass : ''
@@ -18,9 +17,7 @@
       </label>
     </label-wrap>
     <div class="el-form-item__content" :style="contentStyle">
-      <form-wrapper>
-        <slot></slot>
-      </form-wrapper>
+      <slot></slot>
       <transition name="el-zoom-in-top">
         <slot
           v-if="validateState === 'error' && showMessage && form.showMessage"
@@ -63,101 +60,8 @@
     inject: ['elForm'],
 
     components: {
-      // use this component to calculate auto width
-      LabelWrap,
-      formLabel: {
-        render(h) {
-          const {
-            form,
-            label,
-            labelFor,
-            labelStyle,
-            labelWidth,
-            responsiveMode,
-            $slots
-          } = this.$parent;
-          const labelSlot = $slots.label;
-          if (labelStyle.float === null || labelStyle.float === undefined) {
-            labelStyle.float = responsiveMode && form.labelPosition === 'right' ? 'right' : '';
-          }
-          const labelComponent = (label || labelSlot) ? (
-            <label
-              class="el-form-item__label"
-              style={ labelStyle }
-              for={ labelFor }>
-              { labelSlot ? (
-                labelSlot
-              ) : label + form.labelSuffix}
-            </label>
-          ) : null;
-          let responsiveLabelComponent = (
-            <el-col
-              {...{ props: labelWidth }}>
-              { labelComponent }
-            </el-col>
-          );
-          responsiveLabelComponent = form.labelPosition === 'top' ? (
-            <el-row>
-              { responsiveLabelComponent }
-            </el-row>
-          ) : responsiveLabelComponent;
-          return responsiveMode ? responsiveLabelComponent : labelComponent;
-        }
-      },
-      formWrapper: {
-        render(h) {
-          const {
-            contentStyle,
-            elForm,
-            form,
-            inlineMessage,
-            responsiveMode,
-            showMessage,
-            validateMessage,
-            validateState,
-            wrapperWidth
-          } = this.$parent;
-          const $slots = this.$slots;
-          const isShowMessage = validateState === 'error' && showMessage && form.showMessage;
-          const validateClass = {
-            'el-form-item__error': true,
-            'el-form-item__error--inline': typeof inlineMessage === 'boolean'
-              ? inlineMessage : (elForm && elForm.inlineMessage || false)
-          };
-          const errorScopeSlot = $slots.error
-            ? this.$scopedSlots.error({ error: validateMessage })
-            : (
-              <div
-                class={validateClass}>
-                { validateMessage }
-              </div>
-            );
-          const wrapperComponent = (
-            <div
-              class="el-form-item__content"
-              style={contentStyle}>
-              { $slots.default }
-              <transition name="el-zoom-in-top">
-                {
-                  isShowMessage ? errorScopeSlot : null
-                }
-              </transition>
-            </div>
-          );
-          let reponsiveWrapperComponent = (
-            <el-col
-              {...{ props: wrapperWidth }}>
-              { wrapperComponent }
-            </el-col>
-          );
-          reponsiveWrapperComponent = form.labelPosition === 'top' ? (
-            <el-row>
-              { reponsiveWrapperComponent }
-            </el-row>
-          ) : reponsiveWrapperComponent;
-          return responsiveMode ? reponsiveWrapperComponent : wrapperComponent;
-        }
-      }
+      // use this component to calculate auto width1
+      LabelWrap
     },
 
     props: {

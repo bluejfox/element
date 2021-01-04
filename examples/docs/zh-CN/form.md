@@ -622,61 +622,6 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 ```
 :::
 
-### 自适应布局样式
-
-:::demo 可通过设置 `labelWidth` 和 `wrapperWidth`实现自适应布局样式
-```html
-<el-radio-group v-model="labelPosition" size="small">
-  <el-radio-button label="left">左对齐</el-radio-button>
-  <el-radio-button label="right">右对齐</el-radio-button>
-  <el-radio-button label="top">顶部对齐</el-radio-button>
-</el-radio-group>
-<div style="margin: 20px;"></div>
-<el-form
-  :model="numberValidateForm"
-  :label-position="labelPosition"
-  ref="numberValidateForm"
-  class="demo-ruleForm"
-  @submit="onAutoValidSubmit"
-  :rules="autoValidRules">
-  <el-form-item label="年龄" :label-width="{span: 8, xs: 24}" :wrapper-width="{span: 16, xs: 24}" prop="age">
-    <el-input v-model="numberValidateForm.age" auto-complete="off"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" native-type="submit">提交</el-button>
-    <el-button @click="resetForm('numberValidateForm')">重置</el-button>
-  </el-form-item>
-</el-form>
-
-<script>
-  export default {
-    data() {
-      return {
-        labelPosition: 'right',
-        numberValidateForm: {
-          age: ''
-        },
-        autoValidRules: {
-          age: [
-            { required: true, message: '年龄不能为空'},
-            { pattern: /^[0-9]*$/, message: '年龄必须为数字值'}
-          ]
-        },
-      };
-    },
-    methods: {
-      onAutoValidSubmit() {
-        console.log('onAutoValidSubmit');
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
-    }
-  };
-</script>
-```
-:::
-
 ### Form Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
@@ -722,8 +667,6 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | inline-message  | 以行内形式展示校验信息 | boolean | — | false |
 | size  | 用于控制该表单域下组件的尺寸 | string | medium / small / mini | - |
-| label-width | 表单域标签的宽度，例如 '50px'。作为 Form 直接子元素的 form-item 会继承该值。支持 `auto`。若设置为 object, 同 `<el-col>` 组件，可设置 `span` 和 `offset` 等值 | string / object | — | — |
-| wrapper-width | 需要为输入控件设置布局样式时，使用该属性，用法同 `label-width` | object | — | — |
 
 ### Form-Item Slot
 | name | 说明 |
