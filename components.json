@@ -95,5 +95,6 @@
   "condition-filter": "./packages/condition-filter/index.js",
   "description": "./packages/description/index.js",
   "tag-select": "./packages/tag-select/index.js",
-  "tag-select-item": "./packages/tag-select-item/index.js"
+  "tag-select-item": "./packages/tag-select-item/index.js",
+  "statistics": "./packages/statistics/index.js"
 }

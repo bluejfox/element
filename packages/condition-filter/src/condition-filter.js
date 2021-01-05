@@ -281,7 +281,7 @@ export default {
         const componentName = this.getSeniorConditionFormItemComponentName(key);
         if (isCleared === false) {
           // 数字输入框的场合
-          if (componentName === 'ScmInputNumber') {
+          if (componentName === 'ElInputNumber') {
             // 保证清空后输入框不为0
             this.seniorConditionValue[key] = undefined;
           } else {
@@ -430,12 +430,12 @@ export default {
             const childComponentName = item.$children[0].$options.componentName;
             // 可以多选的组件，排除级联选择器
             if (Array.isArray(value) && value.length > 0 &&
-              childComponentName !== 'ScmCascader' &&
-              childComponentName !== 'ScmDatePicker') {
+              childComponentName !== 'ElCascader' &&
+              childComponentName !== 'ElDatePicker') {
               const itemValue = value || [];
               let valueList = null;
-              // 可以多选的选择器(ScmSelect)
-              if (childComponentName === 'ScmSelect') {
+              // 可以多选的选择器(ElSelect)
+              if (childComponentName === 'ElSelect') {
                 valueList = itemValue.map((v, index) => {
                   const label = item.$children[0].getOption(v).label;
                   if (label && label !== '') {
@@ -452,12 +452,12 @@ export default {
             } else {
               let displayValue = value;
               // 选择器
-              if (childComponentName === 'ScmSelect') {
+              if (childComponentName === 'ElSelect') {
                 displayValue = item.$children[0].getOption(value).label;
               // 级联选择器
-              } else if (childComponentName === 'ScmCascader') {
+              } else if (childComponentName === 'ElCascader') {
                 displayValue = item.$children[0].presentText;
-              } else if (childComponentName === 'ScmDatePicker') {
+              } else if (childComponentName === 'ElDatePicker') {
                 const currentValue = item.$children[0].value;
                 if (typeof currentValue === 'string') {
                   displayValue = currentValue;
@@ -465,7 +465,7 @@ export default {
                   displayValue = currentValue.length > 0 ? currentValue.join(' - ') : '';
                 }
               // 单选框
-              } else if (childComponentName === 'ScmRadioGroup') {
+              } else if (childComponentName === 'ElRadioGroup') {
                 if (item.$children[0].$children) {
                   item.$children[0].$children.forEach(radio => {
                     if (radio.model === radio.label) {

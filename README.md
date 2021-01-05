@@ -17,6 +17,8 @@ Fork自[element-ui](https://github.com/ElemeFE/element)
   - 文本省略组件
 - [New]Description [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/description)
   - 描述列表组件,常见于详情页的信息展示。对于在基于业务逻辑对显示项目进行显示/隐藏控制时，会方便很多。
+- [New]Statistics [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/statistics)
+  - 统计数值组件
 - [New]List [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/list)
 - [New]JsonViewer [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/json-viewer)
 - [Update]Badge [链接](https://bluejfox.github.io/setaria-ui/#/zh-CN/component/badge)

@@ -533,7 +533,7 @@
 | ui:widget | 表单字段的组件类型 | string | password, textarea, select, checkbox, radio  |  — |
 | ui:disabled | 表单字段的组件是否可用 | boolean | - | false |
 | ui:hidden | 表单字段的组件是否可见 | boolean | - | false |
-| ui:options | 表单字段的组件独有属性 | object | ScmUI组件独有属性 | - |
+| ui:options | 表单字段的组件独有属性 | object | UI组件独有属性 | - |
 | ui:colspan | 跨越的列数 | number | - | - |
 
 ### Form Events

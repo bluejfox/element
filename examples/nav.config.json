@@ -138,7 +138,7 @@
             },
             {
               "path": "/json-form",
-              "title": "JsonForm Json表单"
+              "title": "[特色]JsonForm Json表单"
             }
           ]
         },
@@ -175,11 +175,11 @@
             },
             {
               "path": "/list",
-              "title": "List 列表"
+              "title": "[特色]List 列表"
             },
             {
               "path": "/json-viewer",
-              "title": "JsonViewer JSON视图查看"
+              "title": "[特色]JsonViewer JSON视图查看"
             },
             {
               "path": "/avatar",
@@ -273,10 +273,6 @@
               "title": "Collapse 折叠面板"
             },
             {
-              "path": "/template-base-search",
-              "title": "TemplateBaseSearch 检索页面模板"
-            },
-            {
               "path": "/timeline",
               "title": "Timeline 时间线"
             },
@@ -306,11 +302,15 @@
             },
             {
               "path": "/ellipsis",
-              "title": "Ellipsis 文本自动省略号"
+              "title": "[特色]Ellipsis 文本自动省略号"
             },
             {
               "path": "/description",
-              "title": "Description 描述列表"
+              "title": "[特色]Description 描述列表"
+            },
+            {
+              "path": "/statistics",
+              "title": "[特色]Statistics 统计数值"
             }
           ]
         }
