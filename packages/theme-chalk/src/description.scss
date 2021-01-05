@@ -1,0 +1,95 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(description) {
+  text-align: left;
+  table {
+    width: 100%;
+    border-top: $--description-border;
+    
+    thead {
+      tr {
+        th {
+          padding: 0 10px;
+          text-align: left;
+          background-color: #fafafa;
+          border: 1px solid #e9eff2;
+          color: $--color-text-regular;
+        }
+      }
+    }
+    
+    tbody {
+      border: $--description-border;
+      font-size: $--description-font-size;
+      
+      tr {
+        th {
+          padding: 0 10px;
+          font-weight: 400;
+          &:first-child {
+            border-left: $--description-border;
+          }
+        }
+        td {
+          padding: 0 10px;
+        }
+        th, td {
+          color: $--color-text-regular;
+          border-right: $--description-border;
+          border-bottom: $--description-border;
+        }
+        th,
+        td {
+          word-break: break-all;
+        }
+      }
+    }
+  }
+  .el-description-title {
+    height: $--description-item-height;
+    line-height: $--description-item-height;
+  }
+  .el-description-item-label {
+    background-color: #fafafa;
+    text-align: right;
+    height: $--description-item-height;
+    line-height: $--description-item-height;
+  }
+  @include m(medium) {
+    .el-description-item-label {
+      height: $--description-item-medium-height;
+      line-height: $--description-item-medium-height;
+    }
+    .el-description-title {
+      height: $--description-item-medium-height;
+      line-height: $--description-item-medium-height;
+    }
+  }
+  @include m(small) {
+    .el-description-item-label {
+      height: $--description-item-small-height;
+      line-height: $--description-item-small-height;
+    }
+    .el-description-title {
+      height: $--description-item-small-height;
+      line-height: $--description-item-small-height;
+    }
+  }
+  @include m(mini) {
+    .el-description-item-label {
+      height: $--description-item-mini-height;
+      line-height: $--description-item-mini-height;
+    }
+    .el-description-title {
+      height: $--description-item-mini-height;
+      line-height: $--description-item-mini-height;
+    }
+  }
+  .has-title {
+    table {
+      border-top: none;
+    }
+  }
+
+}

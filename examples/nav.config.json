@@ -307,6 +307,10 @@
             {
               "path": "/ellipsis",
               "title": "Ellipsis 文本自动省略号"
+            },
+            {
+              "path": "/description",
+              "title": "Description 描述列表"
             }
           ]
         }

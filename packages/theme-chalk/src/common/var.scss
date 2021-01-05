@@ -1029,3 +1029,25 @@ $--list-vertical-item-meta-margin-bottom: 16px !default;
 $--list-vertical-item-meta-title-margin-bottom: 12px !default;
 $--list-vertical-item-content-margin-bottom: 16px !default;
 $--list-vertical-item-extra-margin-left: 58px !default;
+
+/* ConditionFilter
+-------------------------- */
+$--condition-filter-label-text-color: #33517e !default;
+$--condition-filter-label-text-font-weight: 700 !default;
+$--condition-filter-advanced-multiple-condition-line-height: 28px !default;
+$--condition-filter-label-margin-right: 10px !default;
+$--condition-filter-label-width: 100px !default;
+$--condition-filter-expander-width: 40px !default;
+
+/* Description
+-------------------------- */
+$--description-border: 1px solid #e9eff2 !default;
+$--description-font-size: $--font-size-base !default;
+$--description-item-height: 40px !default;
+$--description-item-medium-height: 36px !default;
+$--description-item-small-height: 32px !default;
+$--description-item-mini-height: 28px !default;
+
+/* TagSelect
+-------------------------- */
+$--tag-select-checkbox-group-split-width: 15px !default;

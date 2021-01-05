@@ -93,6 +93,10 @@ import CascaderPanel from '../packages/cascader-panel/index.js';
 import Drawer from '../packages/drawer/index.js';
 import Popconfirm from '../packages/popconfirm/index.js';
 import Ellipsis from '../packages/ellipsis/index.js';
+import ConditionFilter from '../packages/condition-filter/index.js';
+import Description from '../packages/description/index.js';
+import TagSelect from '../packages/tag-select/index.js';
+import TagSelectItem from '../packages/tag-select-item/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -185,6 +189,10 @@ const components = [
   Drawer,
   Popconfirm,
   Ellipsis,
+  ConditionFilter,
+  Description,
+  TagSelect,
+  TagSelectItem,
   CollapseTransition
 ];
 
@@ -220,7 +228,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '1.5.0',
+  version: '1.5.1',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -317,5 +325,9 @@ export default {
   CascaderPanel,
   Drawer,
   Popconfirm,
-  Ellipsis
+  Ellipsis,
+  ConditionFilter,
+  Description,
+  TagSelect,
+  TagSelectItem
 };

@@ -91,5 +91,9 @@
   "cascader-panel": "./packages/cascader-panel/index.js",
   "drawer": "./packages/drawer/index.js",
   "popconfirm": "./packages/popconfirm/index.js",
-  "ellipsis": "./packages/ellipsis/index.js"
+  "ellipsis": "./packages/ellipsis/index.js",
+  "condition-filter": "./packages/condition-filter/index.js",
+  "description": "./packages/description/index.js",
+  "tag-select": "./packages/tag-select/index.js",
+  "tag-select-item": "./packages/tag-select-item/index.js"
 }

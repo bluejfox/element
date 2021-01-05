@@ -1,0 +1,70 @@
+@import "mixins/mixins";
+@import "mixins/utils";
+@import "common/var";
+
+@include b(tag-select) {
+  overflow: hidden;
+  min-height: 20px;
+  line-height: 20px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: block;
+
+  &.has-expand {
+    padding-right: 50px;
+  }
+
+  &.expanded {
+    max-height: 200px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  .el-checkbox-group {
+    display: inline-block;
+    font-size: 14px;
+    // line-height: 32px;
+    font-weight: 400;
+
+    .el-tag-select-item {
+      margin-right: $--tag-select-checkbox-group-split-width;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  
+  .trigger {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+@include b(tag-select-item) {
+  margin-right: $--tag-select-checkbox-group-split-width;
+  
+  @include b(checkbox-button) {
+    .el-checkbox-button__inner {
+      border: 0;
+      padding: 0;
+      font-size: 12px;
+      color: $--color-black;
+      background: transparent;
+    }
+    
+    &.is-checked {
+      .el-checkbox-button__inner {
+        color: $--color-primary;
+        background: transparent;
+      }
+    }
+    
+    &:first-child {
+      .el-checkbox-button__inner {
+        border-left-width: 0;
+      }
+    }
+  }
+}
