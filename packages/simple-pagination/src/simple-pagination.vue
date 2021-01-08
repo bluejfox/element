@@ -83,17 +83,3 @@
     }
   };
 </script>
-<style>
-  .el-pagination {
-    text-align: right;
-  }
-  .el-pagination .el-button-group {
-    margin-left: 10px;
-  }
-  .el-pagination .el-button-group .el-button:not(:last-child) {
-    margin-right: 0 !important;
-  }
-  .el-pagination .el-button-group .el-button--info:first-child {
-    border-right-color: #bfcbd9 !important;
-  }
-</style>

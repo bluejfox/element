@@ -16,7 +16,7 @@ const isPlay = !!process.env.PLAY_ENV;
 const webpackConfig = {
   mode: process.env.NODE_ENV,
   entry: isProd ? {
-    docs: './examples/entry.js',
+    docs: './examples/entry.js'
     // 'setaria-ui': './src/index.js'
   } : (isPlay ? './examples/play.js' : './examples/entry.js'),
   output: {
@@ -138,7 +138,7 @@ if (isProd) {
   webpackConfig.plugins.push(
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:7].css'
-    }),
+    })
     // new webpack.DefinePlugin({
     //   'process.env.NODE_ENV': JSON.stringify('production')
     // }),
