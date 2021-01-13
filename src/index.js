@@ -98,6 +98,7 @@ import Description from '../packages/description/index.js';
 import TagSelect from '../packages/tag-select/index.js';
 import TagSelectItem from '../packages/tag-select-item/index.js';
 import Statistics from '../packages/statistics/index.js';
+import ProForm from '../packages/pro-form/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 
@@ -195,6 +196,7 @@ const components = [
   TagSelect,
   TagSelectItem,
   Statistics,
+  ProForm,
   CollapseTransition
 ];
 
@@ -230,7 +232,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '1.5.3',
+  version: '1.5.4',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -332,5 +334,6 @@ export default {
   Description,
   TagSelect,
   TagSelectItem,
-  Statistics
+  Statistics,
+  ProForm
 };
