@@ -143,6 +143,15 @@
           ]
         },
         {
+          "groupName": "ProComponent",
+          "list": [
+            {
+              "path": "/pro-form",
+              "title": "ProForm 高级表单"
+            }
+          ]
+        },
+        {
           "groupName": "Data",
           "list": [
             {

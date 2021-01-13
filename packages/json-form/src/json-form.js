@@ -526,8 +526,7 @@ export default {
           {
             'class': [
               `el-form-item-${key}`,
-              'el-json-form-item',
-              ui[UI_HIDDEN] === true ? 'is-hidden' : ''
+              'el-json-form-item'
             ],
             props: {
               label: property.title,
@@ -558,7 +557,7 @@ export default {
       // 自适应设置
       const rowArray = [];
       let colArray = [];
-      let totalSpanCount = 0;
+      // let totalSpanCount = 0;
       for (let index = 0; index < formItemArray.length; index += 1) {
         const formItem = formItemArray[index];
         const itemUISchema = this.uiSchema[formItem.id] || {};
@@ -596,35 +595,42 @@ export default {
             props: {
               span: spanProp,
               xs: 24
+            },
+            style: {
+              display: itemUISchema[UI_HIDDEN] === true ? 'none' : ''
             }
           },
           [formItem.component]
         );
-        totalSpanCount += span;
-        if (totalSpanCount <= 24) {
-          colArray.push(column);
-        }
-        // 已超过最大栅格数的场合，暂不处理当前元素
-        if (totalSpanCount > 24) {
-          index -= 1;
-        }
-        if (totalSpanCount >= 24 || index === formItemArray.length - 1) {
-          const labelWidth = self.$attrs['label-width'];
-          const gutter = (labelWidth === undefined || labelWidth === null) ? 10 : 20;
-          const row = h(
-            `${componentPrefix}-row`,
-            {
-              props: {
-                gutter: gutter
-              }
-            },
-            [...colArray]
-          );
-          rowArray.push(row);
-          colArray = [];
-          totalSpanCount = 0;
-        }
+        colArray.push(column);
+        // totalSpanCount += span;
+        // if (totalSpanCount <= 24) {
+        //   colArray.push(column);
+        // }
+        // // 已超过最大栅格数的场合，暂不处理当前元素
+        // if (totalSpanCount > 24) {
+        //   index -= 1;
+        // }
+        // if (totalSpanCount >= 24 || index === formItemArray.length - 1) {
+        //   // colArray = [];
+        //   totalSpanCount = 0;
+        // }
       }
+      if (this.$slots.formItems) {
+        colArray.push(this.$slots.formItems);
+      }
+      const labelWidth = self.$attrs['label-width'];
+      const gutter = (labelWidth === undefined || labelWidth === null) ? 10 : 20;
+      const row = h(
+        `${componentPrefix}-row`,
+        {
+          props: {
+            gutter: gutter
+          }
+        },
+        [...colArray]
+      );
+      rowArray.push(row);
       formComponents = rowArray;
     } else {
       formComponents = formItemArray.map(item => item.component);
@@ -637,7 +643,7 @@ export default {
         on: formEvents.on,
         ref: 'form'
       },
-      [...formComponents, self.$slots.button]
+      [...formComponents, self.$slots.default, self.$slots.button]
     );
   },
   components: {

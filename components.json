@@ -96,5 +96,6 @@
   "description": "./packages/description/index.js",
   "tag-select": "./packages/tag-select/index.js",
   "tag-select-item": "./packages/tag-select-item/index.js",
-  "statistics": "./packages/statistics/index.js"
+  "statistics": "./packages/statistics/index.js",
+  "pro-form": "./packages/pro-form/index.js"
 }
