@@ -42,18 +42,33 @@ export default {
     },
     afterSubmit: {
       type: Function
+    },
+    expand: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       isSubmiting: false,
       isMounted: false,
-      expand: false,
+      innerExpand: false,
       width: null,
       currentDisplayTotalColSpan: 0,
       totalColSpan: 0,
       isShowModalForm: false
     };
+  },
+  watch: {
+    expand: {
+      immediate: true,
+      handler(val) {
+        this.innerExpand = val;
+      }
+    },
+    innerExpand(val) {
+      this.$emit('update:expand', val);
+    }
   },
   computed: {
     direction() {
@@ -88,7 +103,7 @@ export default {
       }
       this.totalColSpan = 0;
       this.currentDisplayTotalColSpan = 0;
-      const { currentColumns, expand, schema, type, uiSchema } = this;
+      const { currentColumns, innerExpand, schema, type, uiSchema } = this;
       Object.keys(schema.properties).forEach((schemaKey, index) => {
         let uiProperty = uiSchema[schemaKey];
         if (isEmpty(uiSchema[schemaKey])) {
@@ -99,7 +114,7 @@ export default {
           let propertyColspan = uiProperty['ui:colspan'];
           propertyColspan = typeof propertyColspan === 'number' ? propertyColspan : 1;
           // 收起的场合
-          if (!expand) {
+          if (!innerExpand) {
             if (currentColumns === 1 && index === 0) {
               uiProperty['ui:hidden'] = false;
             // 只显示一行表单项目，其余的隐藏
@@ -164,7 +179,7 @@ export default {
       this.width = getStyle(this.$el, 'width');
     },
     handleExpand() {
-      this.expand = !this.expand;
+      this.innerExpand = !this.innerExpand;
     },
     handleSubmit() {
       const { afterSubmit, model, type } = this;
@@ -202,7 +217,7 @@ export default {
       $listeners,
       $slots,
       currentColumns,
-      expand,
+      innerExpand,
       model,
       isMounted,
       isSubmiting,
@@ -222,12 +237,12 @@ export default {
       attrs: $attrs,
       listeners: $listeners
     };
-    // console.log('------------------------------------------', expand);
+    // console.log('------------------------------------------', innerExpand);
     // console.log('当前宽度', widthNumber);
     // console.log('当前每行列数', currentColumns);
     // console.log('元素所占列数总和', currentDisplayTotalColSpan, totalColSpan);
     const getExpandTextLabel = () => {
-      return expand
+      return innerExpand
         ? (<div><i class="el-icon-arrow-up"></i><span>收起</span></div>)
         : (<div><i class="el-icon-arrow-down"></i><span>展开</span></div>);
     };
