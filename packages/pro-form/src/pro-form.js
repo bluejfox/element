@@ -24,6 +24,9 @@ export default {
   name: 'ElProForm',
   componentName: 'ElProForm',
   props: {
+    model: {
+      type: Object
+    },
     type: {
       type: String,
       default: ''
@@ -35,10 +38,14 @@ export default {
     uiSchema: {
       type: Object,
       default: {}
+    },
+    afterSubmit: {
+      type: Function
     }
   },
   data() {
     return {
+      isSubmiting: false,
       isMounted: false,
       expand: false,
       width: null,
@@ -77,7 +84,6 @@ export default {
       if (!this.isMounted) {
         return ret;
       }
-      // console.log('innerUiSchema');
       this.totalColSpan = 0;
       this.currentDisplayTotalColSpan = 0;
       const { currentColumns, expand, schema, type, uiSchema } = this;
@@ -137,7 +143,6 @@ export default {
         return ret;
       }
       const leaveSpan = currentColumns - currentDisplayTotalColSpan % currentColumns - 1;
-      // console.log('currentColumns', currentColumns, 'leaveSpan', leaveSpan);
       ret.offset = leaveSpan * currentColspan;
       return ret;
     }
@@ -160,8 +165,16 @@ export default {
       this.expand = !this.expand;
     },
     handleSubmit() {
+      const { afterSubmit, model } = this;
       this.$refs.proForm.validate((isValid) => {
         if (isValid) {
+          this.isSubmiting = true;
+          if (typeof afterSubmit === 'function') {
+            const result = afterSubmit(model);
+            if (result.then) {
+              result.then(() => { this.isSubmiting = false; });
+            }
+          }
           this.$emit('submit');
         }
       });
@@ -176,15 +189,15 @@ export default {
       $listeners,
       // $slots,
       currentColumns,
-      // currentDisplayTotalColSpan,
       expand,
+      model,
       isMounted,
+      isSubmiting,
       innerUiSchema,
       queryFilterColumnConfig,
       schema,
       totalColSpan,
       type,
-      // widthNumber,
       handleExpand
     } = this;
     if (!isMounted) {
@@ -207,7 +220,7 @@ export default {
       const { handleSubmit, handleReset } = this;
       return (
         <div class="pro-form-control-button-container" slot="button">
-          <el-button type="primary" onClick={handleSubmit}>提交</el-button>
+          <el-button type="primary" onClick={handleSubmit} loading={isSubmiting}>提交</el-button>
           <el-button onClick={handleReset}>重置</el-button>
         </div>
       );
@@ -219,7 +232,7 @@ export default {
       const { handleSubmit, handleReset } = this;
       return (
         <el-col span={queryFilterColumnConfig.span} offset={queryFilterColumnConfig.offset} slot="formItems" style="text-align: right;">
-          <el-button type="primary" onClick={handleSubmit}>查询</el-button>
+          <el-button type="primary" onClick={handleSubmit} loading={isSubmiting}>查询</el-button>
           <el-button onClick={handleReset}>重置</el-button>
           <el-button type="text" onClick={handleExpand}>{totalColSpan >= currentColumns ? getExpandTextLabel() : null}</el-button>
         </el-col>
@@ -237,6 +250,7 @@ export default {
       <ElJsonForm
         ref="proForm"
         class="el-pro-form"
+        model={model}
         schema={schema}
         uiSchema={innerUiSchema}
         columns={currentColumns}
