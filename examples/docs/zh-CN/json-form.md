@@ -262,6 +262,8 @@
             "searchHelp": {
               "type": "string",
               "title": "搜索弹窗"
+            },
+            "customRender": {
             }
           }
         },
@@ -313,6 +315,12 @@
                 message: "数据格式为最多10位整数和4位小数"
               }
             ]
+          },
+          "customRender": {
+            "ui:colspan": 3,
+            render(h) {
+              return (<el-form-item label="自定义项目"><el-button>自定义</el-button></el-form-item>);
+            }
           }
         }
       }

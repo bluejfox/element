@@ -311,237 +311,247 @@ export default {
     if (this.schema && this.schema.properties) {
       Object.keys(this.schema.properties).forEach(key => {
         const ui = this.uiSchema[key] || {};
-        const className = ui[CLASSNAME] || '';
-        let componentTagName = '';
-        let componentProps = {
-          'class': `el-json-form__component ${className}`
-        };
-        const componentChildren = [];
-        const props = {
-          value: self.model[key],
-          disabled: ui[UI_DISABLED] === true
-        };
-        // DOM 属性
-        const domProps = {};
-        // 普通的 HTML attribute
-        const attrs = {};
+        let formItem = null;
         const property = self.schema.properties[key];
-        const events = {
-          on: {},
-          nativeOn: {}
-        };
-        // 因render 函数中没有与 v-model 相应的 api, 实现v-model逻辑。
-        events.on.input = (val) => {
-          this.model[key] = val;
-          this.$emit('change', key, val, self.model);
-        };
-        if (property.enum || property.oneOf || property.anyOf) {
-          if (property.oneOf && ui[UI_WIDGET] === 'radio') {
-            componentTagName = `${componentPrefix}-radio-group`;
-          } else if (property.anyOf && ui[UI_WIDGET] === 'checkbox' && property.type === 'array') {
-            componentTagName = `${componentPrefix}-checkbox-group`;
-          } else {
-            componentTagName = `${componentPrefix}-select`;
-            props.multiple = false;
-          }
-          // 取得选择项一览
-          let list = null;
-          if (property.oneOf) {
-            list = property.oneOf;
-          } else if (property.anyOf) {
-            list = property.anyOf;
+        // type不为空的场合，基于schema进行渲染
+        if (!isEmpty(property.type)) {
+          const className = ui[CLASSNAME] || '';
+          let componentTagName = '';
+          let componentProps = {
+            'class': `el-json-form__component ${className}`
+          };
+          const componentChildren = [];
+          const props = {
+            value: self.model[key],
+            disabled: ui[UI_DISABLED] === true
+          };
+          // DOM 属性
+          const domProps = {};
+          // 普通的 HTML attribute
+          const attrs = {};
+          const events = {
+            on: {},
+            nativeOn: {}
+          };
+          // 因render 函数中没有与 v-model 相应的 api, 实现v-model逻辑。
+          events.on.input = (val) => {
+            this.model[key] = val;
+            this.$emit('change', key, val, self.model);
+          };
+          if (property.enum || property.oneOf || property.anyOf) {
+            if (property.oneOf && ui[UI_WIDGET] === 'radio') {
+              componentTagName = `${componentPrefix}-radio-group`;
+            } else if (property.anyOf && ui[UI_WIDGET] === 'checkbox' && property.type === 'array') {
+              componentTagName = `${componentPrefix}-checkbox-group`;
+            } else {
+              componentTagName = `${componentPrefix}-select`;
+              props.multiple = false;
+            }
+            // 取得选择项一览
+            let list = null;
+            if (property.oneOf) {
+              list = property.oneOf;
+            } else if (property.anyOf) {
+              list = property.anyOf;
+              if (componentTagName === `${componentPrefix}-select`) {
+                props.multiple = true;
+              }
+            } else {
+              list = property.enum.map(e => {
+                return { title: e, 'const': e };
+              });
+            }
+            const optionList = [];
+            list.forEach(item => {
+              optionList.push({
+                label: item.title,
+                value: item.const
+              });
+            });
             if (componentTagName === `${componentPrefix}-select`) {
-              props.multiple = true;
-            }
-          } else {
-            list = property.enum.map(e => {
-              return { title: e, 'const': e };
-            });
-          }
-          const optionList = [];
-          list.forEach(item => {
-            optionList.push({
-              label: item.title,
-              value: item.const
-            });
-          });
-          if (componentTagName === `${componentPrefix}-select`) {
-            optionList.forEach(item => {
-              componentChildren.push(h(
-                `${componentPrefix}-option`,
-                {
-                  props: {
-                    label: item.label,
-                    value: item.value
+              optionList.forEach(item => {
+                componentChildren.push(h(
+                  `${componentPrefix}-option`,
+                  {
+                    props: {
+                      label: item.label,
+                      value: item.value
+                    }
                   }
+                ));
+              });
+            } else if (componentTagName === `${componentPrefix}-radio-group`) {
+              optionList.forEach(item => {
+                componentChildren.push(h(
+                  `${componentPrefix}-radio`,
+                  {
+                    props: {
+                      label: item.value
+                    }
+                  },
+                  [item.label]
+                ));
+              });
+            } else if (componentTagName === `${componentPrefix}-checkbox-group`) {
+              optionList.forEach(item => {
+                componentChildren.push(h(
+                  `${componentPrefix}-checkbox`,
+                  {
+                    props: {
+                      label: item.value
+                    }
+                  },
+                  [item.label]
+                ));
+              });
+            }
+          } else if (property.format === 'date' ||
+            property.format === 'date-time') {
+            componentTagName = `${componentPrefix}-date-picker`;
+            events.on.input = (val) => {
+              this.model[key] = val;
+            };
+            events.on.change = (val) => {
+              this.model[key] = val;
+              this.$emit('change', key, val, self.model);
+            };
+            if (property.type === 'string') {
+              props.type = property.format.replace(/-/g, '');
+            } else if (property.type === 'array') {
+              props.type = `${property.format}-range`.replace(/-/g, '');
+            }
+            if (ui[UI_FORMAT] !== undefined && ui[UI_FORMAT] !== null) {
+              props['value-format'] = ui[UI_FORMAT];
+            } else if (property.format === 'date' || property.format === 'date-range') {
+              props['value-format'] = DEFAULT_DATE_FORMAT;
+            } else if (property.format === 'date-time' || property.format === 'date-time-range') {
+              props['value-format'] = DEFAULT_DATE_TIME_FORMAT;
+            }
+          } else if (property.format === 'time') {
+            componentTagName = `${componentPrefix}-time-picker`;
+            events.on.input = (val) => {
+              this.model[key] = val;
+            };
+            events.on.change = (val) => {
+              this.model[key] = val;
+              this.$emit('change', key, val, self.model);
+            };
+            if (property.type === 'array') {
+              props['is-range'] = true;
+            }
+            if (ui[UI_FORMAT] !== undefined && ui[UI_FORMAT] !== null) {
+              props['value-format'] = ui[UI_FORMAT];
+            } else if (property.format === 'time' || property.format === 'time-range') {
+              props['value-format'] = DEFAULT_TIME_FORMAT;
+            }
+          } else if (property.type === 'string') {
+            componentTagName = `${componentPrefix}-input`;
+            // 组件类型
+            const widgetType = ui[UI_WIDGET];
+            if (widgetType !== undefined) {
+              if (widgetType === 'password') {
+                props.type = 'password';
+              } else if (widgetType === 'textarea') {
+                props.type = 'textarea';
+                const options = ui[UI_OPTIONS] || {};
+                if (typeof options.rows === 'number') {
+                  attrs.rows = options.rows;
                 }
-              ));
-            });
-          } else if (componentTagName === `${componentPrefix}-radio-group`) {
-            optionList.forEach(item => {
-              componentChildren.push(h(
-                `${componentPrefix}-radio`,
-                {
-                  props: {
-                    label: item.value
-                  }
-                },
-                [item.label]
-              ));
-            });
-          } else if (componentTagName === `${componentPrefix}-checkbox-group`) {
-            optionList.forEach(item => {
-              componentChildren.push(h(
-                `${componentPrefix}-checkbox`,
-                {
-                  props: {
-                    label: item.value
-                  }
-                },
-                [item.label]
-              ));
-            });
-          }
-        } else if (property.format === 'date' ||
-          property.format === 'date-time') {
-          componentTagName = `${componentPrefix}-date-picker`;
-          events.on.input = (val) => {
-            this.model[key] = val;
-          };
-          events.on.change = (val) => {
-            this.model[key] = val;
-            this.$emit('change', key, val, self.model);
-          };
-          if (property.type === 'string') {
-            props.type = property.format.replace(/-/g, '');
-          } else if (property.type === 'array') {
-            props.type = `${property.format}-range`.replace(/-/g, '');
-          }
-          if (ui[UI_FORMAT] !== undefined && ui[UI_FORMAT] !== null) {
-            props['value-format'] = ui[UI_FORMAT];
-          } else if (property.format === 'date' || property.format === 'date-range') {
-            props['value-format'] = DEFAULT_DATE_FORMAT;
-          } else if (property.format === 'date-time' || property.format === 'date-time-range') {
-            props['value-format'] = DEFAULT_DATE_TIME_FORMAT;
-          }
-        } else if (property.format === 'time') {
-          componentTagName = `${componentPrefix}-time-picker`;
-          events.on.input = (val) => {
-            this.model[key] = val;
-          };
-          events.on.change = (val) => {
-            this.model[key] = val;
-            this.$emit('change', key, val, self.model);
-          };
-          if (property.type === 'array') {
-            props['is-range'] = true;
-          }
-          if (ui[UI_FORMAT] !== undefined && ui[UI_FORMAT] !== null) {
-            props['value-format'] = ui[UI_FORMAT];
-          } else if (property.format === 'time' || property.format === 'time-range') {
-            props['value-format'] = DEFAULT_TIME_FORMAT;
-          }
-        } else if (property.type === 'string') {
-          componentTagName = `${componentPrefix}-input`;
-          // 组件类型
-          const widgetType = ui[UI_WIDGET];
-          if (widgetType !== undefined) {
-            if (widgetType === 'password') {
-              props.type = 'password';
-            } else if (widgetType === 'textarea') {
-              props.type = 'textarea';
-              const options = ui[UI_OPTIONS] || {};
-              if (typeof options.rows === 'number') {
-                attrs.rows = options.rows;
               }
             }
-          }
-          if (typeof property.maxLength === 'number') {
-            attrs.maxlength = property.maxLength;
-          }
-          componentProps.style = {
-            width: '100%'
-          };
-        } else if (property.type === 'integer' || property.type === 'number') {
-          events.on.input = (val) => {
-            let ret = val;
-            if (typeof val === 'string') {
-              ret = parseFloat(val);
-              if (isNaN(ret)) {
-                ret = null;
+            if (typeof property.maxLength === 'number') {
+              attrs.maxlength = property.maxLength;
+            }
+            componentProps.style = {
+              width: '100%'
+            };
+          } else if (property.type === 'integer' || property.type === 'number') {
+            events.on.input = (val) => {
+              let ret = val;
+              if (typeof val === 'string') {
+                ret = parseFloat(val);
+                if (isNaN(ret)) {
+                  ret = null;
+                }
               }
-            }
-            this.model[key] = ret;
-            this.$emit('change', key, ret, self.model);
-          };
-          componentTagName = `${componentPrefix}-input-number`;
-        }
-        componentProps.props = props;
-        componentProps.on = events.on;
-        componentProps.nativeOn = events.nativeOn;
-        if (Object.keys(domProps).length > 0) {
-          componentProps.domProps = domProps;
-        }
-        if (Object.keys(attrs).length > 0) {
-          componentProps.attrs = attrs;
-        }
-        if (ui[UI_ON]) {
-          const uiOn = ui[UI_ON];
-          // 合并事件定义
-          Object.keys(uiOn).forEach(uiOnKey => {
-            // 自定义事件已被注册的场合，把注册的事件和自定义的事件按顺序执行
-            if (typeof events.on[uiOnKey] === 'function') {
-              events.on[uiOnKey] = () => {
-                events.on[uiOnKey]();
-                uiOn[uiOnKey]();
-              };
-            } else {
-              events.on[uiOnKey] = uiOn[uiOnKey];
-            }
-          });
-        }
-        if (ui[UI_NATIVE_ON]) {
-          const uiNativeOn = ui[UI_NATIVE_ON];
-          // 合并事件定义
-          Object.keys(uiNativeOn).forEach(uiOnKey => {
-            // 自定义事件已被注册的场合，把注册的事件和自定义的事件按顺序执行
-            if (typeof events.on[uiOnKey] === 'function') {
-              events.nativeOn[uiOnKey] = () => {
-                events.nativeOn[uiOnKey]();
-                uiNativeOn[uiOnKey]();
-              };
-            } else {
-              events.nativeOn[uiOnKey] = uiNativeOn[uiOnKey];
-            }
-          });
-        }
-        // 合并ui:options属性至组件属性中
-        // 用户自定义的options属性为最优先
-        const mergedProps = Object.assign({}, componentProps.props, ui[UI_OPTIONS] || {});
-        componentProps.props = mergedProps;
-        const colSpan = ui[UI_COLSPAN];
-        const labelSlot = self.getFormLabelSlot(h, property, self.columnMaxLabelLength, colSpan);
-        const formItem = h(
-          `${componentPrefix}-form-item`,
-          {
-            'class': [
-              `el-form-item-${key}`,
-              'el-json-form-item'
-            ],
-            props: {
-              label: property.title,
-              prop: key
+              this.model[key] = ret;
+              this.$emit('change', key, ret, self.model);
+            };
+            componentTagName = `${componentPrefix}-input-number`;
+          }
+          componentProps.props = props;
+          componentProps.on = events.on;
+          componentProps.nativeOn = events.nativeOn;
+          if (Object.keys(domProps).length > 0) {
+            componentProps.domProps = domProps;
+          }
+          if (Object.keys(attrs).length > 0) {
+            componentProps.attrs = attrs;
+          }
+          if (ui[UI_ON]) {
+            const uiOn = ui[UI_ON];
+            // 合并事件定义
+            Object.keys(uiOn).forEach(uiOnKey => {
+              // 自定义事件已被注册的场合，把注册的事件和自定义的事件按顺序执行
+              if (typeof events.on[uiOnKey] === 'function') {
+                events.on[uiOnKey] = () => {
+                  events.on[uiOnKey]();
+                  uiOn[uiOnKey]();
+                };
+              } else {
+                events.on[uiOnKey] = uiOn[uiOnKey];
+              }
+            });
+          }
+          if (ui[UI_NATIVE_ON]) {
+            const uiNativeOn = ui[UI_NATIVE_ON];
+            // 合并事件定义
+            Object.keys(uiNativeOn).forEach(uiOnKey => {
+              // 自定义事件已被注册的场合，把注册的事件和自定义的事件按顺序执行
+              if (typeof events.on[uiOnKey] === 'function') {
+                events.nativeOn[uiOnKey] = () => {
+                  events.nativeOn[uiOnKey]();
+                  uiNativeOn[uiOnKey]();
+                };
+              } else {
+                events.nativeOn[uiOnKey] = uiNativeOn[uiOnKey];
+              }
+            });
+          }
+          // 合并ui:options属性至组件属性中
+          // 用户自定义的options属性为最优先
+          const mergedProps = Object.assign({}, componentProps.props, ui[UI_OPTIONS] || {});
+          componentProps.props = mergedProps;
+          const colSpan = ui[UI_COLSPAN];
+          const labelSlot = self.getFormLabelSlot(h, property, self.columnMaxLabelLength, colSpan);
+          formItem = h(
+            `${componentPrefix}-form-item`,
+            {
+              'class': [
+                `el-form-item-${key}`,
+                'el-json-form-item'
+              ],
+              props: {
+                label: property.title,
+                prop: key
+              },
+              scopedSlots: {
+                label: labelSlot
+              }
             },
-            scopedSlots: {
-              label: labelSlot
-            }
-          },
-          [h(componentTagName, componentProps, componentChildren)]
-        );
-        formItemArray.push({
-          id: key,
-          component: formItem
-        });
+            [h(componentTagName, componentProps, componentChildren)]
+          );
+        } else if (typeof ui.render === 'function') {
+          console.log(ui);
+          formItem = ui.render(h);
+          console.log(formItem);
+        }
+        if (!isEmpty(formItem)) {
+          formItemArray.push({
+            id: key,
+            component: formItem
+          });
+        }
       });
     }
     const { $attrs } = this;

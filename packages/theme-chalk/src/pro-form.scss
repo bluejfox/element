@@ -1,0 +1,9 @@
+@import "mixins/mixins";
+@import "mixins/utils";
+@import "common/var";
+
+@include b(pro-form) {
+  .pro-form-control-button-container {
+    text-align: center;
+  }
+}

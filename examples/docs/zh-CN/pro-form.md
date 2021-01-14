@@ -1,23 +1,26 @@
-## JsonForm 动态表单
+## ProForm 高级表单
+
+ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设置，帮助我们快速的开发一个表单。同时添加一些默认行为，让我们的表单默认好用。
 
 根据 [JSON-Schema](https://json-schema.org/) 可渲染对应的表单用于数据的展示和编辑
 
-**JSON-Schema的文档稍后整理，在此之前可参考 [链接](https://imweb.io/topic/56b1b4bb5c49f9d377ed8ee9)**
+### 何时使用
 
-### 典型表单
+当你想快速实现一个表单但不想花太多时间去布局时 ProForm 是最好的选择。
 
-动态表单的基本使用
 
-::: demo 根据标准JSON-Schema生成对应的表单
+### 查询筛选
+
+::: demo 设置 `type` 为 `queryFilter` 即可渲染查询筛选，主要用于查询页面的筛选条件。
 ```html
 <div>
   <el-pro-form
-    ref="form1"
+    type="queryFilter"
     :model="form1"
     :schema="schema"
     :ui-schema="uiSchema"
     label-width="100px"
-    @change="onChange">
+    @submit="onSubmit">
   </el-pro-form>
   <p>result:</p>
   <div>
@@ -43,9 +46,7 @@
         },
         schema: {
           "required": [
-            "firstName",
-            "lastName",
-            "age"
+            "firstName"
           ],
           "properties": {
             "firstName": {
@@ -106,32 +107,15 @@
           }
         },
         uiSchema: {
+          "comment": {
+            "ui:colspan": 2
+          }
         }
       }
     },
     methods: {
-      onChange(key, value, object) {
-        console.log(key, value, object);
-        // if(object.profession === 2){
-        //   this.schema.required=[
-        //     "firstName",
-        //     "lastName",
-        //     "age","interest"
-        //   ]
-        // }else{
-        //     this.schema.required=[
-        //     "firstName",
-        //     "lastName",
-        //     "age","comment"
-        //   ]
-        // }
-      },
-      onSubmitForm1() {
-        this.$refs.form1.validate((isValid) => {
-          if (isValid) {
-            this.$message.success('表单提交成功');
-          }
-        });
+      onSubmit() {
+        this.$message.success('执行查询操作');
       }
     }
   }
@@ -139,7 +123,7 @@
 ```
 :::
 
-### Form Attributes
+### ProForm Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
