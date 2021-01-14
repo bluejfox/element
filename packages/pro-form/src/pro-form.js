@@ -1,3 +1,4 @@
+import ElDialog from 'setaria-ui/packages/dialog/src/component';
 import ElJsonForm from 'setaria-ui/packages/json-form/src/json-form';
 import { getStyle } from 'setaria-ui/src/utils/dom';
 import { arrayFind, isEmpty } from 'setaria-ui/src/utils/util';
@@ -50,7 +51,8 @@ export default {
       expand: false,
       width: null,
       currentDisplayTotalColSpan: 0,
-      totalColSpan: 0
+      totalColSpan: 0,
+      isShowModalForm: false
     };
   },
   computed: {
@@ -165,14 +167,19 @@ export default {
       this.expand = !this.expand;
     },
     handleSubmit() {
-      const { afterSubmit, model } = this;
+      const { afterSubmit, model, type } = this;
       this.$refs.proForm.validate((isValid) => {
         if (isValid) {
           this.isSubmiting = true;
           if (typeof afterSubmit === 'function') {
             const result = afterSubmit(model);
             if (result.then) {
-              result.then(() => { this.isSubmiting = false; });
+              result.then(() => {
+                this.isSubmiting = false;
+                if (type === 'modalForm' && this.isShowModalForm) {
+                  this.isShowModalForm = false;
+                }
+              });
             }
           }
           this.$emit('submit');
@@ -181,24 +188,32 @@ export default {
     },
     handleReset() {
       this.$refs.proForm.resetFields();
+    },
+    handleModalButtonClick(evt) {
+      console.log('handleModalButtonClick', evt);
+      // evt.preventDefault();
+      // evt.stopPropagation();
+      this.isShowModalForm = !this.isShowModalForm;
     }
   },
   render(h) {
     const {
       $attrs,
       $listeners,
-      // $slots,
+      $slots,
       currentColumns,
       expand,
       model,
       isMounted,
       isSubmiting,
+      isShowModalForm,
       innerUiSchema,
       queryFilterColumnConfig,
       schema,
       totalColSpan,
       type,
-      handleExpand
+      handleExpand,
+      handleModalButtonClick
     } = this;
     if (!isMounted) {
       return (<div></div>);
@@ -246,7 +261,7 @@ export default {
       }
       return null;
     };
-    return (
+    const formRender = (
       <ElJsonForm
         ref="proForm"
         class="el-pro-form"
@@ -258,8 +273,25 @@ export default {
         { getControlButton() }
       </ElJsonForm>
     );
+    const modalDialog = (
+      <ElDialog
+        visible={isShowModalForm}
+        {...attributes}>
+        {formRender}
+        <span slot="footer" class="dialog-footer">
+          {getNormalFormControlContainer()}
+        </span>
+      </ElDialog>
+    );
+    return this.type === 'modalForm' ? (
+      <div class="el-modal-form">
+        <div onClick={handleModalButtonClick}>{$slots.default}</div>
+        {modalDialog}
+      </div>
+    ) : formRender;
   },
   components: {
+    ElDialog,
     ElJsonForm
   }
 };

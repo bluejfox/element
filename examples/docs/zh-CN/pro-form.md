@@ -8,6 +8,124 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
 
 当你想快速实现一个表单但不想花太多时间去布局时 ProForm 是最好的选择。
 
+### 基本使用
+
+与 `JSON-FORM` 的不同之处为在其基础上增加了响应式功能，对于常见的分辨率进行了 `columns` 的预设置
+
+::: demo
+```html
+<div>
+  <el-pro-form
+    :model="form1"
+    :schema="schema"
+    :ui-schema="uiSchema"
+    label-width="100px"
+    :after-submit="onSubmit">
+  </el-pro-form>
+  <p>result:</p>
+  <div>
+    {{ this.form1 }}
+  </div>
+</div>
+<script>
+  export default {
+    data() {
+      return {
+        form1: {
+          firstName: 'first',
+          lastName: 'last',
+          password: '',
+          age: null,
+          gender: 2,
+          birth: '',
+          interest: [],
+          comment: '',
+          profession: '',
+          dateTime: '',
+          time: '',
+        },
+        schema: {
+          "required": [
+            "firstName",
+            "lastName",
+            "age"
+          ],
+          "properties": {
+            "firstName": {
+              "description": "First Name(名)",
+              "type": "string",
+              "title": "First name",
+              "minLength": 3,
+              "maxLength": 6
+            },
+            "lastName": {
+              "type": "string",
+              "title": "Last name"
+            },
+            "password": {
+              "type": "string",
+              "title": "password"
+            },
+            "age": {
+              "type": "integer",
+              "title": "Age"
+            },
+            "gender": {
+              "type": "integer",
+              "title": "gender",
+              "oneOf": [
+                {"const": 1, "title": "Male"},
+                {"const": 2, "title": "FeMale"}
+              ]
+            },
+            "birth": {
+              "type": "string",
+              "title": "birth",
+              "format": "date"
+            },
+            "time": {
+              "type": "array",
+              "title": "time",
+              "format": "time"
+            },
+            "dateTime": {
+              "type": "string",
+              "title": "dateTime",
+              "format": "date-time"
+            },
+            "interest": {
+              "type": "array",
+              "title": "interest",
+              "anyOf": [
+                {"const": "1", "title": "Game"},
+                {"const": "2", "title": "Music"},
+                {"const": "3", "title": "Sport"}
+              ]
+            },
+            "comment": {
+              "type": "string",
+              "title": "comment"
+            }
+          }
+        },
+        uiSchema: {
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            this.$message.success('表单提交成功');
+            resolve();
+          }, 1000);
+        });
+      }
+    }
+  }
+</script>
+```
+:::
 
 ### 查询筛选
 
@@ -20,7 +138,7 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
     :schema="schema"
     :ui-schema="uiSchema"
     label-width="100px"
-    @submit="onSubmit">
+    :after-submit="onSubmit">
   </el-pro-form>
   <p>result:</p>
   <div>
@@ -115,7 +233,133 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
     },
     methods: {
       onSubmit() {
-        this.$message.success('执行查询操作');
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            this.$message.success('查询执行成功');
+            resolve();
+          }, 1000);
+        });
+      }
+    }
+  }
+</script>
+```
+:::
+
+### Modal表单
+
+::: demo
+```html
+<div>
+  <el-pro-form
+    type="modalForm"
+    :model="form1"
+    :schema="schema"
+    :ui-schema="uiSchema"
+    label-width="100px"
+    :after-submit="onSubmit"
+    title="新建表单">
+    <el-button type="primary">新建表单</el-button>
+  </el-pro-form>
+  <p>result:</p>
+  <div>
+    {{ this.form1 }}
+  </div>
+</div>
+<script>
+  export default {
+    data() {
+      return {
+        form1: {
+          firstName: 'first',
+          lastName: 'last',
+          password: '',
+          age: null,
+          gender: 2,
+          birth: '',
+          interest: [],
+          comment: '',
+          profession: '',
+          dateTime: '',
+          time: '',
+        },
+        schema: {
+          "required": [
+            "firstName"
+          ],
+          "properties": {
+            "firstName": {
+              "description": "First Name(名)",
+              "type": "string",
+              "title": "First name",
+              "minLength": 3,
+              "maxLength": 6
+            },
+            "lastName": {
+              "type": "string",
+              "title": "Last name"
+            },
+            "password": {
+              "type": "string",
+              "title": "password"
+            },
+            "age": {
+              "type": "integer",
+              "title": "Age"
+            },
+            "gender": {
+              "type": "integer",
+              "title": "gender",
+              "oneOf": [
+                {"const": 1, "title": "Male"},
+                {"const": 2, "title": "FeMale"}
+              ]
+            },
+            "birth": {
+              "type": "string",
+              "title": "birth",
+              "format": "date"
+            },
+            "time": {
+              "type": "array",
+              "title": "time",
+              "format": "time"
+            },
+            "dateTime": {
+              "type": "string",
+              "title": "dateTime",
+              "format": "date-time"
+            },
+            "interest": {
+              "type": "array",
+              "title": "interest",
+              "anyOf": [
+                {"const": "1", "title": "Game"},
+                {"const": "2", "title": "Music"},
+                {"const": "3", "title": "Sport"}
+              ]
+            },
+            "comment": {
+              "type": "string",
+              "title": "comment"
+            }
+          }
+        },
+        uiSchema: {
+          "comment": {
+            "ui:colspan": 2
+          }
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            this.$message.success('表单提交成功');
+            resolve();
+          }, 1000);
+        });
       }
     }
   }
