@@ -26,6 +26,7 @@
       @blur="focus = false"
     >
     <span
+      ref="radioLabel"
       class="el-radio-button__inner"
       :style="value === label ? activeStyle : null"
       @keydown.stop>
@@ -119,6 +120,10 @@
         this.$nextTick(() => {
           this.dispatch('ElRadioGroup', 'handleChange', this.value);
         });
+      },
+      getDisplayLabel() {
+        return this.$refs.radioLabel ? this.$refs.radioLabel.innerHTML.replace('<!---->', '')
+          : '';
       }
     }
   };

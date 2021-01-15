@@ -36,7 +36,7 @@
         tabindex="-1"
       >
     </span>
-    <span class="el-radio__label" @keydown.stop>
+    <span ref="radioLabel" class="el-radio__label" @keydown.stop>
       <slot></slot>
       <template v-if="!$slots.default">{{label}}</template>
     </span>
@@ -140,6 +140,9 @@
           this.$emit('change', this.model);
           this.isGroup && this.dispatch('ElRadioGroup', 'handleChange', this.model);
         });
+      },
+      getDisplayLabel() {
+        return this.$refs.radioLabel.innerHTML.replace('<!---->', '');
       }
     }
   };

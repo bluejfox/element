@@ -48,7 +48,6 @@
 <script>
   export default {
     name: 'ElButton',
-
     inject: {
       elForm: {
         default: ''
@@ -120,6 +119,11 @@
       },
       handleClick(evt) {
         this.$emit('click', evt);
+      },
+      getDisplayLabel() {
+        // 图标按钮没有文字
+        return (this.$slots.default && this.$slots.default[0] && this.$slots.default[0].text) ||
+          this.icon;
       }
     }
   };

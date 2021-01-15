@@ -101,6 +101,7 @@ import Statistics from '../packages/statistics/index.js';
 import ProForm from '../packages/pro-form/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
+import eventManager from 'setaria-ui/src/mixins/event-manager';
 
 const components = [
   Pagination,
@@ -223,7 +224,9 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
-
+  Vue.mixin({
+    ...eventManager
+  });
 };
 
 /* istanbul ignore if */

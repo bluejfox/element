@@ -834,6 +834,13 @@
         } else {
           return getValueByPath(item.value, this.valueKey);
         }
+      },
+
+      getDisplayLabel() {
+        if (this.options && this.options[this.hoverIndex]) {
+          return this.options[this.hoverIndex].label;
+        }
+        return '';
       }
     },
 

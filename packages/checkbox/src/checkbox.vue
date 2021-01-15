@@ -201,6 +201,16 @@
             this.dispatch('ElCheckboxGroup', 'change', [this._checkboxGroup.value]);
           }
         });
+      },
+      getDisplayLabel() {
+        // 图标按钮没有文字
+        let ret = this.$slots.default && this.$slots.default[0] && this.$slots.default[0].text;
+        if (ret === undefined || ret === null) {
+          if (this.label) {
+            ret = this.label;
+          }
+        }
+        return ret;
       }
     },
 
