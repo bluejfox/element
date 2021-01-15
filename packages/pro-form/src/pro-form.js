@@ -204,6 +204,9 @@ export default {
     handleReset() {
       this.$refs.proForm.resetFields();
     },
+    handleCancel() {
+      this.isShowModalForm = true;
+    },
     handleModalButtonClick(evt) {
       console.log('handleModalButtonClick', evt);
       // evt.preventDefault();
@@ -246,6 +249,9 @@ export default {
         ? (<div><i class="el-icon-arrow-up"></i><span>收起</span></div>)
         : (<div><i class="el-icon-arrow-down"></i><span>展开</span></div>);
     };
+    /**
+     * 正常表单的操作区域
+     */
     const getNormalFormControlContainer = () => {
       const { handleSubmit, handleReset } = this;
       return (
@@ -268,6 +274,18 @@ export default {
         </el-col>
       );
     };
+    /**
+     * ModalForm的操作区域
+     */
+    const getModalFormControlContainer = () => {
+      const { handleSubmit, handleCancel } = this;
+      return (
+        <div class="pro-form-control-button-container" slot="button">
+          <el-button onClick={handleCancel}>取消</el-button>
+          <el-button type="primary" onClick={handleSubmit} loading={isSubmiting}>提交</el-button>
+        </div>
+      );
+    };
     const getControlButton = () => {
       if (isEmpty(type)) {
         return getNormalFormControlContainer();
@@ -288,13 +306,19 @@ export default {
         { getControlButton() }
       </ElJsonForm>
     );
+    const onListener = {
+      'update:visible': (val) => {
+        this.isShowModalForm = val;
+      }
+    };
     const modalDialog = (
       <ElDialog
         visible={isShowModalForm}
-        {...attributes}>
+        {...attributes}
+        {...{on: onListener }}>
         {formRender}
         <span slot="footer" class="dialog-footer">
-          {getNormalFormControlContainer()}
+          {getModalFormControlContainer()}
         </span>
       </ElDialog>
     );
