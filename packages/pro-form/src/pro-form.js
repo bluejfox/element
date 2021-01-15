@@ -127,22 +127,19 @@ export default {
           } else {
             uiProperty['ui:hidden'] = false;
           }
+          const isCurrentRowEnough = currentColumns - (this.currentDisplayTotalColSpan % currentColumns) < propertyColspan;
+          if (propertyColspan > currentColumns) {
+            propertyColspan = currentColumns;
+          }
           // 隐藏的项目不统计
           if (uiProperty['ui:hidden'] !== true) {
-            if (propertyColspan > currentColumns) {
-              propertyColspan = currentColumns;
-            }
-            if (currentColumns - (this.currentDisplayTotalColSpan % currentColumns) < propertyColspan) {
+            if (isCurrentRowEnough) {
               // 如果当前行空余位置放不下，那么折行
               this.currentDisplayTotalColSpan += currentColumns - (this.currentDisplayTotalColSpan % currentColumns);
             }
             this.currentDisplayTotalColSpan += propertyColspan;
           }
-          if (propertyColspan > currentColumns) {
-            propertyColspan = currentColumns;
-          }
-          if (currentColumns - (this.totalColSpan % currentColumns) < propertyColspan) {
-            // 如果当前行空余位置放不下，那么折行
+          if (isCurrentRowEnough) {
             this.totalColSpan += currentColumns - (this.totalColSpan % currentColumns);
           }
           this.totalColSpan += propertyColspan;
