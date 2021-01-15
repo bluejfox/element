@@ -68,6 +68,9 @@ export default {
     },
     innerExpand(val) {
       this.$emit('update:expand', val);
+    },
+    isShowModalForm(val) {
+      this.$emit('visibleChange', val);
     }
   },
   computed: {
@@ -202,7 +205,7 @@ export default {
       this.$refs.proForm.resetFields();
     },
     handleCancel() {
-      this.isShowModalForm = true;
+      this.isShowModalForm = false;
     },
     handleModalButtonClick(evt) {
       console.log('handleModalButtonClick', evt);
