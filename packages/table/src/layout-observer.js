@@ -56,6 +56,7 @@ export default {
       for (let i = 0, j = cols.length; i < j; i++) {
         const col = cols[i];
         col.setAttribute('width', layout.scrollY ? layout.gutterWidth : '0');
+        col.style.display = layout.scrollY ? '' : 'none';
       }
       const ths = this.$el.querySelectorAll('th.gutter');
       for (let i = 0, j = ths.length; i < j; i++) {
