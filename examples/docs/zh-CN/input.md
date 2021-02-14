@@ -254,6 +254,7 @@ export default {
 ```html
 <div class="demo-input-size">
   <el-input
+    size="large"
     placeholder="请输入内容"
     suffix-icon="el-icon-date"
     v-model="input1">

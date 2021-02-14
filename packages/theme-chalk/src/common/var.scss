@@ -16,7 +16,7 @@ $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 /* Color
 -------------------------- */
 /// color|1|Brand Color|0
-$--color-primary: #409EFF !default;
+$--color-primary: #40A9FF !default;
 /// color|1|Background Color|4
 $--color-white: #FFFFFF !default;
 /// color|1|Background Color|4
@@ -80,10 +80,10 @@ $--link-hover-color: $--color-primary !default;
 -------------------------- */
 $--border-width-base: 1px !default;
 $--border-style-base: solid !default;
-$--border-color-hover: $--color-text-placeholder !default;
+$--border-color-hover: $--color-primary !default;
 $--border-base: $--border-width-base $--border-style-base $--border-color-base !default;
 /// borderRadius|1|Radius|0
-$--border-radius-base: 4px !default;
+$--border-radius-base: 2px !default;
 /// borderRadius|1|Radius|0
 $--border-radius-small: 2px !default;
 /// borderRadius|1|Radius|0
@@ -481,6 +481,8 @@ $--input-small-height: 32px !default;
 $--input-mini-font-size: 12px !default;
 /// height||Other|4
 $--input-mini-height: 28px !default;
+$--input-padding: 0 11px !default;
+$--input-textarea-padding: 4px 11px !default;
 
 /* Cascader
 -------------------------- */
@@ -1051,3 +1053,8 @@ $--description-item-mini-height: 28px !default;
 /* TagSelect
 -------------------------- */
 $--tag-select-checkbox-group-split-width: 15px !default;
+
+/* ProTable
+-------------------------- */
+$--pro-table-header-background-color: #fafafa !default;
+$--pro-table-pagination-height: 32px !default;

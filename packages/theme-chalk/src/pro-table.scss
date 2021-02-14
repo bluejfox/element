@@ -1,0 +1,39 @@
+@import "mixins/mixins";
+@import "mixins/utils";
+@import "common/var";
+
+@include b(pro-table) {
+  .el-card__header {
+    border-bottom: 0;
+    .el-pro-table__header__title {
+      display: inline-block;
+      height: 28px;
+      line-height: 28px;
+    }
+  }
+  .el-card__body {
+    padding-top: 0;
+  }
+  .el-table {
+    .el-table__header-wrapper {
+      .el-table__header {
+        thead {
+          tr {
+            th {
+              background-color: $--pro-table-header-background-color;
+            }
+          }
+        }
+      }
+    }
+  }
+  .el-pro-table__pagination {
+    line-height: $--pro-table-pagination-height;
+    height: $--pro-table-pagination-height;
+    margin-top: 20px;
+
+    .el-pagination {
+      float: right;
+    }
+  }
+}

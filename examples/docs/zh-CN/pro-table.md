@@ -1,52 +1,39 @@
-## ProForm 高级表单
+## ProTable 高级表格
 
-ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设置，帮助我们快速的开发一个表单。同时添加一些默认行为，让我们的表单默认好用。
+`ProTable` 的诞生是为了解决项目中需要写很多 table 的样板代码的问题，所以在其中做了封装了很多常用的逻辑。这些封装可以简单的分类为预设行为与预设逻辑。
+
+依托于 `ProForm` `的能力，ProForm` 拥有多种形态，可以切换查询表单类型，设置变形成为一个简单的 Form 表单，执行新建等功能。
 
 根据 [JSON-Schema](https://json-schema.org/) 可渲染对应的表单用于数据的展示和编辑
 
 ### 何时使用
 
-当你想快速实现一个表单但不想花太多时间去布局时 ProForm 是最好的选择。
+当你的表格需要与服务端进行交互或者需要多种单元格样式时，`ProTable` 是不二选择。
 
 ### 基本使用
-
-与 `JSON-FORM` 的不同之处为在其基础上增加了响应式功能，对于常见的分辨率进行了 `columns` 的预设置
 
 ::: demo
 ```html
 <div>
-  <el-pro-form
-    :model="form1"
+  <el-pro-table
+    ref="proTable"
+    height="600"
     :schema="schema"
-    :ui-schema="uiSchema"
-    label-width="100px"
-    :after-submit="onSubmit">
-  </el-pro-form>
-  <p>result:</p>
-  <div>
-    {{ this.form1 }}
-  </div>
+    :request="onRequest">
+    <div slot="toolbar">
+      <el-button type="primary" size="mini" icon="el-icon-plus">新建</el-button>
+    </div>
+  </el-pro-table>
 </div>
 <script>
+  const total = parseInt(Math.random() * 100, 10);
+
   export default {
     data() {
       return {
-        form1: {
-          id: '',
-          password: '',
-          age: null,
-          gender: 2,
-          birth: '',
-          interest: [],
-          comment: '',
-          profession: '',
-          dateTime: '',
-          time: '',
-        },
+        tableData: [
+        ],
         schema: {
-          "required": [
-            "id"
-          ],
           "properties": {
             "id": {
               "description": "用户ID",
@@ -54,10 +41,6 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
               "title": "用户ID",
               "minLength": 3,
               "maxLength": 6
-            },
-            "password": {
-              "type": "string",
-              "title": "密码"
             },
             "age": {
               "type": "integer",
@@ -94,14 +77,17 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
                 {"const": "2", "title": "音乐"},
                 {"const": "3", "title": "运动"}
               ]
-            },
-            "comment": {
-              "type": "string",
-              "title": "备注"
             }
           }
         },
         uiSchema: {
+          "birth": {
+            "ui:options": {
+              formatter(row, column, value) {
+                return value.replace(/\-/g, '/');
+              }
+            }
+          },
           "interest": {
             "ui:colspan": 2
           },
@@ -114,13 +100,33 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
         }
       }
     },
+    mounted() {
+      this.$refs.proTable.fetch();
+    },
     methods: {
-      onSubmit() {
+      onRequest(params) {
+        console.log(params);
+        const { pageNum, pageSize } = params;
+        const tableData = [];
+        const startIndex = ((pageNum - 1) * pageSize) + 1;
+        const endIndex = (pageNum * pageSize) > total ? total : (pageNum * pageSize);
+        for (let i = startIndex; i <= endIndex; i++) {
+          tableData.push({
+            no: i,
+            id: `zhangsan${i}`,
+            age: parseInt(Math.random() * 100, 10),
+            gender: (parseInt(Math.random() * 10, 10) % 2) + 1,
+            birth: '1990-10-01',
+            interest: '1'
+          });
+        }
         return new Promise((resolve) => {
           setTimeout(() => {
-            this.$message.success('表单提交成功');
-            resolve();
-          }, 1000);
+            resolve({
+              data: tableData,
+              total
+            });
+          }, 2000);
         });
       }
     }

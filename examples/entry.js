@@ -17,7 +17,9 @@ import './assets/styles/common.css';
 import './assets/styles/fonts/style.css';
 import icon from './icon.json';
 
-Vue.use(Element);
+Vue.use(Element, {
+  size: 'small'
+});
 Vue.use(VueRouter);
 Vue.component('demo-block', demoBlock);
 Vue.component('main-footer', MainFooter);

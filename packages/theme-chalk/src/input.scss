@@ -11,7 +11,7 @@
   @include e(inner) {
     display: block;
     resize: vertical;
-    padding: 5px 15px;
+    padding: $--input-textarea-padding;
     line-height: 1.5;
     box-sizing: border-box;
     width: 100%;
@@ -116,7 +116,7 @@
     height: $--input-height;
     line-height: $--input-height;
     outline: none;
-    padding: 0 15px;
+    padding: $--input-padding;
     transition: $--border-transition-base;
     width: 100%;
 

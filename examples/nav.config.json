@@ -147,7 +147,11 @@
           "list": [
             {
               "path": "/pro-form",
-              "title": "ProForm 高级表单"
+              "title": "[特色]ProForm 高级表单"
+            },
+            {
+              "path": "/pro-table",
+              "title": "[特色]ProTable 高级表格"
             }
           ]
         },
@@ -320,6 +324,10 @@
             {
               "path": "/statistics",
               "title": "[特色]Statistics 统计数值"
+            },
+            {
+              "path": "/condition-filter",
+              "title": "ConditionFilter"
             }
           ]
         }
