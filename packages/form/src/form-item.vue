@@ -14,6 +14,9 @@
       :update-all="form.labelWidth === 'auto'">
       <label :for="labelFor" class="el-form-item__label" :style="labelStyle" v-if="label || $slots.label">
         <slot name="label">{{label + form.labelSuffix}}</slot>
+        <el-tooltip class="label__tooltip" :content="tooltip" placement="top" v-if="tooltip">
+          <i class="el-icon-question"></i>
+        </el-tooltip>
       </label>
     </label-wrap>
     <div class="el-form-item__content" :style="contentStyle">
@@ -43,6 +46,7 @@
   import emitter from 'setaria-ui/src/mixins/emitter';
   import objectAssign from 'setaria-ui/src/utils/merge';
   import { noop, getPropByPath } from 'setaria-ui/src/utils/util';
+  import ElTooltip from 'setaria-ui/packages/tooltip';
   import LabelWrap from './label-wrap';
   export default {
     name: 'ElFormItem',
@@ -61,7 +65,8 @@
 
     components: {
       // use this component to calculate auto width1
-      LabelWrap
+      LabelWrap,
+      ElTooltip
     },
 
     props: {
@@ -85,7 +90,8 @@
         type: Boolean,
         default: true
       },
-      size: String
+      size: String,
+      tooltip: String
     },
     watch: {
       error: {
@@ -303,6 +309,7 @@
       }
     },
     mounted() {
+      console.log(this.labelWidth);
       if (this.prop) {
         this.dispatch('ElForm', 'el.form.addField', [this]);
 
