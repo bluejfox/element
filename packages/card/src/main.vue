@@ -128,7 +128,7 @@
           if (e.target !== this.$refs.header && parentNodeList.length > 0) {
             if (parentNodeList[0] === this.$refs.headerContainer ||
               parentNodeList[0] === this.$refs.header) {
-                triggerExpand = true;
+              triggerExpand = true;
             }
           }
           // 自定义header slot插槽的场合
