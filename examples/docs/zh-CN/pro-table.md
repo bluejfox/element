@@ -17,10 +17,9 @@
 <div>
   <el-pro-table
     ref="proTable"
-    height="600"
     :schema="schema"
     :request="onRequest">
-    <div slot="toolbar">
+    <div slot="action">
       <el-button type="primary" size="mini" icon="el-icon-plus">新建</el-button>
     </div>
   </el-pro-table>

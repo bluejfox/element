@@ -2,18 +2,53 @@
 @import "mixins/utils";
 @import "common/var";
 
-@include b(pro-table) {
-  .el-card__header {
-    border-bottom: 0;
-    .el-pro-table__header__title {
-      display: inline-block;
-      height: 28px;
-      line-height: 28px;
+.pro-table__column-setting-tree {
+  & > .el-checkbox {
+    & > .el-checkbox__label {
+      padding-left: 8px;
+    }
+    .el-checkbox__input.is-checked + .el-checkbox__label {
+      color: $--checkbox-font-color;
     }
   }
-  .el-card__body {
-    padding-top: 0;
+  & > .el-tree {
+    & > .el-tree-node {
+      .el-tree-node__expand-icon {
+        display: none;
+      }
+    }
   }
+}
+
+@include b(pro-table) {
+  @include e(header) {
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 12px;
+
+    & .header__title,
+    & .header__action {
+      display: inline-block;
+    }
+
+    & .header__action {
+      float: right;
+
+      & > div {
+        display: inline-block;
+      }
+      .action__toolbar {
+        display: inline-block;
+        font-size: 18px;
+
+        & .column-setting {
+          margin-left: 4px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
   .el-table {
     .el-table__header-wrapper {
       .el-table__header {

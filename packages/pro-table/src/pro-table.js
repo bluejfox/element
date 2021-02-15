@@ -1,7 +1,11 @@
 import ElCard from 'setaria-ui/packages/card';
+import ElCheckbox from 'setaria-ui/packages/checkbox';
 import ElPagination from 'setaria-ui/packages/pagination';
+import ElPopover from 'setaria-ui/packages/popover';
 import ElTable from 'setaria-ui/packages/table';
 import ElTableColumn from 'setaria-ui/packages/table-column';
+import ElTooltip from 'setaria-ui/packages/tooltip';
+import ElTree from 'setaria-ui/packages/tree';
 import { arrayFind, getValueByPath, isEmpty } from 'setaria-ui/src/utils/util';
 
 /**
@@ -30,9 +34,13 @@ export default {
   name: 'ElProTable',
   components: {
     ElCard,
+    ElCheckbox,
     ElPagination,
+    ElPopover,
     ElTable,
-    ElTableColumn
+    ElTableColumn,
+    ElTooltip,
+    ElTree
   },
   props: {
     schema: {
@@ -98,10 +106,30 @@ export default {
       innerTotal: 0,
       current: 0,
       currentPageSize: 0,
-      isLoading: false
+      isLoading: false,
+      columnSettingKeys: [],
+      columnSettingCheckedKeys: []
     };
   },
   watch: {
+    schema: {
+      immediate: true,
+      handler(val) {
+        if (this.columnSettingKeys.length === 0) {
+          this.columnSettingKeys = Object.keys(val.properties).map((key) => {
+            return {
+              key,
+              ...val.properties[key]
+            };
+          });
+        }
+        if (this.columnSettingCheckedKeys.length === 0) {
+          // 初始化，默认显示全部列
+          this.columnSettingCheckedKeys = this.columnSettingKeys.map(item => item.key);
+        }
+        console.log(this.columnSettingKeys, this.columnSettingCheckedKeys);
+      }
+    },
     tableData: {
       immediate: true,
       handler(val) {
@@ -151,14 +179,19 @@ export default {
         if (typeof formatter !== 'function') {
           formatter = createFormatter(property);
         }
-        console.log(key, formatter, uiSchema);
-        ret.push({
-          title: property.title,
-          key,
-          formatter
-        });
+        console.log(key, arrayFind(this.columnSettingCheckedKeys, checkedKey => key === checkedKey));
+        if (arrayFind(this.columnSettingCheckedKeys, checkedKey => key === checkedKey)) {
+          ret.push({
+            title: property.title,
+            key,
+            formatter
+          });
+        }
       });
       return ret;
+    },
+    isAllColumnShow() {
+      return this.columnSettingCheckedKeys.length === this.columnSettingKeys.length;
     }
   },
   created() {
@@ -172,6 +205,10 @@ export default {
     ) {
       this.pageSizes = targetInstance.proTablePageSizes.split(',');
     }
+  },
+  mounted() {
+    // 默认显示全部列
+    this.$refs.columnSettingTree.setCheckedKeys(this.columnSettingCheckedKeys);
   },
   methods: {
     fetch() {
@@ -308,6 +345,63 @@ export default {
         'element-loading-text': '加载中',
         ...$attrs
       };
+    },
+    handleColumnSettingTreeNodeClick(data, node) {
+      console.log('click', data, node);
+      const { checked } = node;
+      // 选中的场合，取消选中
+      this.$refs.columnSettingTree.setChecked(data, !checked);
+      this.columnSettingCheckedKeys = this.$refs.columnSettingTree.getCheckedKeys();
+    },
+    handleColumnSettingTreeNodeCheck(data, node) {
+      console.log(data, node);
+      const { checkedKeys } = node;
+      this.columnSettingCheckedKeys = checkedKeys;
+    },
+    getColumnSettingRender() {
+      const {
+        columnSettingKeys,
+        handleColumnSettingTreeNodeCheck,
+        handleColumnSettingTreeNodeClick,
+        isAllColumnShow
+      } = this;
+      const indeterminate = !isAllColumnShow;
+      console.log(isAllColumnShow);
+      const renderContent = (h, { node, data, store }) => {
+        return (
+          <span class="custom-tree-node">
+            <span>{node.label}</span>
+          </span>
+        );
+      };
+      if (columnSettingKeys.length > 0) {
+        return (
+          <ElPopover
+            placement="bottom"
+            class="column-setting"
+            width="200"
+            trigger="click"
+            popper-class="pro-table__column-setting-tree">
+            <ElCheckbox indeterminate={indeterminate} value={isAllColumnShow}>所有列</ElCheckbox>
+            <ElTree data={columnSettingKeys}
+              node-key="key"
+              ref="columnSettingTree"
+              props={{ label: 'title' }}
+              indent={0}
+              default-expand-all={true}
+              expand-on-click-node={false}
+              show-checkbox
+              draggable
+              on-node-click={handleColumnSettingTreeNodeClick}
+              on-check={handleColumnSettingTreeNodeCheck}
+              render-content={renderContent}>
+            </ElTree>
+            <ElTooltip content="列设置" placement="top" slot="reference">
+              <i class="el-icon-setting"></i>
+            </ElTooltip>
+          </ElPopover>
+        );
+      }
     }
   },
   /**
@@ -335,6 +429,7 @@ export default {
       rowKey,
       rowClassName,
       getDefaultTableProperties,
+      getColumnSettingRender,
       headerTitle
     } = this;
     const tableAttrs = getDefaultTableProperties();
@@ -349,12 +444,16 @@ export default {
     columns.forEach((column) => {
       renderColumns.push(renderColumn(column));
     });
-    console.log(renderColumns);
     return (
       <el-card class="el-pro-table">
-        <div slot="header" class="clearfix">
-          <div class="el-pro-table__header__title">{headerTitle}</div>
-          <div style="float: right;" type="text">{$slots.toolbar}</div>
+        <div class="el-pro-table__header clearfix">
+          <div class="header__title">{headerTitle}</div>
+          <div class="header__action" type="text">
+            {$slots.action}
+            <div class="action__toolbar">
+              {getColumnSettingRender()}
+            </div>
+          </div>
         </div>
         <el-table
           ref="proTable"
