@@ -14,16 +14,17 @@
     padding-left: 8px;
 
     .column-setting__reset-button {
-      padding: 2px 14px;
+      padding: 4px 14px;
       float: right;
     }
-  }
-  & > .el-checkbox {
-    & > .el-checkbox__label {
-      padding-left: 8px;
-    }
-    .el-checkbox__input.is-checked + .el-checkbox__label {
-      color: $--checkbox-font-color;
+
+    & > .el-checkbox {
+      & > .el-checkbox__label {
+        padding-left: 8px;
+      }
+      .el-checkbox__input.is-checked + .el-checkbox__label {
+        color: $--checkbox-font-color;
+      }
     }
   }
   & > .el-tree {
