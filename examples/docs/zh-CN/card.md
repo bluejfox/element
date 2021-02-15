@@ -9,7 +9,7 @@
 
 :::demo Card 组件包括`header`和`body`部分，`header`部分需要有显式具名 slot 分发，同时也是可选的。
 ```html
-<el-card class="box-card">
+<el-card class="box-card" collapse v-model="expand">
   <div slot="header" class="clearfix">
     <span>卡片名称</span>
     <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -18,6 +18,16 @@
     {{'列表内容 ' + o }}
   </div>
 </el-card>
+
+<script>
+export default {
+  data() {
+    return {
+      expand: false
+    };
+  }
+}
+</script>
 
 <style>
   .text {
@@ -283,6 +293,8 @@ export default {
 | tab-list | 标签标题列表 | array<{label, name}> | — | — |
 | active-tab-name | 当前激活标签的 name | string | — | — |
 | type | 卡片类型，可设置为 inner 或 不设置 | string | — | — |
+| collapse | 是否开启卡片折叠功能 | boolean | — | false |
+| value | 是否展开卡片 body | boolean | — | true |
 
 ### Events
 | 事件名称      | 说明    | 回调参数      |

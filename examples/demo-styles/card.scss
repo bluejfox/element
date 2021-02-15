@@ -29,5 +29,10 @@
 
   .box-card {
     width: 480px;
+    .el-card__body {
+      .item:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 }

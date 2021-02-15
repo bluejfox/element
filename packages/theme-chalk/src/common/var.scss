@@ -768,10 +768,12 @@ $--card-border-color: $--border-color-lighter !default;
 $--card-border-radius: 4px !default;
 /// padding||Spacing|3
 $--card-padding: 20px !default;
-$--card-inner-head-top-padding: 12px !default;
-$--card-inner-head-bottom-padding: 12px !default;
-$--card-inner-body-top-padding: 16px !default;
-$--card-inner-body-bottom-padding: 16px !default;
+$--card-inner-head-top-padding: 10px !default;
+$--card-inner-head-bottom-padding: 10px !default;
+$--card-inner-body-top-padding: 12px !default;
+$--card-inner-body-bottom-padding: 12px !default;
+$--card-small-header-font-size: 14px !default;
+$--card-small-padding: 12px !default;
 
 /* Slider
 --------------------------*/

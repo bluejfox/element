@@ -25,6 +25,16 @@
     padding: #{$--card-padding - 2 $--card-padding};
     border-bottom: 1px solid $--card-border-color;
     box-sizing: border-box;
+    font-weight: 600;
+    position: relative;
+
+    & > .header__expander {
+      display: inline-block;
+      color: #000;
+      font-size: 16px;
+      position: absolute;
+      left: 10px;
+    }
     
     &.is-tab {
       padding-bottom: 0;
@@ -157,6 +167,28 @@
 
       &:not(:last-child) {
         border-right: 1px solid $--card-border-color;
+      }
+    }
+  }
+
+  @include when(collapse) {
+    @include e(header) {
+      cursor: pointer;
+      padding-left: $--card-padding + 12;
+    }
+  }
+
+  @include m(small) {
+    @include e(header) {
+      padding: #{$--card-small-padding - 2 $--card-small-padding};
+      font-size: $--card-small-header-font-size;
+    }
+    @include e(body) {
+      padding: $--card-small-padding;
+    }
+    @include when(collapse) {
+      @include e(header) {
+        padding-left: $--card-small-padding + 18;
       }
     }
   }
