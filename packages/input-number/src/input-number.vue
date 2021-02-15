@@ -52,6 +52,7 @@
 
   export default {
     name: 'ElInputNumber',
+    componentName: 'ElInputNumber',
     mixins: [Focus('input')],
     inject: {
       elForm: {
@@ -115,8 +116,8 @@
       value: {
         immediate: true,
         handler(value) {
-          let newVal = value === undefined ? value : Number(value);
-          if (newVal !== undefined) {
+          let newVal = (value === undefined || value === null) ? value : Number(value);
+          if (newVal !== undefined && newVal !== null) {
             if (isNaN(newVal)) {
               return;
             }
