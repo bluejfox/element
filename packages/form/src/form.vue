@@ -24,7 +24,10 @@
       model: Object,
       rules: Object,
       labelPosition: String,
-      labelWidth: String,
+      labelWidth: {
+        type: String,
+        default: 'auto'
+      },
       labelSuffix: {
         type: String,
         default: ''
