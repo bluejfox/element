@@ -1,3 +1,4 @@
+import ElButton from 'setaria-ui/packages/button';
 import ElCard from 'setaria-ui/packages/card';
 import ElCheckbox from 'setaria-ui/packages/checkbox';
 import ElPagination from 'setaria-ui/packages/pagination';
@@ -33,6 +34,7 @@ function createFormatter(schema) {
 export default {
   name: 'ElProTable',
   components: {
+    ElButton,
     ElCard,
     ElCheckbox,
     ElPagination,
@@ -108,7 +110,8 @@ export default {
       currentPageSize: 0,
       isLoading: false,
       columnSettingKeys: [],
-      columnSettingCheckedKeys: []
+      columnSettingCheckedKeys: [],
+      dragNodeChecked: null
     };
   },
   watch: {
@@ -172,14 +175,13 @@ export default {
       const ret = [];
       const { schema, uiSchema } = this;
       const { properties } = schema;
-      Object.keys(properties).forEach((key) => {
+      this.columnSettingCheckedKeys.forEach((key) => {
         const property = properties[key];
         // formatter
         let formatter = getValueByPath(uiSchema, `${key}.ui:options.formatter`);
         if (typeof formatter !== 'function') {
           formatter = createFormatter(property);
         }
-        console.log(key, arrayFind(this.columnSettingCheckedKeys, checkedKey => key === checkedKey));
         if (arrayFind(this.columnSettingCheckedKeys, checkedKey => key === checkedKey)) {
           ret.push({
             title: property.title,
@@ -346,6 +348,18 @@ export default {
         ...$attrs
       };
     },
+    handleColumnSettingDragStart(node) {
+      const { checked } = node;
+      this.dragNodeChecked = checked;
+    },
+    handleColumnSettingDragDrop(node, targetNode) {
+      this.$nextTick(() => {
+        // 解决拖拽后节点被选中状态丢失的问题
+        this.$refs.columnSettingTree.setChecked(node.data, this.dragNodeChecked);
+        this.columnSettingCheckedKeys = this.$refs.columnSettingTree.getCheckedKeys();
+        this.dragNodeChecked = null;
+      });
+    },
     handleColumnSettingTreeNodeClick(data, node) {
       console.log('click', data, node);
       const { checked } = node;
@@ -361,6 +375,8 @@ export default {
     getColumnSettingRender() {
       const {
         columnSettingKeys,
+        handleColumnSettingDragDrop,
+        handleColumnSettingDragStart,
         handleColumnSettingTreeNodeCheck,
         handleColumnSettingTreeNodeClick,
         isAllColumnShow
@@ -379,13 +395,17 @@ export default {
           <ElPopover
             placement="bottom"
             class="column-setting"
-            width="200"
+            width="150"
             trigger="click"
             popper-class="pro-table__column-setting-tree">
-            <ElCheckbox indeterminate={indeterminate} value={isAllColumnShow}>所有列</ElCheckbox>
+            <div class="column-setting__toolbar">
+              <ElCheckbox indeterminate={indeterminate} value={isAllColumnShow}>所有列</ElCheckbox>
+              <ElButton type="text" class="column-setting__reset-button">重置</ElButton>
+            </div>
             <ElTree data={columnSettingKeys}
               node-key="key"
               ref="columnSettingTree"
+              icon-class="el-icon-rank"
               props={{ label: 'title' }}
               indent={0}
               default-expand-all={true}
@@ -394,6 +414,8 @@ export default {
               draggable
               on-node-click={handleColumnSettingTreeNodeClick}
               on-check={handleColumnSettingTreeNodeCheck}
+              on-node-drag-start={handleColumnSettingDragStart}
+              on-node-drop={handleColumnSettingDragDrop}
               render-content={renderContent}>
             </ElTree>
             <ElTooltip content="列设置" placement="top" slot="reference">
