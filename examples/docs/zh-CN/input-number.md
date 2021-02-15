@@ -54,7 +54,7 @@
 
 ```html
 <template>
-  <el-input-number v-model="num" :step="2"></el-input-number>
+  <el-input-number v-model="num" :step="2" controls></el-input-number>
 </template>
 <script>
   export default {
@@ -74,7 +74,7 @@
 
 ```html
 <template>
-  <el-input-number v-model="num" :step="2" step-strictly></el-input-number>
+  <el-input-number v-model="num" :step="2" step-strictly controls></el-input-number>
 </template>
 <script>
   export default {
@@ -121,7 +121,7 @@
 
 ```html
 <template>
-  <el-input-number v-model="num1"></el-input-number>
+  <el-input-number size="large" v-model="num1"></el-input-number>
   <el-input-number size="medium" v-model="num2"></el-input-number>
   <el-input-number size="small" v-model="num3"></el-input-number>
   <el-input-number size="mini" v-model="num4"></el-input-number>
@@ -146,7 +146,7 @@
 :::demo 设置 `controls-position` 属性可以控制按钮位置。
 ```html
 <template>
-  <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="10"></el-input-number>
+  <el-input-number v-model="num" controls-position="right" @change="handleChange" :min="1" :max="10" controls></el-input-number>
 </template>
 <script>
   export default {
@@ -176,7 +176,7 @@
 | precision| 数值精度             | number   | — | — |
 | size     | 计数器尺寸           | string   | large, small | — |
 | disabled | 是否禁用计数器        | boolean | — | false |
-| controls | 是否使用控制按钮        | boolean | — | true |
+| controls | 是否使用控制按钮        | boolean | — | false |
 | controls-position | 控制按钮位置 | string | right | - |
 | name | 原生属性 | string | — | — |
 | label | 输入框关联的label文字 | string | — | — |
