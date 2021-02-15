@@ -128,7 +128,7 @@ export default {
         }
         if (this.columnSettingCheckedKeys.length === 0) {
           // 初始化，默认显示全部列
-          this.columnSettingCheckedKeys = this.columnSettingKeys.map(item => item.key);
+          this.columnSettingCheckedKeys = this.getAllColumnKeys();
         }
         console.log(this.columnSettingKeys, this.columnSettingCheckedKeys);
       }
@@ -213,6 +213,9 @@ export default {
     this.$refs.columnSettingTree.setCheckedKeys(this.columnSettingCheckedKeys);
   },
   methods: {
+    getAllColumnKeys() {
+      return this.columnSettingKeys.map(item => item.key);
+    },
     fetch() {
       const {
         current,
@@ -348,6 +351,14 @@ export default {
         ...$attrs
       };
     },
+    handleColumnSettingCheckboxChange(val) {
+      if (!val) {
+        this.columnSettingCheckedKeys = [];
+      } else {
+        this.columnSettingCheckedKeys = this.getAllColumnKeys();
+      }
+      this.getAllColumnKeys().forEach(key => this.$refs.columnSettingTree.setChecked(key, val));
+    },
     handleColumnSettingDragStart(node) {
       const { checked } = node;
       this.dragNodeChecked = checked;
@@ -361,20 +372,19 @@ export default {
       });
     },
     handleColumnSettingTreeNodeClick(data, node) {
-      console.log('click', data, node);
       const { checked } = node;
       // 选中的场合，取消选中
       this.$refs.columnSettingTree.setChecked(data, !checked);
       this.columnSettingCheckedKeys = this.$refs.columnSettingTree.getCheckedKeys();
     },
     handleColumnSettingTreeNodeCheck(data, node) {
-      console.log(data, node);
       const { checkedKeys } = node;
       this.columnSettingCheckedKeys = checkedKeys;
     },
     getColumnSettingRender() {
       const {
         columnSettingKeys,
+        handleColumnSettingCheckboxChange,
         handleColumnSettingDragDrop,
         handleColumnSettingDragStart,
         handleColumnSettingTreeNodeCheck,
@@ -382,7 +392,6 @@ export default {
         isAllColumnShow
       } = this;
       const indeterminate = !isAllColumnShow;
-      console.log(isAllColumnShow);
       const renderContent = (h, { node, data, store }) => {
         return (
           <span class="custom-tree-node">
@@ -399,7 +408,7 @@ export default {
             trigger="click"
             popper-class="pro-table__column-setting-tree">
             <div class="column-setting__toolbar">
-              <ElCheckbox indeterminate={indeterminate} value={isAllColumnShow}>所有列</ElCheckbox>
+              <ElCheckbox indeterminate={indeterminate} value={isAllColumnShow} on-change={handleColumnSettingCheckboxChange}>所有列</ElCheckbox>
               <ElButton type="text" class="column-setting__reset-button">重置</ElButton>
             </div>
             <ElTree data={columnSettingKeys}
