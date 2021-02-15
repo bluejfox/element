@@ -4,6 +4,7 @@
 
 .pro-table__column-setting-tree {
   padding-bottom: 5px;
+  font-size: 12px;
   
   & > .column-setting__toolbar {
     border-bottom: 1px solid #f0f0f0;
@@ -21,6 +22,7 @@
     & > .el-checkbox {
       & > .el-checkbox__label {
         padding-left: 8px;
+        font-size: 12px;
       }
       .el-checkbox__input.is-checked + .el-checkbox__label {
         color: $--checkbox-font-color;
