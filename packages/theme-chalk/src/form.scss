@@ -101,6 +101,10 @@
     line-height: 40px;
     padding: 0 12px 0 0;
     box-sizing: border-box;
+
+    & > .label__tooltip {
+      margin-left: 4px;
+    }
   }
   @include e(content) {
     line-height: 40px;
@@ -110,6 +114,10 @@
 
     .el-input-group {
       vertical-align: top;
+    }
+
+    .el-select {
+      width: 100%;
     }
   }
   @include e(error) {
