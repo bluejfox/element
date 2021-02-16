@@ -9,6 +9,9 @@ import ElTooltip from 'setaria-ui/packages/tooltip';
 import ElTree from 'setaria-ui/packages/tree';
 import { arrayFind, getValueByPath, isEmpty } from 'setaria-ui/src/utils/util';
 
+const UI_OPTIONS = 'ui:options';
+const UI_RENDER = 'ui:render';
+
 /**
  * 根据oneOf或anyOf结构取得值对应的label
  */
@@ -130,7 +133,6 @@ export default {
           // 初始化，默认显示全部列
           this.columnSettingCheckedKeys = this.getAllColumnKeys();
         }
-        console.log(this.columnSettingKeys, this.columnSettingCheckedKeys);
       }
     },
     tableData: {
@@ -177,16 +179,20 @@ export default {
       const { properties } = schema;
       this.columnSettingCheckedKeys.forEach((key) => {
         const property = properties[key];
+        const render = getValueByPath(uiSchema, `${key}.${UI_RENDER}`);
+        const options = getValueByPath(uiSchema, `${key}.${UI_OPTIONS}`) || {};
         // formatter
-        let formatter = getValueByPath(uiSchema, `${key}.ui:options.formatter`);
+        let { formatter } = options;
         if (typeof formatter !== 'function') {
+          // 根据oneOf或anyOf结构取得值对应的label
           formatter = createFormatter(property);
         }
         if (arrayFind(this.columnSettingCheckedKeys, checkedKey => key === checkedKey)) {
           ret.push({
             title: property.title,
             key,
-            formatter
+            formatter,
+            render
           });
         }
       });
@@ -290,7 +296,7 @@ export default {
      * 渲染表格Column
      * @param {Object} props Column属性
      */
-    renderColumn(props) {
+    renderColumn(h, props) {
       let ret = null;
       const { reserveelection, reserveSelection } = props;
       let columnReserveSelection = reserveelection;
@@ -313,13 +319,17 @@ export default {
           />
         );
       } else {
-        let scopedSlots =
-          typeof props.render === 'function'
-            ? { default: (scope) => props.render(scope) }
-            : null;
+        let scopedSlots = null;
+        if (this.$scopedSlots[props.key]) {
+          scopedSlots = {
+            default: (scope) => this.$scopedSlots[props.key](scope)
+          };
+        } else if (props.render === 'function') {
+          scopedSlots = { default: (scope) => props.render(h, scope) };
+        }
         const { renderHeader } = props;
         if (typeof renderHeader === 'function') {
-          const header = (scope) => props.renderHeader(scope);
+          const header = (scope) => props.renderHeader(h, scope);
           if (scopedSlots === null) {
             scopedSlots = {
               header
@@ -438,7 +448,7 @@ export default {
   /**
    * Vue实例渲染函数，生成组件模版
    */
-  render() {
+  render(h) {
     const {
       $listeners,
       $slots,
@@ -473,14 +483,14 @@ export default {
     ];
     const renderColumns = [];
     columns.forEach((column) => {
-      renderColumns.push(renderColumn(column));
+      renderColumns.push(renderColumn(h, column));
     });
     return (
       <el-card class="el-pro-table">
         <div class="el-pro-table__header clearfix">
           <div class="header__title">{headerTitle}</div>
           <div class="header__action" type="text">
-            {$slots.action}
+            {$slots.toolbar}
             <div class="action__toolbar">
               {getColumnSettingRender()}
             </div>

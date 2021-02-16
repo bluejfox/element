@@ -18,9 +18,14 @@
   <el-pro-table
     ref="proTable"
     :schema="schema"
+    :ui-schema="uiSchema"
     :request="onRequest">
-    <div slot="action">
-      <el-button type="primary" size="mini" icon="el-icon-plus">新建</el-button>
+    <div slot="toolbar">
+      <el-button type="primary" icon="el-icon-plus">新建</el-button>
+    </div>
+    <!-- slot插槽名称需要在schema.properties内进行定义，譬如下例的control -->
+    <div slot="control" slot-scope="scope">
+      <el-button type="text" @click="handleUpdateButtonClick(scope)">修改数据</el-button>
     </div>
   </el-pro-table>
 </div>
@@ -76,6 +81,9 @@
                 {"const": "2", "title": "音乐"},
                 {"const": "3", "title": "运动"}
               ]
+            },
+            "control": {
+              "title": "操作"
             }
           }
         },
@@ -127,6 +135,9 @@
             });
           }, 2000);
         });
+      },
+      handleUpdateButtonClick({ row }) {
+        this.$message.warning(`修改 ${row.id} 数据!`);
       }
     }
   }
