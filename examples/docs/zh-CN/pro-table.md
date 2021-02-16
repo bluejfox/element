@@ -19,6 +19,7 @@
     ref="proTable"
     :schema="schema"
     :ui-schema="uiSchema"
+    row-key="id"
     :request="onRequest">
     <div slot="toolbar">
       <el-button type="primary" icon="el-icon-plus">新建</el-button>

@@ -88,7 +88,7 @@ export default {
       type: Number,
       default: 10
     },
-    // 含有multiple类型列的场合，必须设置此属性
+    // 存在rowKey的场合，即自动开启行多选
     rowKey: null,
     rowClassName: null,
     // 获取表格数据
@@ -98,6 +98,10 @@ export default {
       default() {
         return {};
       }
+    },
+    showHeader: {
+      type: Boolean,
+      default: true
     },
     headerTitle: {
       type: String,
@@ -175,8 +179,16 @@ export default {
   computed: {
     columns() {
       const ret = [];
-      const { schema, uiSchema } = this;
+      const { rowKey, schema, uiSchema } = this;
       const { properties } = schema;
+      // rowKey存在的场合，开启multiple支持
+      if (!isEmpty(rowKey)) {
+        ret.push({
+          title: '',
+          width: '40px',
+          type: 'selection'
+        });
+      }
       this.columnSettingCheckedKeys.forEach((key) => {
         const property = properties[key];
         const render = getValueByPath(uiSchema, `${key}.${UI_RENDER}`);
