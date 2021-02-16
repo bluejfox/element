@@ -15,6 +15,7 @@ const UI_COLSPAN = 'ui:colspan';
 const UI_ON = 'ui:on';
 const UI_NATIVE_ON = 'ui:nativeOn';
 const UI_RULE = 'ui:rules';
+const UI_RENDER = 'ui:render';
 // 默认日期格式
 const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd';
 const DEFAULT_DATE_TIME_FORMAT = `${DEFAULT_DATE_FORMAT} HH:mm:ss`;
@@ -541,10 +542,8 @@ export default {
             },
             [h(componentTagName, componentProps, componentChildren)]
           );
-        } else if (typeof ui.render === 'function') {
-          console.log(ui);
-          formItem = ui.render(h);
-          console.log(formItem);
+        } else if (typeof ui[UI_RENDER] === 'function') {
+          formItem = ui[UI_RENDER](h);
         }
         if (!isEmpty(formItem)) {
           formItemArray.push({

@@ -318,7 +318,7 @@
           },
           "customRender": {
             "ui:colspan": 3,
-            render(h) {
+            "ui:render": (h) => {
               return (<el-form-item label="自定义项目"><el-button>自定义</el-button></el-form-item>);
             }
           }
