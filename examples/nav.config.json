@@ -324,10 +324,6 @@
             {
               "path": "/statistics",
               "title": "[特色]Statistics 统计数值"
-            },
-            {
-              "path": "/condition-filter",
-              "title": "ConditionFilter"
             }
           ]
         }
