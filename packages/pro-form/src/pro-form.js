@@ -1,3 +1,4 @@
+import ElCard from 'setaria-ui/packages/card/src/main';
 import ElDialog from 'setaria-ui/packages/dialog/src/component';
 import ElJsonForm from 'setaria-ui/packages/json-form/src/json-form';
 import { getStyle } from 'setaria-ui/src/utils/dom';
@@ -46,6 +47,10 @@ export default {
     expand: {
       type: Boolean,
       default: false
+    },
+    headerTitle: {
+      type: String,
+      default: '搜索条件'
     }
   },
   data() {
@@ -230,6 +235,7 @@ export default {
       schema,
       totalColSpan,
       type,
+      headerTitle,
       handleExpand,
       handleModalButtonClick
     } = this;
@@ -306,6 +312,11 @@ export default {
         { getControlButton() }
       </ElJsonForm>
     );
+    const cardForm = (
+      <ElCard header={headerTitle}>
+        {formRender}
+      </ElCard>
+    );
     const onListener = {
       'update:visible': (val) => {
         this.isShowModalForm = val;
@@ -322,14 +333,20 @@ export default {
         </span>
       </ElDialog>
     );
-    return this.type === 'modalForm' ? (
-      <div class="el-modal-form">
-        <div onClick={handleModalButtonClick}>{$slots.default}</div>
-        {modalDialog}
-      </div>
-    ) : formRender;
+    if (type === 'cardForm') {
+      return cardForm;
+    } else if (type === 'modalForm') {
+      return (
+        <div class="el-modal-form">
+          <div onClick={handleModalButtonClick}>{$slots.default}</div>
+          {modalDialog}
+        </div>
+      );
+    }
+    return formRender;
   },
   components: {
+    ElCard,
     ElDialog,
     ElJsonForm
   }

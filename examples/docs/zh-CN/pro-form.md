@@ -249,6 +249,126 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
 ```
 :::
 
+### Card表单
+
+::: demo
+```html
+<div>
+  <el-pro-form
+    type="cardForm"
+    :model="form1"
+    :schema="schema"
+    :ui-schema="uiSchema"
+    label-width="100px"
+    :after-submit="onSubmit">
+  </el-pro-form>
+  <p>result:</p>
+  <div>
+    {{ this.form1 }}
+  </div>
+</div>
+<script>
+  export default {
+    data() {
+      return {
+        form1: {
+          id: '',
+          password: '',
+          age: null,
+          gender: 2,
+          birth: '',
+          interest: [],
+          comment: '',
+          profession: '',
+          dateTime: '',
+          time: '',
+        },
+        schema: {
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "description": "用户ID",
+              "type": "string",
+              "title": "用户ID",
+              "minLength": 3,
+              "maxLength": 6
+            },
+            "password": {
+              "type": "string",
+              "title": "密码"
+            },
+            "age": {
+              "type": "integer",
+              "title": "年龄"
+            },
+            "gender": {
+              "type": "integer",
+              "title": "性别",
+              "oneOf": [
+                {"const": 1, "title": "男"},
+                {"const": 2, "title": "女"}
+              ]
+            },
+            "birth": {
+              "type": "string",
+              "title": "出生年月日",
+              "format": "date"
+            },
+            "time": {
+              "type": "array",
+              "title": "时间",
+              "format": "time"
+            },
+            "dateTime": {
+              "type": "string",
+              "title": "日期时间",
+              "format": "date-time"
+            },
+            "interest": {
+              "type": "array",
+              "title": "兴趣",
+              "anyOf": [
+                {"const": "1", "title": "游戏"},
+                {"const": "2", "title": "音乐"},
+                {"const": "3", "title": "运动"}
+              ]
+            },
+            "comment": {
+              "type": "string",
+              "title": "备注"
+            }
+          }
+        },
+        uiSchema: {
+          "interest": {
+            "ui:colspan": 2
+          },
+          "comment": {
+            "ui:options": {
+              type: 'textarea'
+            },
+            "ui:colspan": 2
+          }
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            this.$message.success('表单提交成功');
+            resolve();
+          }, 1000);
+        });
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Modal表单
 
 ::: demo
