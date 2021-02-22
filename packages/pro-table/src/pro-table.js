@@ -498,17 +498,16 @@ export default {
       renderColumns.push(renderColumn(h, column));
     });
     return (
-      <el-card class="el-pro-table">
+      <ElCard class="el-pro-table" header={headerTitle}>
         <div class="el-pro-table__header clearfix">
-          <div class="header__title">{headerTitle}</div>
-          <div class="header__action" type="text">
+          <div class="header__toolbar">
             {$slots.toolbar}
-            <div class="action__toolbar">
+            <div class="toolbar__extra__setting">
               {getColumnSettingRender()}
             </div>
           </div>
         </div>
-        <el-table
+        <ElTable
           ref="proTable"
           {...inheritProps}
           {...$listeners}
@@ -529,10 +528,10 @@ export default {
             <template slot="control">{$slots['batch-control']}</template>
           ) : null}
           {renderColumns}
-        </el-table>
+        </ElTable>
         {innerData.length > 0 && isShowPager ? (
           <div class="el-pro-table__pagination">
-            <el-pagination
+            <ElPagination
               total={innerTotal}
               current-page={current}
               page-size={currentPageSize}
@@ -543,7 +542,7 @@ export default {
             />
           </div>
         ) : null}
-      </el-card>
+      </ElCard>
     );
   }
 };

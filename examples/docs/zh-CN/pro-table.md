@@ -22,7 +22,7 @@
     row-key="id"
     :request="onRequest">
     <div slot="toolbar">
-      <el-button type="primary" icon="el-icon-plus">新建</el-button>
+      <el-button type="text">新建</el-button>
     </div>
     <!-- slot插槽名称需要在schema.properties内进行定义，譬如下例的control -->
     <div slot="control" slot-scope="scope">

@@ -155,9 +155,12 @@
   }
 
   @include m(small) {
-    font-size: 12px;
-    th, td {
-      padding: 8px 0;
+    font-size: $--table-small-font-size;
+    th {
+      padding: 4px 0;
+    }
+    td {
+      padding: 0;
     }
   }
 

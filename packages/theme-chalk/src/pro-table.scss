@@ -45,20 +45,22 @@
   @include e(header) {
     height: 30px;
     line-height: 30px;
-    margin-bottom: 12px;
+    margin: 6px 0;
 
     & .header__title,
-    & .header__action {
-      display: inline-block;
+    & .header__toolbar {
+      display: block;
     }
 
-    & .header__action {
-      float: right;
+    & .header__toolbar {
+      position: relative;
 
       & > div {
         display: inline-block;
       }
-      .action__toolbar {
+      .toolbar__extra__setting {
+        margin-top: 3px;
+        float: right;
         display: inline-block;
         font-size: 18px;
 
@@ -68,6 +70,9 @@
         }
       }
     }
+  }
+  .el-card__body {
+    padding-top: 0;
   }
 
   .el-table {
