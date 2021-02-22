@@ -58,6 +58,7 @@
   @include m(small) {
     .el-form-item__label {
       line-height: 32px;
+      font-size: $--font-size-small;
     }
     .el-form-item__content {
       line-height: 32px;
