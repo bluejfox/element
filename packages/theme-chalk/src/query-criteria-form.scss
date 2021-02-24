@@ -49,10 +49,8 @@
 
   .el-query-criteria-form-value {
     .criteria-value-in-input {
-      /deep/ {
-        .el-input__suffix {
-          display: none;
-        }
+      .el-input__suffix {
+        display: none;
       }
     }
     &.is-compact {
@@ -70,12 +68,10 @@
       }
     }
     .form {
-      /deep/ {
-        .el-form-item {
-          margin-bottom: 0;
-          .el-form-item__label {
-            display: none;
-          }
+      .el-form-item {
+        margin-bottom: 0;
+        .el-form-item__label {
+          display: none;
         }
       }
     }
