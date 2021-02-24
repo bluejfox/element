@@ -1,0 +1,49 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(query-criteria-form) {
+  @include e(row) {
+    & + .el-query-criteria-form__row {
+      margin-top: 5px;
+    }
+
+    .el-select {
+      width: 100%;
+    }
+    .criteria-value {
+      margin-top: -1px;
+    }
+    
+    .row__control {
+      height: 32px;
+      line-height: 32px;
+      position: relative;
+
+      .control__button {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 1px solid $--color-primary;
+        border-radius: 4px;
+        position: absolute;
+        top: 6px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        .control__icon {
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          color: $--color-primary;
+          font-size: 12px;
+        }
+
+        & + .control__button {
+          left: 36px;
+        }
+      }
+    }
+  }
+}

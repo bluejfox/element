@@ -100,6 +100,7 @@ import TagSelectItem from '../packages/tag-select-item/index.js';
 import Statistics from '../packages/statistics/index.js';
 import ProForm from '../packages/pro-form/index.js';
 import ProTable from '../packages/pro-table/index.js';
+import QueryCriteriaForm from '../packages/query-criteria-form/index.js';
 import locale from 'setaria-ui/src/locale';
 import CollapseTransition from 'setaria-ui/src/transitions/collapse-transition';
 import eventManager from 'setaria-ui/src/mixins/event-manager';
@@ -200,6 +201,7 @@ const components = [
   Statistics,
   ProForm,
   ProTable,
+  QueryCriteriaForm,
   CollapseTransition
 ];
 
@@ -341,5 +343,6 @@ export default {
   TagSelectItem,
   Statistics,
   ProForm,
-  ProTable
+  ProTable,
+  QueryCriteriaForm
 };
