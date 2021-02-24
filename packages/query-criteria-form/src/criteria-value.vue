@@ -135,7 +135,6 @@ export default {
   },
   methods: {
     initInnerValue(val) {
-      console.log('initInnerValue');
       if (this.isNullOperator) {
         this.inValue = null;
       } else if (this.isInOperator) {
@@ -169,7 +168,6 @@ export default {
       // 同步schema
       this.innerSchema = {};
       this.innerSchema = schema;
-      console.log(this.innerSchema);
       this.syncComponentTypeByOperator();
     },
     resetInnerValue() {

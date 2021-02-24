@@ -10,9 +10,6 @@
     .el-select {
       width: 100%;
     }
-    .criteria-value {
-      margin-top: -1px;
-    }
 
     .row__control {
       height: 32px;
@@ -48,6 +45,8 @@
   }
 
   .el-query-criteria-form-value {
+    margin-top: -1px;
+    
     .criteria-value-in-input {
       .el-input__suffix {
         display: none;

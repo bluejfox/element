@@ -23,8 +23,8 @@ QueryCriteriaForm
   <el-query-criteria-form :schema="schema"
                           :exclude-operators="excludeOperators"
                           v-model="value1">
-    <template slot="location" slot-scope="scope">
-      <el-input v-model="scope.criteria.value"/>
+    <template slot="comment" slot-scope="scope">
+      <el-input v-model="scope.criteria.value" suffix-icon="el-icon-search"/>
     </template>
   </el-query-criteria-form>
   <p>result:</p>
@@ -38,9 +38,7 @@ QueryCriteriaForm
       return {
         value1: [
           {
-            "field": "birth",
-            "operator": "0",
-            "value": "2021-02-16"
+            "field": "birth"
           }
         ],
         schema: {
@@ -61,6 +59,20 @@ QueryCriteriaForm
             },
             "location": {
               "title": "居住地",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "1",
+                  "title": "重庆"
+                },
+                {
+                  "const": "2",
+                  "title": "北京"
+                }
+              ]
+            },
+            "comment": {
+              "title": "备注",
               "type": "string"
             }
           }

@@ -115,9 +115,18 @@ export default {
   watch: {
     value: {
       immediate: true,
-      handler(val) {
+      deep: true,
+      handler(val, oldVal) {
         if (!isEmpty(val)) {
-          this.innerValue = val;
+          // 设置操作符和值的初始值，以保证可以正常响应值的输入
+          val.forEach(v => {
+            if (isEmpty(v.operator)) {
+              v.operator = OPERATOR.IS;
+            }
+            if (typeof v.value !== 'number' && isEmpty(v.value)) {
+              v.value = null;
+            }
+          });
         } else {
           this.innerValue = [];
         }
