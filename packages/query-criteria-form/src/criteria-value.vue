@@ -1,5 +1,5 @@
 <template>
-  <div class="criteria-value"
+  <div class="el-query-criteria-form-value"
       :class="{
         'is-compact': isNeedCompact
       }">
@@ -274,43 +274,3 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.criteria-value {
-  .criteria-value-in-input {
-    /deep/ {
-      .el-input__suffix {
-        display: none;
-      }
-    }
-  }
-  &.is-compact {
-    height: 32px;
-    line-height: 32px;
-    .separator {
-      display: inline-block;
-      vertical-align: top;
-      font-size: 18px;
-      padding: 0 5px;
-    }
-    .el-form {
-      width: 46%;
-      display: inline-block;
-    }
-  }
-  .form {
-    /deep/ {
-      .el-form-item {
-        margin-bottom: 0;
-        .el-form-item__label {
-          display: none;
-        }
-      }
-    }
-  }
-}
-</style>
-<style lang="scss">
-.criteria-value-in-input-popper {
-  display: none;
-}
-</style>

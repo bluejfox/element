@@ -13,7 +13,7 @@
     .criteria-value {
       margin-top: -1px;
     }
-    
+
     .row__control {
       height: 32px;
       line-height: 32px;
@@ -45,5 +45,42 @@
         }
       }
     }
+  }
+
+  .el-query-criteria-form-value {
+    .criteria-value-in-input {
+      /deep/ {
+        .el-input__suffix {
+          display: none;
+        }
+      }
+    }
+    &.is-compact {
+      height: 32px;
+      line-height: 32px;
+      .separator {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 18px;
+        padding: 0 5px;
+      }
+      .el-form {
+        width: 46%;
+        display: inline-block;
+      }
+    }
+    .form {
+      /deep/ {
+        .el-form-item {
+          margin-bottom: 0;
+          .el-form-item__label {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  .criteria-value-in-input-popper {
+    display: none;
   }
 }
