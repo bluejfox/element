@@ -59,7 +59,7 @@
       align-items: center;
 
       .el-button {
-        padding: 4px 8px;
+        padding: 7px 10px 7px 8px;
       }
 
       & > div {
@@ -76,14 +76,26 @@
       }
     }
   }
+  .el-pro-table__batch-control {
+    display: flex;
+
+    .el-button--text {
+      padding: 0;
+    }
+  }
   .el-card__header {
     padding: $--pro-table-header-padding;
+    .header__expander {
+      top: 9px;
+    }
   }
   .el-card__body {
     padding: $--pro-table-body-padding;
   }
 
   .el-table {
+    margin-top: 10px;
+
     .el-table__header-wrapper {
       .el-table__header {
         thead {

@@ -17,12 +17,17 @@
 <div>
   <el-pro-table
     ref="proTable"
+    collapse
     :schema="schema"
     :ui-schema="uiSchema"
     row-key="id"
-    :request="onRequest">
+    :request="onRequest"
+    @selection-change="handleSelectionChange">
     <template slot="toolbar">
       <el-button size="mini" type="primary" icon="el-icon-plus">新建</el-button>
+    </template>
+    <template slot="batchControl">
+      <el-button type="text" :disabled="!isBatchButtonEnable">批量删除</el-button>
     </template>
     <!-- slot插槽名称需要在schema.properties内进行定义，譬如下例的control -->
     <template slot="control" slot-scope="scope">
@@ -36,8 +41,8 @@
   export default {
     data() {
       return {
-        tableData: [
-        ],
+        tableData: [],
+        multipleSelection: [],
         schema: {
           "properties": {
             "id": {
@@ -108,6 +113,11 @@
         }
       }
     },
+    computed: {
+      isBatchButtonEnable() {
+        return this.multipleSelection.length > 0;
+      }
+    },
     mounted() {
       this.$refs.proTable.fetch();
     },
@@ -139,6 +149,9 @@
       },
       handleUpdateButtonClick({ row }) {
         this.$message.warning(`修改 ${row.id} 数据!`);
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
       }
     }
   }
@@ -146,249 +159,7 @@
 ```
 :::
 
-### 查询筛选
-
-::: demo 设置 `type` 为 `queryFilter` 即可渲染查询筛选，主要用于查询页面的筛选条件。
-```html
-<div>
-  <el-pro-form
-    type="queryFilter"
-    :model="form1"
-    :schema="schema"
-    :ui-schema="uiSchema"
-    label-width="100px"
-    :after-submit="onSubmit">
-  </el-pro-form>
-  <p>result:</p>
-  <div>
-    {{ this.form1 }}
-  </div>
-</div>
-<script>
-  export default {
-    data() {
-      return {
-        form1: {
-          id: '',
-          password: '',
-          age: null,
-          gender: 2,
-          birth: '',
-          interest: [],
-          comment: '',
-          profession: '',
-          dateTime: '',
-          time: '',
-        },
-        schema: {
-          "required": [
-            "id"
-          ],
-          "properties": {
-            "id": {
-              "description": "用户ID",
-              "type": "string",
-              "title": "用户ID",
-              "minLength": 3,
-              "maxLength": 6
-            },
-            "password": {
-              "type": "string",
-              "title": "密码"
-            },
-            "age": {
-              "type": "integer",
-              "title": "年龄"
-            },
-            "gender": {
-              "type": "integer",
-              "title": "性别",
-              "oneOf": [
-                {"const": 1, "title": "男"},
-                {"const": 2, "title": "女"}
-              ]
-            },
-            "birth": {
-              "type": "string",
-              "title": "出生年月日",
-              "format": "date"
-            },
-            "time": {
-              "type": "array",
-              "title": "时间",
-              "format": "time"
-            },
-            "dateTime": {
-              "type": "string",
-              "title": "日期时间",
-              "format": "date-time"
-            },
-            "interest": {
-              "type": "array",
-              "title": "兴趣",
-              "anyOf": [
-                {"const": "1", "title": "游戏"},
-                {"const": "2", "title": "音乐"},
-                {"const": "3", "title": "运动"}
-              ]
-            },
-            "comment": {
-              "type": "string",
-              "title": "备注"
-            }
-          }
-        },
-        uiSchema: {
-          "interest": {
-            "ui:colspan": 2
-          },
-          "comment": {
-            "ui:options": {
-              type: 'textarea'
-            },
-            "ui:colspan": 2
-          }
-        }
-      }
-    },
-    methods: {
-      onSubmit() {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            this.$message.success('查询执行成功');
-            resolve();
-          }, 1000);
-        });
-      }
-    }
-  }
-</script>
-```
-:::
-
-### Modal表单
-
-::: demo
-```html
-<div>
-  <el-pro-form
-    type="modalForm"
-    :model="form1"
-    :schema="schema"
-    :ui-schema="uiSchema"
-    label-width="100px"
-    :after-submit="onSubmit"
-    title="新建表单">
-    <el-button type="primary">新建表单</el-button>
-  </el-pro-form>
-  <p>result:</p>
-  <div>
-    {{ this.form1 }}
-  </div>
-</div>
-<script>
-  export default {
-    data() {
-      return {
-        form1: {
-          id: '',
-          password: '',
-          age: null,
-          gender: 2,
-          birth: '',
-          interest: [],
-          comment: '',
-          profession: '',
-          dateTime: '',
-          time: '',
-        },
-        schema: {
-          "required": [
-            "id"
-          ],
-          "properties": {
-            "id": {
-              "description": "用户ID",
-              "type": "string",
-              "title": "用户ID",
-              "minLength": 3,
-              "maxLength": 6
-            },
-            "password": {
-              "type": "string",
-              "title": "密码"
-            },
-            "age": {
-              "type": "integer",
-              "title": "年龄"
-            },
-            "gender": {
-              "type": "integer",
-              "title": "性别",
-              "oneOf": [
-                {"const": 1, "title": "男"},
-                {"const": 2, "title": "女"}
-              ]
-            },
-            "birth": {
-              "type": "string",
-              "title": "出生年月日",
-              "format": "date"
-            },
-            "time": {
-              "type": "array",
-              "title": "时间",
-              "format": "time"
-            },
-            "dateTime": {
-              "type": "string",
-              "title": "日期时间",
-              "format": "date-time"
-            },
-            "interest": {
-              "type": "array",
-              "title": "兴趣",
-              "anyOf": [
-                {"const": "1", "title": "游戏"},
-                {"const": "2", "title": "音乐"},
-                {"const": "3", "title": "运动"}
-              ]
-            },
-            "comment": {
-              "type": "string",
-              "title": "备注"
-            }
-          }
-        },
-        uiSchema: {
-          "interest": {
-            "ui:colspan": 2
-          },
-          "comment": {
-            "ui:options": {
-              type: 'textarea'
-            },
-            "ui:colspan": 2
-          }
-        }
-      }
-    },
-    methods: {
-      onSubmit() {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            this.$message.success('表单提交成功');
-            resolve();
-          }, 1000);
-        });
-      }
-    }
-  }
-</script>
-```
-:::
-
-### ProForm Attributes
+### ProTable Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -415,13 +186,13 @@
 | ui:options | 表单字段的组件独有属性 | object | UI组件独有属性 | - |
 | ui:colspan | 跨越的列数 | number | - | - |
 
-### Form Events
+### ProTable Events
 
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
 | change  | 表单字段值变更时回调 | key 表单字段的Key, val 表单字段的值 |
 
-### Form Methods
+### ProTable Methods
 
 | 方法名      | 说明          | 参数
 |---------- |-------------- | --------------

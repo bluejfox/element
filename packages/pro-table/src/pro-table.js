@@ -58,6 +58,7 @@ export default {
         return {};
       }
     },
+    collapse: Boolean,
     // 查询结果数据
     tableData: {
       type: Array,
@@ -465,6 +466,7 @@ export default {
       $listeners,
       $slots,
       columns,
+      collapse,
       current,
       currentPageSize,
       pageSizes,
@@ -498,7 +500,7 @@ export default {
       renderColumns.push(renderColumn(h, column));
     });
     return (
-      <ElCard class="el-pro-table">
+      <ElCard class="el-pro-table" collapse={collapse}>
         <div slot="header" class="el-pro-table__header clearfix">
           <div class="header__title">{ headerTitle }</div>
           <div class="el-pro-table__toolbar clearfix">
@@ -508,8 +510,12 @@ export default {
             </div>
           </div>
         </div>
+        <div class="el-pro-table__batch-control">
+          {$slots.batchControl}
+        </div>
         <ElTable
           ref="proTable"
+          class="el-pro-table__content"
           {...inheritProps}
           {...$listeners}
           {...{
