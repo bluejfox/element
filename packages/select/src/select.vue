@@ -113,7 +113,10 @@
           wrap-class="el-select-dropdown__wrap"
           view-class="el-select-dropdown__list"
           ref="scrollbar"
-          :class="{ 'is-empty': !allowCreate && query && filteredOptionsCount === 0 }"
+          :class="[
+            { 'is-empty': !allowCreate && query && filteredOptionsCount === 0 },
+            selectSize ? 'el-select-dropdown--' + selectSize : ''
+          ]"
           v-show="options.length > 0 && !loading">
           <el-option
             :value="query"

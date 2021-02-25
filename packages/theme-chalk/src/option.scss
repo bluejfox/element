@@ -33,4 +33,20 @@
       font-weight: bold;
     }
   }
+
+  @include m(small) {
+    @include e(item) {
+      font-size: $--select-small-font-size;
+      height: $--select-option-small-height;
+      line-height: $--select-option-small-height;
+    }
+  }
+
+  @include m(mini) {
+    @include e(item) {
+      font-size: $--select-mini-font-size;
+      height: $--select-option-mini-height;
+      line-height: $--select-option-mini-height;
+    }
+  }
 }

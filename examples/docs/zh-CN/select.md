@@ -8,7 +8,31 @@
 :::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
 ```html
 <template>
-  <el-select v-model="value" placeholder="请选择">
+  <el-select v-model="value" placeholder="请选择" size="large">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+  <el-select v-model="value" placeholder="请选择" size="medium">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+  <el-select v-model="value" placeholder="请选择" size="small">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+  <el-select v-model="value" placeholder="请选择" size="mini">
     <el-option
       v-for="item in options"
       :key="item.value"
