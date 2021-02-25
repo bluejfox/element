@@ -59,7 +59,7 @@
       align-items: center;
 
       .el-button {
-        padding: 6px 9px;
+        padding: 4px 8px;
       }
 
       & > div {
@@ -76,7 +76,11 @@
       }
     }
   }
+  .el-card__header {
+    padding: $--pro-table-header-padding;
+  }
   .el-card__body {
+    padding: $--pro-table-body-padding;
   }
 
   .el-table {
@@ -95,7 +99,7 @@
   .el-pro-table__pagination {
     line-height: $--pro-table-pagination-height;
     height: $--pro-table-pagination-height;
-    margin-top: 20px;
+    margin-top: $--pro-table-body-padding;
 
     .el-pagination {
       float: right;
