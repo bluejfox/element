@@ -498,9 +498,10 @@ export default {
       renderColumns.push(renderColumn(h, column));
     });
     return (
-      <ElCard class="el-pro-table" header={headerTitle}>
-        <div class="el-pro-table__header clearfix">
-          <div class="header__toolbar">
+      <ElCard class="el-pro-table">
+        <div slot="header" class="el-pro-table__header clearfix">
+          <div class="header__title">{ headerTitle }</div>
+          <div class="el-pro-table__toolbar clearfix">
             {$slots.toolbar}
             <div class="toolbar__extra__setting">
               {getColumnSettingRender()}

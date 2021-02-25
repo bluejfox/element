@@ -43,24 +43,29 @@
 
 @include b(pro-table) {
   @include e(header) {
-    height: 30px;
-    line-height: 30px;
-    margin: 6px 0;
+    display: flex;
+    justify-content: space-between;
 
-    & .header__title,
-    & .header__toolbar {
-      display: block;
+    .header__title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
 
-    & .header__toolbar {
+    & .el-pro-table__toolbar {
       position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .el-button {
+        padding: 6px 9px;
+      }
 
       & > div {
         display: inline-block;
       }
       .toolbar__extra__setting {
-        margin-top: 3px;
-        float: right;
         display: inline-block;
         font-size: 18px;
 
@@ -72,7 +77,6 @@
     }
   }
   .el-card__body {
-    padding-top: 0;
   }
 
   .el-table {
