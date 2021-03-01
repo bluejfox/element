@@ -12,6 +12,9 @@
     :aria-disabled="isDisabled"
     :tabindex="tabIndex"
     @keydown.space.stop.prevent="value = isDisabled ? value : label"
+    :style="{
+      'margin-left': split !== undefined && split !== null && !isFirstChild ? split : ''
+    }"
   >
     <input
       class="el-radio-button__orig-radio"
@@ -112,6 +115,12 @@
       },
       isReadOnly() {
         return this.readonly || this._radioGroup.readonly || (this.elForm || {}).readonly;
+      },
+      split() {
+        return this._radioGroup.split;
+      },
+      isFirstChild() {
+        return this._radioGroup.$children[0] === this;
       }
     },
 

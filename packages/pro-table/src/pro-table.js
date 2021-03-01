@@ -186,7 +186,7 @@ export default {
       if (!isEmpty(rowKey)) {
         ret.push({
           title: '',
-          width: '40px',
+          width: '45px',
           type: 'selection'
         });
       }
@@ -369,7 +369,6 @@ export default {
     getDefaultTableProperties() {
       const { $attrs } = this;
       return {
-        border: true,
         'element-loading-text': '加载中',
         ...$attrs
       };

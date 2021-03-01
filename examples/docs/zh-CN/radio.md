@@ -92,7 +92,8 @@
     </el-radio-group>
   </div>
   <div style="margin-top: 20px">
-    <el-radio-group v-model="radio2" size="medium">
+    <div>选项分割</div>
+    <el-radio-group v-model="radio2" split="5px">
       <el-radio-button label="上海" ></el-radio-button>
       <el-radio-button label="北京"></el-radio-button>
       <el-radio-button label="广州"></el-radio-button>
@@ -100,7 +101,7 @@
     </el-radio-group>
   </div>
   <div style="margin-top: 20px">
-    <el-radio-group v-model="radio3" size="small">
+    <el-radio-group v-model="radio3">
       <el-radio-button label="上海"></el-radio-button>
       <el-radio-button label="北京" disabled ></el-radio-button>
       <el-radio-button label="广州"></el-radio-button>

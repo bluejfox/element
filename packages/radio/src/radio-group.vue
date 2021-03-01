@@ -2,6 +2,9 @@
   <component
     :is="_elTag"
     class="el-radio-group"
+    :class="[
+      { 'is-split': split !== undefined && split !== null },
+    ]"
     role="radiogroup"
     @keydown="handleKeydown"
   >
@@ -40,7 +43,8 @@
       readonly: {
         type: Boolean,
         default: false
-      }
+      },
+      split: String
     },
 
     computed: {

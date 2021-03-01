@@ -1,0 +1,15 @@
+.demo-sample-search .source {
+  .el-card {
+    .el-card__header {
+      .el-icon-setting {
+        font-size: 20px;
+      }
+    }
+    & + .el-card {
+      margin-top: 10px;
+    }
+    .el-card__body {
+      // padding-bottom: 0;
+    }
+  }
+}

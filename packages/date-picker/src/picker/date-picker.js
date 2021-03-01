@@ -17,6 +17,8 @@ export default {
 
   name: 'ElDatePicker',
 
+  componentName: 'ElDatePicker',
+
   props: {
     type: {
       type: String,

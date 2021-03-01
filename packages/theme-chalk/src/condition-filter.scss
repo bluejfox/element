@@ -1,7 +1,7 @@
 @import "mixins/mixins";
 
 @include b(condition-filter) {
-  font-size: 12px;
+  font-size: $--condition-filter-small-font-size;
   
   @include e(quick) {
     display: inline-block;
@@ -13,13 +13,14 @@
       flex:1;
       line-height: 30px;
       vertical-align: top;
+      .el-radio-button__inner {
+        padding: 6px 15px;
+      }
     }
   }
   
-  @include e(divider) {
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  .el-divider {
+    margin: 5px;
   }
   
   .el-condition-filter__divider-dashed {
@@ -29,10 +30,12 @@
   
   @include e(senior) {
     .senior-result {
-      min-height: 32px;
+      min-height: 27px;
       
       .senior-result__label {
         margin-top: 5px;
+        height: 30px;
+        line-height: 25px;
       }
       
       .senior-result__detail {
@@ -47,7 +50,7 @@
           padding-left: 10px;
           padding-right: 10px;
           margin-right: 10px;
-          margin-bottom: 5px;
+          margin-top: 5px;
           
           &:last-child {
             margin-right: 0;
@@ -72,6 +75,9 @@
         margin-top: 6px;
         color: $--color-primary;
         text-decoration: none;
+        .el-icon-arrow-up {
+          margin-left: 5px;
+        }
       }
     }
     .senior-multiple-condition {
@@ -89,15 +95,18 @@
       }
       
       .senior-multiple-condition__label {
-        float: left;
         vertical-align: middle;
         line-height: $--condition-filter-advanced-multiple-condition-line-height;
         width: 100px;
-        text-align: left;
+        text-align: right;
+        display: inline-block;
       }
       .senior-multiple-condition__item {
         position: relative;
         line-height: 27px;
+        display: inline-block;
+        margin-left: 2px;
+
         @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
           min-height: 28px;
         }
@@ -122,13 +131,17 @@
         
         .item-error {
           color: $--color-danger;
-          font-size: 12px;
+          font-size: $--condition-filter-small-font-size;
           line-height: 1;
           padding-top: 4px;
           top: 100%;
           left: 0;
         }
       }
+    }
+
+    @include e(senior-expand-container) {
+      margin-top: 5px;
     }
     
     .el-condition-filter__button {
@@ -154,6 +167,10 @@
       }
     }
   }
+
+  .el-quick__divider {
+    margin-bottom: 0;
+  }
   
   .el-condition-filter__quick > .quick-label,
   .el-condition-filter__senior .senior-result .senior-result__label {
@@ -163,13 +180,19 @@
     font-weight: $--condition-filter-label-text-font-weight;
     // margin-right: $--condition-filter-label-margin-right;
     width: $--condition-filter-label-width;
-    text-align: left;
+    text-align: right;
+  }
+
+  .el-condition-filter__quick > .el-condition-filter__quick-container,
+  .el-condition-filter__senior .senior-result .senior-result__detail {
+    margin-left: 2px;
   }
   
   .el-form {
     .el-form-item {
       .el-form-item__label {
         color: $--color-black;
+        padding: 0 3px 0 0;
       }
     }
     &.el-form--inline {

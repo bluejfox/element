@@ -16,7 +16,7 @@ $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 /* Color
 -------------------------- */
 /// color|1|Brand Color|0
-$--color-primary: #E50039 !default;
+$--color-primary: #40A9FF !default;
 /// color|1|Background Color|4
 $--color-white: #FFFFFF !default;
 /// color|1|Background Color|4
@@ -33,11 +33,11 @@ $--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /
 /// color|1|Functional Color|1
 $--color-success: #67C23A !default;
 /// color|1|Functional Color|1
-$--color-warning: #FFA927 !default;
+$--color-warning: #E6A23C !default;
 /// color|1|Functional Color|1
-$--color-danger: #FF6666 !default;
+$--color-danger: #F56C6C !default;
 /// color|1|Functional Color|1
-$--color-info: #999999 !default;
+$--color-info: #909399 !default;
 
 $--color-success-light: mix($--color-white, $--color-success, 80%) !default;
 $--color-warning-light: mix($--color-white, $--color-warning, 80%) !default;
@@ -116,7 +116,7 @@ $--font-size-medium: 16px !default;
 /// fontSize|1|Font Size|0
 $--font-size-base: 14px !default;
 /// fontSize|1|Font Size|0
-$--font-size-small: 14px !default;
+$--font-size-small: 12px !default;
 /// fontSize|1|Font Size|0
 $--font-size-extra-small: 12px !default;
 /// fontWeight|1|Font Weight|1
@@ -179,7 +179,7 @@ $--checkbox-input-border: $--border-base !default;
 
 /// color||Color|0
 $--checkbox-disabled-border-color: $--border-color-base !default;
-$--checkbox-disabled-input-fill: mix($--checkbox-background-color, $--color-white) !default;
+$--checkbox-disabled-input-fill: #edf2fc !default;
 $--checkbox-disabled-icon-color: $--color-text-placeholder !default;
 
 $--checkbox-disabled-checked-input-fill: $--border-color-extra-light !default;
@@ -289,7 +289,6 @@ $--radio-button-checked-font-color: $--color-white !default;
 /// color||Color|0
 $--radio-button-checked-border-color: $--color-primary !default;
 $--radio-button-disabled-checked-fill: $--border-color-extra-light !default;
-$--radio-button-border-radius: 2px !default;
 
 /* Select
 -------------------------- */
@@ -328,8 +327,8 @@ $--select-dropdown-max-height: 274px !default;
 $--select-dropdown-padding: 6px 0 !default;
 $--select-dropdown-empty-padding: 10px 0 !default;
 $--select-dropdown-border: solid 1px $--border-color-light !default;
-/// small
-$--select-small-font-size: $--font-size-small !default;
+
+$--select-small-font-size: 12px !default;
 $--select-option-small-height: 30px !default;
 $--select-option-small-line-height: 30px !default;
 $--select-mini-font-size: 12px !default;
@@ -553,10 +552,10 @@ $--button-medium-padding-vertical: 10px !default;
 $--button-medium-padding-horizontal: 20px !default;
 
 /// fontSize||Font|1
-$--button-small-font-size: 14px !default;
+$--button-small-font-size: 12px !default;
 $--button-small-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
-$--button-small-padding-vertical: 8px !default;
+$--button-small-padding-vertical: 9px !default;
 /// padding||Spacing|3
 $--button-small-padding-horizontal: 15px !default;
 /// fontSize||Font|1
@@ -653,7 +652,6 @@ $--dialog-padding-primary: 20px !default;
 -------------------------- */
 /// color||Color|0
 $--table-border-color: $--border-color-lighter !default;
-$--table-header-border: 2px solid $--color-primary !default;
 $--table-border: 1px solid $--table-border-color !default;
 /// color||Color|0
 $--table-font-color: $--color-text-regular !default;
@@ -665,7 +663,7 @@ $--table-current-row-background-color: $--color-primary-light-9 !default;
 /// color||Color|0
 $--table-header-background-color: $--color-white !default;
 $--table-fixed-box-shadow: 0 0 10px rgba(0, 0, 0, .12) !default;
-$--table-small-font-size: $--font-size-small !default;
+$--table-small-font-size: 12px !default;
 
 /* Pagination
 -------------------------- */
@@ -740,10 +738,9 @@ $--tag-warning-color: $--color-warning !default;
 /// color||Color|0
 $--tag-danger-color: $--color-danger !default;
 /// fontSize||Font|1
-$--tag-font-size: $--font-size-base !default;
+$--tag-font-size: 12px !default;
 $--tag-border-radius: 4px !default;
 $--tag-padding: 0 10px !default;
-$--tag-small-font-size: $--font-size-small !default;
 
 /* Tree
 -------------------------- */
@@ -783,8 +780,7 @@ $--card-inner-head-top-padding: 10px !default;
 $--card-inner-head-bottom-padding: 10px !default;
 $--card-inner-body-top-padding: 12px !default;
 $--card-inner-body-bottom-padding: 12px !default;
-/// small
-$--card-small-header-font-size: 16px !default;
+$--card-small-header-font-size: 14px !default;
 $--card-small-padding: 12px !default;
 
 /* Slider
@@ -1049,13 +1045,12 @@ $--list-vertical-item-extra-margin-left: 58px !default;
 
 /* ConditionFilter
 -------------------------- */
-$--condition-filter-label-text-color: $--color-primary !default;
+$--condition-filter-label-text-color: #33517e !default;
 $--condition-filter-label-text-font-weight: 700 !default;
 $--condition-filter-advanced-multiple-condition-line-height: 28px !default;
 $--condition-filter-label-margin-right: 10px !default;
 $--condition-filter-label-width: 100px !default;
-$--condition-filter-expander-width: 50px !default;
-$--condition-filter-small-font-size: $--font-size-small !default;
+$--condition-filter-expander-width: 40px !default;
 
 /* Description
 -------------------------- */

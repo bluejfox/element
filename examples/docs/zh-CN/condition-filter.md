@@ -40,7 +40,7 @@
     </el-row>
     <el-row :gutter="24">
       <el-col :span="8">
-        <el-form-item prop="publishFlag" label="是否下发">
+        <el-form-item prop="publishFlag" label="是否下发" required>
           <el-radio-group v-model="value.seniorCondition.publishFlag">
             <el-radio label="0">是</el-radio>
             <el-radio label="1">否</el-radio>
@@ -54,7 +54,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item prop="procurementType" label="采购类型" required>
+        <el-form-item prop="procurementType" label="采购类型">
           <el-select
             v-model="value.seniorCondition.procurementType"
             @change="onProcurementTypeChange"
@@ -71,7 +71,7 @@
     </el-row>
     <el-row :gutter="24">
       <el-col :span="8">
-        <el-form-item prop="dateRange" label="期间" required>
+        <el-form-item prop="dateRange" label="期间">
           <el-date-picker
             type="daterange"
             range-separator="至"
@@ -140,8 +140,7 @@
                     label: '审批驳回',
                     value: '4'
                   }
-                ],
-                required: true
+                ]
               },
             }
           }
@@ -574,8 +573,7 @@
                     label: '审批驳回',
                     value: '4'
                   }
-                ],
-                required: true
+                ]
               },
             }
           },
@@ -595,10 +593,6 @@
           }
         },
         schema: {
-          "required": [
-            "procurementType",
-            "publishDate"
-          ],
           "properties": {
             "createBy": {
               "type": "string",

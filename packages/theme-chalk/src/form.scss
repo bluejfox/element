@@ -64,10 +64,10 @@
       line-height: 32px;
     }
     &.el-form-item {
-      margin-bottom: 18px;
+      margin-bottom: 15px;
     }
     .el-form-item__error {
-      padding-top: 2px;
+      padding-top: 0;
     }
   }
   @include m(mini) {
@@ -118,7 +118,10 @@
     }
 
     .el-input-number,
-    .el-select {
+    .el-select,
+    .el-range-editor,
+    .el-cascader,
+    .el-date-editor {
       width: 100%;
     }
   }

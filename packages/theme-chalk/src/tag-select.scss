@@ -49,9 +49,16 @@
     .el-checkbox-button__inner {
       border: 0;
       padding: 0;
-      font-size: 12px;
+      font-size: $--tag-font-size;
       color: $--color-black;
       background: transparent;
+      font-weight: inherit;
+    }
+
+    @include m(small) {
+      .el-checkbox-button__inner {
+        font-size: $--tag-small-font-size;
+      }
     }
     
     &.is-checked {

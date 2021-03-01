@@ -2,7 +2,7 @@
   <div
     v-bind="data.attrs"
     v-on="listeners"
-    :class="[data.staticClass, 'el-divider', `el-divider--${props.direction}`]"
+    :class="[...props.customClass, data.staticClass, 'el-divider', `el-divider--${props.direction}`]"
   >
     <div
       v-if="slots().default && props.direction !== 'vertical'"
@@ -30,6 +30,14 @@ export default {
       validator(val) {
         return ['left', 'center', 'right'].indexOf(val) !== -1;
       }
+    },
+    customClass: {
+      default: []
+    }
+  },
+  computed: {
+    externalCustomClass() {
+      return this.customClass ? this.customClass : [];
     }
   }
 };

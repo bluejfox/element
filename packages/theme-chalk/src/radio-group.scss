@@ -6,4 +6,32 @@
   line-height: 1;
   vertical-align: middle;
   font-size: 0;
+
+  &.is-split {
+    @include b(radio-button) {
+      .el-radio-button__inner {
+        border-radius: $--radio-button-border-radius;
+        font-weight: 400;
+        
+        &:hover {
+          color: $--color-primary;
+        }
+      }
+      
+      &:not(:first-child) {
+        .el-radio-button__inner {
+          border-left: $--border-base;
+        }
+      }
+      
+      @include e(orig-radio) {
+        &:checked {
+          & + .el-radio-button__inner {
+            border-left-color: $--color-primary;
+            color: $--radio-button-checked-font-color;
+          }
+        }
+      }
+    }
+  }
 }

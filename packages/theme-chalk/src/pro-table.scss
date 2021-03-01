@@ -84,7 +84,7 @@
     }
   }
   .el-card__header {
-    padding: $--pro-table-header-padding;
+    // padding: $--pro-table-header-padding;
     .header__expander {
       top: 9px;
     }
@@ -101,7 +101,7 @@
         thead {
           tr {
             th {
-              background-color: $--pro-table-header-background-color;
+              // background-color: $--pro-table-header-background-color;
             }
           }
         }

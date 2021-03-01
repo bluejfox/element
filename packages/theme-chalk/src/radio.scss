@@ -13,7 +13,7 @@
   white-space: nowrap;
   outline: none;
   font-size: $--font-size-base;
-  margin-right: 30px;
+  margin-right: 8px;
   @include utils-user-select(none);
 
   @include when(bordered) {
@@ -194,6 +194,6 @@
 
   @include e(label) {
     font-size: $--radio-font-size;
-    padding-left: 10px;
+    margin: 0 8px;
   }
 }

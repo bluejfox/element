@@ -1,7 +1,8 @@
 <template>
   <form class="el-form" :class="[
     labelPosition ? 'el-form--label-' + labelPosition : '',
-    { 'el-form--inline': inline }
+    { 'el-form--inline': inline },
+    labelSuffix !== '' ? 'el-form-has-label-suffix' : ''
   ]" @submit.prevent="handleSubmit($event)">
     <slot></slot>
   </form>
@@ -88,6 +89,7 @@
           this.fields.splice(this.fields.indexOf(field), 1);
         }
       });
+      console.log(this.labelSuffix);
     },
     methods: {
       resetFields() {

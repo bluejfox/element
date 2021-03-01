@@ -384,8 +384,8 @@ export default {
       return (
         <div class="item-value">
           <span>{label}</span>
-          { !isRequired ? <ElIcon class="value-clear-icon" name="close" onClick={this.handleItemClose(key, value)}></ElIcon> : null }
-          { isLastChild ? <ElDivider type="vertical"></ElDivider> : null }
+          { !isRequired ? <i class="value-clear-icon el-icon-close" name="close" onClick={this.handleItemClose(key, value)}></i> : null }
+          { isLastChild ? <ElDivider direction="vertical"></ElDivider> : null }
         </div>
       );
     },
@@ -427,7 +427,8 @@ export default {
             return null;
           }
           if (item.$children) {
-            const childComponentName = item.$children[0].$options.componentName;
+            const formItemComponent = item.$children.length > 1 ? item.$children[1] : item.$children[0];
+            const childComponentName = formItemComponent.$options.componentName;
             // 可以多选的组件，排除级联选择器
             if (Array.isArray(value) && value.length > 0 &&
               childComponentName !== 'ElCascader' &&
@@ -437,7 +438,7 @@ export default {
               // 可以多选的选择器(ElSelect)
               if (childComponentName === 'ElSelect') {
                 valueList = itemValue.map((v, index) => {
-                  const label = item.$children[0].getOption(v).label;
+                  const label = formItemComponent.getOption(v).label;
                   if (label && label !== '') {
                     return this.renderMultipleLabelItem(h, key, label, v, index !== itemValue.length - 1, item.isRequired);
                   }
@@ -453,12 +454,12 @@ export default {
               let displayValue = value;
               // 选择器
               if (childComponentName === 'ElSelect') {
-                displayValue = item.$children[0].getOption(value).label;
+                displayValue = formItemComponent.getOption(value).label;
               // 级联选择器
               } else if (childComponentName === 'ElCascader') {
-                displayValue = item.$children[0].presentText;
+                displayValue = formItemComponent.presentText;
               } else if (childComponentName === 'ElDatePicker') {
-                const currentValue = item.$children[0].value;
+                const currentValue = formItemComponent.value;
                 if (typeof currentValue === 'string') {
                   displayValue = currentValue;
                 } else if (Array.isArray(currentValue)) {
@@ -466,15 +467,15 @@ export default {
                 }
               // 单选框
               } else if (childComponentName === 'ElRadioGroup') {
-                if (item.$children[0].$children) {
-                  item.$children[0].$children.forEach(radio => {
+                if (formItemComponent.$children) {
+                  formItemComponent.$children.forEach(radio => {
                     if (radio.model === radio.label) {
                       displayValue = radio.getDisplayLabel();
                     }
                   });
                 }
-              } else if (item.$children[0] && typeof item.$children[0].getDisplayLabel === 'function') {
-                displayValue = item.$children[0].getDisplayLabel();
+              } else if (formItemComponent && typeof formItemComponent.getDisplayLabel === 'function') {
+                displayValue = formItemComponent.getDisplayLabel();
               }
               if (item !== undefined && item !== null && value && value !== '') {
                 ret = (
@@ -482,7 +483,7 @@ export default {
                     <span class="item-label">{item.label}：</span>
                     <div class="item-value">
                       <span>{displayValue}</span>
-                      { !item.isRequired ? <ElIcon class="value-clear-icon" name="close" onClick={this.handleItemClose(key)}></ElIcon> : null }
+                      { !item.isRequired ? <i class="value-clear-icon el-icon-close" name="close" onClick={this.handleItemClose(key)}></i> : null }
                     </div>
                   </div>
                 );
@@ -523,7 +524,12 @@ export default {
       ? (
         <div class="el-condition-filter__quick">
           <div class="quick-label">快捷筛选：</div>
-          <ElRadioGroup value={quickConditionValue} onInput={this.handleQuickConditionChange} size="small" split="5px">
+          <ElRadioGroup
+            class="el-condition-filter__quick-container"
+            value={quickConditionValue}
+            onInput={this.handleQuickConditionChange}
+            size="small"
+            split="5px">
             { quickConditionSelectItemList }
           </ElRadioGroup>
         </div>
@@ -533,8 +539,7 @@ export default {
     if (schema) {
       conditionForm = (<ElJsonForm
         model={seniorConditionValue}
-        label-position="top"
-        label-width="100px"
+        label-width="auto"
         ref="seniorConditionForm"
         class="senior-condition-form"
         positionErrorField={false}
@@ -546,13 +551,12 @@ export default {
     } else {
       conditionForm = (<ElForm
         model={seniorConditionValue}
-        inline
-        label-position="top"
         ref="seniorConditionForm"
         class="senior-condition-form"
         rules={this.rules}
         positionErrorField={false}
-        nativeOnKeyup={this.handleFormKeyUp}>
+        nativeOnKeyup={this.handleFormKeyUp}
+        labelWidth="auto">
         { this.$slots.default }
       </ElForm>);
     }
@@ -560,7 +564,7 @@ export default {
     return (
       <div class="el-condition-filter">
         { quickConditionNode }
-        { quickConditionNode !== null ? <ElDivider class="el-condition-filter__divider"></ElDivider> : null }
+        { quickConditionNode !== null ? <ElDivider customClass={['el-quick__divider', 'el-condition-filter__divider']}></ElDivider> : null }
         <div class="el-condition-filter__senior">
           {
             isShowSeniorConditionLabel ? (
@@ -580,13 +584,13 @@ export default {
               </div>
             ) : null
           }
-          {
+          {/* {
             isShowSeniorConditionLabel ? (
-              <ElDivider class="el-condition-filter__divider-dashed" dashed></ElDivider>
+              <ElDivider customClass={['el-condition-filter__divider']} dashed></ElDivider>
             ) : null
-          }
+          } */}
           <ElCollapseTransition>
-            <div v-show={innerExpand}>
+            <div v-show={innerExpand} class="el-condition-filter__senior-expand-container">
               { seniorMultipleConditionList }
               { conditionForm }
               <div class="el-condition-filter__button" v-show={showControlButton}>

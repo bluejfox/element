@@ -160,7 +160,7 @@
       padding: 4px 0;
     }
     td {
-      padding: 0;
+      padding: 4px 0;
     }
   }
 
@@ -562,6 +562,14 @@
       height: 20px;
       text-align: center;
       margin-right: 3px;
+    }
+  }
+
+  @include e(header-wrapper) {
+    @include e(header) {
+      & > thead > tr > th.is-leaf {
+        border-bottom: $--table-header-border;
+      }
     }
   }
 }

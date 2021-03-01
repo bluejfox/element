@@ -175,6 +175,8 @@ const InputSizeMap = {
 export default {
   name: 'ElCascader',
 
+  componentName: 'ElCascader',
+
   directives: { Clickoutside },
 
   mixins: [PopperMixin, Emitter, Locale, Migrating],

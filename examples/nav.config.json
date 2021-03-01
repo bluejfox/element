@@ -156,6 +156,19 @@
             {
               "path": "/query-criteria-form",
               "title": "[特色]QueryCriteriaForm 标准查询表单"
+            },
+            {
+              "path": "/condition-filter",
+              "title": "[特色]ConditionFilter 高级筛选器"
+            }
+          ]
+        },
+        {
+          "groupName": "Sample",
+          "list": [
+            {
+              "path": "/sample-search",
+              "title": "Search 查询页面"
             }
           ]
         },
