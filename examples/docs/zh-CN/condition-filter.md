@@ -40,7 +40,7 @@
     </el-row>
     <el-row :gutter="24">
       <el-col :span="8">
-        <el-form-item prop="publishFlag" label="是否下发" required>
+        <el-form-item prop="publishFlag" label="是否下发">
           <el-radio-group v-model="value.seniorCondition.publishFlag">
             <el-radio label="0">是</el-radio>
             <el-radio label="1">否</el-radio>
@@ -97,21 +97,17 @@
         data: {
           quickCondition: [
             {
-              label: '由我创建',
+              label: '我创建的',
               value: 1,
               tooltip: '由我创建Tooltip'
             },
             {
-              label: '由我审批',
+              label: '我审批的',
               value: 2
             },
             {
-              label: '由我处理',
+              label: '我负责的',
               value: 3
-            },
-            {
-              label: '由我保存',
-              value: 4
             }
           ],
           seniorCondition: {

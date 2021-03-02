@@ -107,7 +107,8 @@ export default {
     headerTitle: {
       type: String,
       default: '查询结果'
-    }
+    },
+    defaultSort: Object
   },
   data() {
     return {
@@ -195,7 +196,7 @@ export default {
         const render = getValueByPath(uiSchema, `${key}.${UI_RENDER}`);
         const options = getValueByPath(uiSchema, `${key}.${UI_OPTIONS}`) || {};
         // formatter
-        let { formatter } = options;
+        let { formatter, sortable } = options;
         if (typeof formatter !== 'function') {
           // 根据oneOf或anyOf结构取得值对应的label
           formatter = createFormatter(property);
@@ -205,7 +206,8 @@ export default {
             title: property.title,
             key,
             formatter,
-            render
+            render,
+            sortable
           });
         }
       });
@@ -328,6 +330,7 @@ export default {
             index={props.index}
             selectable={props.selectable}
             align={props.align}
+            sortable={props.sortable}
             reserve-selection={columnReserveSelection}
           />
         );
@@ -360,6 +363,7 @@ export default {
             min-width={props.minWidth}
             width={props.width}
             align={props.align}
+            sortable={props.sortable}
             scopedSlots={scopedSlots}
           />
         );
@@ -484,8 +488,10 @@ export default {
       rowClassName,
       getDefaultTableProperties,
       getColumnSettingRender,
-      headerTitle
+      headerTitle,
+      defaultSort
     } = this;
+    console.log(defaultSort);
     const tableAttrs = getDefaultTableProperties();
     const inheritProps = {
       attrs: tableAttrs,
@@ -520,6 +526,7 @@ export default {
           {...{
             directives
           }}
+          border
           data={innerData}
           loading={isLoading}
           height={height}
@@ -529,6 +536,7 @@ export default {
           row-key={rowKey}
           row-class-name={rowClassName}
           highlight-select-row={true}
+          default-sort={defaultSort}
         >
           {$slots['batch-control'] ? (
             <template slot="control">{$slots['batch-control']}</template>

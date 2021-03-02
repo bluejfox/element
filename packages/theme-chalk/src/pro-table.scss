@@ -4,7 +4,7 @@
 
 .pro-table__column-setting-tree {
   padding-bottom: 5px;
-  font-size: 12px;
+  font-size: $--pro-table-font-size;
   
   & > .column-setting__toolbar {
     border-bottom: 1px solid #f0f0f0;
@@ -15,14 +15,14 @@
     padding-left: 8px;
 
     .column-setting__reset-button {
-      padding: 4px 14px;
+      padding: 2px 14px;
       float: right;
     }
 
     & > .el-checkbox {
       & > .el-checkbox__label {
         padding-left: 8px;
-        font-size: 12px;
+        font-size: $--pro-table-font-size;
       }
       .el-checkbox__input.is-checked + .el-checkbox__label {
         color: $--checkbox-font-color;
@@ -70,7 +70,7 @@
         font-size: 18px;
 
         & .column-setting {
-          margin-left: 4px;
+          margin-left: 8px;
           cursor: pointer;
         }
       }
@@ -86,7 +86,7 @@
   .el-card__header {
     // padding: $--pro-table-header-padding;
     .header__expander {
-      top: 9px;
+      top: 14px;
     }
   }
   .el-card__body {

@@ -54,7 +54,10 @@ export default {
         return null;
       }
     },
-    showSeniorConditionResult: Boolean,
+    showSeniorConditionResult: {
+      type: Boolean,
+      default: true
+    },
     showControlButton: {
       type: Boolean,
       default: true
@@ -523,7 +526,7 @@ export default {
     const quickConditionNode = (quickConditionSelectItemList && quickConditionSelectItemList.length > 0)
       ? (
         <div class="el-condition-filter__quick">
-          <div class="quick-label">快捷筛选：</div>
+          <div class="quick-label">快捷搜索：</div>
           <ElRadioGroup
             class="el-condition-filter__quick-container"
             value={quickConditionValue}
@@ -560,21 +563,21 @@ export default {
         { this.$slots.default }
       </ElForm>);
     }
-    const isShowSeniorConditionLabel = showSeniorConditionResult || quickConditionSelectItemList.length > 0 || seniorMultipleConditionList.length > 0;
+    // const isShowSeniorConditionLabel = showSeniorConditionResult || quickConditionSelectItemList.length > 0 || seniorMultipleConditionList.length > 0;
     return (
       <div class="el-condition-filter">
         { quickConditionNode }
         { quickConditionNode !== null ? <ElDivider customClass={['el-quick__divider', 'el-condition-filter__divider']}></ElDivider> : null }
         <div class="el-condition-filter__senior">
           {
-            isShowSeniorConditionLabel ? (
+            showSeniorConditionResult ? (
               <div class="senior-result">
-                <div class="senior-result__label">条件筛选：</div>
+                <div class="senior-result__label">条件搜索：</div>
                 <div class="senior-result__detail">
                   {seniorResultList}
                 </div>
                 {
-                  showSeniorConditionResult || quickCondition.length > 0 || Object.keys(multipleCondition).length > 0 ? (
+                  showSeniorConditionResult ? (
                     <a class="senior-expander" onClick={this.handleExpand}>
                       { innerExpand ? '收起' : '展开' }
                       <i class={{ 'el-icon-arrow-down': !innerExpand, 'el-icon-arrow-up': innerExpand }}></i>
@@ -594,8 +597,8 @@ export default {
               { seniorMultipleConditionList }
               { conditionForm }
               <div class="el-condition-filter__button" v-show={showControlButton}>
-                <ElButton onClick={this.handleClear}>清空</ElButton>
-                <ElButton onClick={this.handleSearch} type="primary">查询</ElButton>
+                <ElButton onClick={this.handleClear} icon="el-icon-refresh-left">重置</ElButton>
+                <ElButton onClick={this.handleSearch} type="primary" icon="el-icon-search">查询</ElButton>
               </div>
             </div>
           </ElCollapseTransition>

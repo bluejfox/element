@@ -22,7 +22,8 @@
     :ui-schema="uiSchema"
     row-key="id"
     :request="onRequest"
-    @selection-change="handleSelectionChange">
+    @selection-change="handleSelectionChange"
+    :default-sort="{prop: 'age', order: 'descending'}">
     <template slot="toolbar">
       <el-button size="mini" type="primary" icon="el-icon-plus">新建</el-button>
     </template>
@@ -31,7 +32,7 @@
     </template>
     <!-- slot插槽名称需要在schema.properties内进行定义，譬如下例的control -->
     <template slot="control" slot-scope="scope">
-      <el-button type="text" @click="handleUpdateButtonClick(scope)">修改数据</el-button>
+      <el-button type="text" @click="handleUpdateButtonClick(scope)">修改</el-button>
     </template>
   </el-pro-table>
 </div>
@@ -94,6 +95,11 @@
           }
         },
         uiSchema: {
+          "age": {
+            "ui:options": {
+              "sortable": true
+            }
+          },
           "birth": {
             "ui:options": {
               formatter(row, column, value) {
