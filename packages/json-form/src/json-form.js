@@ -554,6 +554,7 @@ export default {
       });
     }
     const { $attrs } = this;
+    console.log($attrs);
     const formProps = {
       ...$attrs,
       model: self.model,

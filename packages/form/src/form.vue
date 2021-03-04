@@ -89,7 +89,6 @@
           this.fields.splice(this.fields.indexOf(field), 1);
         }
       });
-      console.log(this.labelSuffix);
     },
     methods: {
       resetFields() {

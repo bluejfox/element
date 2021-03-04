@@ -309,7 +309,6 @@
       }
     },
     mounted() {
-      console.log(this.labelWidth);
       if (this.prop) {
         this.dispatch('ElForm', 'el.form.addField', [this]);
 

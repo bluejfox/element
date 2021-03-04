@@ -299,7 +299,7 @@
           },
           "searchHelp": {
             "ui:options": {
-              "suffix-icon": "search",
+              "suffix-icon": "el-icon-search",
               "readonly": true
             },
             "ui:nativeOn": {
@@ -488,7 +488,7 @@
           },
           "searchHelp": {
             "ui:options": {
-              "suffix-icon": "search",
+              "suffix-icon": "el-icon-search",
               "readonly": true
             },
             "ui:nativeOn": {
