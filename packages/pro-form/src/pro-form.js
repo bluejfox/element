@@ -42,7 +42,9 @@ export default {
     },
     uiSchema: {
       type: Object,
-      default: {}
+      default() {
+        return {};
+      }
     },
     afterSubmit: {
       type: Function

@@ -113,7 +113,7 @@ export default {
   data() {
     return {
       pageSizes: [10, 20, 50, 100],
-      innerData: null,
+      innerData: [],
       innerTotal: 0,
       current: 0,
       currentPageSize: 0,
@@ -144,7 +144,7 @@ export default {
     tableData: {
       immediate: true,
       handler(val) {
-        this.innerData = val;
+        this.innerData = val || [];
       }
     },
     total: {
@@ -215,6 +215,9 @@ export default {
     },
     isAllColumnShow() {
       return this.columnSettingCheckedKeys.length === this.columnSettingKeys.length;
+    },
+    tableD1ata() {
+
     }
   },
   created() {
@@ -244,7 +247,6 @@ export default {
         params,
         request
       } = this;
-      console.log('fetch');
       if (typeof request === 'function') {
         const requestParams = {
           pageNum: current,
@@ -256,7 +258,6 @@ export default {
           const { data, total } = res;
           this.innerData = data;
           this.innerTotal = total;
-          console.log(this.innerTotal);
           this.isLoading = false;
         }).catch((error) => {
           this.isLoading = false;

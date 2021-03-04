@@ -21,7 +21,7 @@
     :schema="schema"
     :ui-schema="uiSchema"
     row-key="id"
-    :request="onRequest"
+    :table-data="data"
     @selection-change="handleSelectionChange"
     :default-sort="{prop: 'age', order: 'descending'}">
     <template slot="toolbar">
@@ -116,7 +116,8 @@
             },
             "ui:colspan": 2
           }
-        }
+        },
+        data: null
       }
     },
     computed: {
@@ -125,11 +126,22 @@
       }
     },
     mounted() {
-      this.$refs.proTable.fetch();
+      // this.$refs.proTable.fetch();
+      const tableData = [];
+      for (let i = 0; i <= 20; i++) {
+        tableData.push({
+          no: i,
+          id: `zhangsan${i}`,
+          age: parseInt(Math.random() * 100, 10),
+          gender: (parseInt(Math.random() * 10, 10) % 2) + 1,
+          birth: '1990-10-01',
+          interest: '1'
+        });
+      }
+      this.data = tableData;
     },
     methods: {
       onRequest(params) {
-        console.log(params);
         const { pageNum, pageSize } = params;
         const tableData = [];
         const startIndex = ((pageNum - 1) * pageSize) + 1;
