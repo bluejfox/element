@@ -21,9 +21,11 @@
     :schema="schema"
     :ui-schema="uiSchema"
     row-key="id"
+    :total="totalDataLength"
     :table-data="data"
-    @selection-change="handleSelectionChange"
-    :default-sort="{prop: 'age', order: 'descending'}">
+    @current-change="handleCurrentChange"
+    @size-change="handleSizeChange"
+    @selection-change="handleSelectionChange">
     <template slot="toolbar">
       <el-button size="mini" type="primary" icon="el-icon-plus">新建</el-button>
     </template>
@@ -95,6 +97,11 @@
           }
         },
         uiSchema: {
+          "id": {
+            "ui:options": {
+              "width": "100px"
+            }
+          },
           "age": {
             "ui:options": {
               "sortable": true
@@ -102,6 +109,7 @@
           },
           "birth": {
             "ui:options": {
+              "width": "100px",
               formatter(row, column, value) {
                 return value.replace(/\-/g, '/');
               }
@@ -117,7 +125,8 @@
             "ui:colspan": 2
           }
         },
-        data: null
+        data: null,
+        totalDataLength: total
       }
     },
     computed: {
@@ -128,10 +137,10 @@
     mounted() {
       // this.$refs.proTable.fetch();
       const tableData = [];
-      for (let i = 0; i <= 20; i++) {
+      for (let i = 0; i < total; i++) {
         tableData.push({
           no: i,
-          id: `zhangsan${i}`,
+          id: `zhangsan${i + 1}`,
           age: parseInt(Math.random() * 100, 10),
           gender: (parseInt(Math.random() * 10, 10) % 2) + 1,
           birth: '1990-10-01',
@@ -167,6 +176,12 @@
       },
       handleUpdateButtonClick({ row }) {
         this.$message.warning(`修改 ${row.id} 数据!`);
+      },
+      handleCurrentChange(val) {
+        this.$message.info(`跳转至 ${val} 页`);
+      },
+      handleSizeChange(val) {
+        this.$message.info(`每页数据显示数量改为 ${val}`);
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;

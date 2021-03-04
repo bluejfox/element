@@ -9,6 +9,7 @@ import ElTooltip from 'setaria-ui/packages/tooltip';
 import ElTree from 'setaria-ui/packages/tree';
 import { arrayFind, getValueByPath, isEmpty } from 'setaria-ui/src/utils/util';
 
+const PRO_TABLE_INDEX = 'proTableIndex';
 const UI_OPTIONS = 'ui:options';
 const UI_RENDER = 'ui:render';
 
@@ -104,11 +105,23 @@ export default {
       type: Boolean,
       default: true
     },
+    showIndex: {
+      type: Boolean,
+      default: true
+    },
+    indexTitle: {
+      type: String,
+      default: '序号'
+    },
     headerTitle: {
       type: String,
       default: '查询结果'
     },
-    defaultSort: Object
+    defaultSort: Object,
+    pagination: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -141,28 +154,22 @@ export default {
         }
       }
     },
-    tableData: {
-      immediate: true,
-      handler(val) {
-        this.innerData = val || [];
-      }
-    },
     total: {
       immediate: true,
       handler(val) {
         this.innerTotal = val;
       }
     },
-    pageSize: {
-      immediate: true,
-      handler(val) {
-        this.currentPageSize = val;
-      }
-    },
     pageNum: {
       immediate: true,
       handler(val) {
         this.current = val;
+      }
+    },
+    pageSize: {
+      immediate: true,
+      handler(val) {
+        this.currentPageSize = val;
       }
     },
     current(val) {
@@ -181,7 +188,7 @@ export default {
   computed: {
     columns() {
       const ret = [];
-      const { rowKey, schema, uiSchema } = this;
+      const { showIndex, indexTitle, rowKey, schema, uiSchema } = this;
       const { properties } = schema;
       // rowKey存在的场合，开启multiple支持
       if (!isEmpty(rowKey)) {
@@ -189,6 +196,13 @@ export default {
           title: '',
           width: '45px',
           type: 'selection'
+        });
+      }
+      if (showIndex) {
+        ret.push({
+          title: indexTitle,
+          width: '55px',
+          key: PRO_TABLE_INDEX
         });
       }
       this.columnSettingCheckedKeys.forEach((key) => {
@@ -204,6 +218,7 @@ export default {
         if (arrayFind(this.columnSettingCheckedKeys, checkedKey => key === checkedKey)) {
           ret.push({
             title: property.title,
+            ...options,
             key,
             formatter,
             render,
@@ -216,11 +231,29 @@ export default {
     isAllColumnShow() {
       return this.columnSettingCheckedKeys.length === this.columnSettingKeys.length;
     },
-    tableD1ata() {
-
+    isNeedAutoPagination() {
+      const { pagination, tableData } = this;
+      // 判断是否进行前端分页
+      return pagination && tableData && tableData.length > 0 && typeof request !== 'function';
+    },
+    currentPageData() {
+      const { current, currentPageSize, tableData, total } = this;
+      if (tableData && tableData.length && tableData.length > 0) {
+        let fromIndex = (current - 1) * currentPageSize;
+        if (fromIndex < 0) {
+          fromIndex = 0;
+        }
+        let toIndex = current * currentPageSize;
+        if (toIndex > total) {
+          toIndex = total + 1;
+        }
+        return tableData.slice(fromIndex, toIndex);
+      }
+      return tableData;
     }
   },
   created() {
+    const { isNeedAutoPagination, tableData } = this;
     let targetInstance = window;
     if (window.top !== targetInstance) {
       targetInstance = window.top;
@@ -230,6 +263,10 @@ export default {
       typeof targetInstance.proTablePageSizes === 'string'
     ) {
       this.pageSizes = targetInstance.proTablePageSizes.split(',');
+    }
+    // 判断是否进行前端分页
+    if (isNeedAutoPagination) {
+      this.total = tableData.length;
     }
   },
   mounted() {
@@ -276,19 +313,21 @@ export default {
      * @event
      * @param {Number} val 变更后的页号
      */
-    onCurrentChange(val) {
+    handleCurrentChange(val) {
       this.current = val;
       this.fetch();
-      // this.$emit('current-change', val);
+      console.log(this.currentPageData);
+      this.$emit('current-change', val);
     },
     /**
      * 当前表格数据显示数量变更事件处理
      * @event
      * @param {Number} val 变更后的表格数据显示数量
      */
-    onSizeChange(val) {
+    handleSizeChange(val) {
       this.currentPageSize = val;
       this.fetch();
+      this.$emit('size-change', val);
     },
     /**
      * 当某一行被点击时会触发该事件
@@ -305,7 +344,7 @@ export default {
      * @event
      * @param {Array} val 当前的选择项
      */
-    onSelectionChange(val) {
+    handleSelectionChange(val) {
       this.$emit('selection-change', val);
     },
     /**
@@ -473,13 +512,15 @@ export default {
       collapse,
       current,
       currentPageSize,
+      currentPageData,
       pageSizes,
-      onCurrentChange,
+      handleCurrentChange,
       onRowClick,
-      onSelectionChange,
-      onSizeChange,
+      handleSelectionChange,
+      handleSizeChange,
       renderColumn,
       isLoading,
+      isNeedAutoPagination,
       innerData = [],
       innerTotal,
       isShowPager,
@@ -490,9 +531,16 @@ export default {
       getDefaultTableProperties,
       getColumnSettingRender,
       headerTitle,
+      showIndex,
       defaultSort
     } = this;
-    console.log(defaultSort);
+    console.log(this.tableData);
+    const tableCurrentData = isNeedAutoPagination ? currentPageData : innerData;
+    if (tableCurrentData && typeof tableCurrentData.length === 'number' && showIndex) {
+      tableCurrentData.forEach((data, index) => {
+        data[PRO_TABLE_INDEX] = (currentPageSize * (current - 1)) + index + 1;
+      });
+    }
     const tableAttrs = getDefaultTableProperties();
     const inheritProps = {
       attrs: tableAttrs,
@@ -528,12 +576,12 @@ export default {
             directives
           }}
           border
-          data={innerData}
+          data={tableCurrentData}
           loading={isLoading}
           height={height}
           max-height={maxHeight}
           on-row-click={onRowClick}
-          on-selection-change={onSelectionChange}
+          on-selection-change={handleSelectionChange}
           row-key={rowKey}
           row-class-name={rowClassName}
           highlight-select-row={true}
@@ -544,7 +592,7 @@ export default {
           ) : null}
           {renderColumns}
         </ElTable>
-        {innerData.length > 0 && isShowPager ? (
+        {tableCurrentData.length > 0 && isShowPager ? (
           <div class="el-pro-table__pagination">
             <ElPagination
               total={innerTotal}
@@ -552,8 +600,8 @@ export default {
               page-size={currentPageSize}
               page-sizes={pageSizes}
               layout="total, sizes, prev, pager, next, jumper"
-              on-current-change={onCurrentChange}
-              on-size-change={onSizeChange}
+              on-current-change={handleCurrentChange}
+              on-size-change={handleSizeChange}
             />
           </div>
         ) : null}
