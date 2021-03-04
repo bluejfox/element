@@ -316,7 +316,6 @@ export default {
     handleCurrentChange(val) {
       this.current = val;
       this.fetch();
-      console.log(this.currentPageData);
       this.$emit('current-change', val);
     },
     /**
@@ -534,7 +533,6 @@ export default {
       showIndex,
       defaultSort
     } = this;
-    console.log(this.tableData);
     const tableCurrentData = isNeedAutoPagination ? currentPageData : innerData;
     if (tableCurrentData && typeof tableCurrentData.length === 'number' && showIndex) {
       tableCurrentData.forEach((data, index) => {
