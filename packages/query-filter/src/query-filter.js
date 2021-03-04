@@ -264,13 +264,9 @@ export default {
       return null;
     },
     emitValue() {
-      const { quickConditionValue, conditionValue } = this;
-      const current = {
-        quickCondition: quickConditionValue,
-        seniorCondition: conditionValue
-      };
-      this.$emit('input', current);
-      this.$emit('change', current);
+      const { conditionValue } = this;
+      this.$emit('input', conditionValue);
+      this.$emit('change', conditionValue);
     },
     /**
      * 渲染允许多选值的条件筛选Label
