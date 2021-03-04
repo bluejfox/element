@@ -8,24 +8,29 @@ import ElRadioButton from 'setaria-ui/packages/radio-button';
 import ElTagSelect from 'setaria-ui/packages/tag-select';
 import ElTagSelectItem from 'setaria-ui/packages/tag-select-item';
 import ElTooltip from 'setaria-ui/packages/tooltip';
-import ElJsonForm from 'setaria-ui/packages/json-form';
+import ElProForm from 'setaria-ui/packages/pro-form';
 import { arrayFind, arrayFindIndex, coerceTruthyValueToArray } from 'setaria-ui/src/utils/util';
 
 const NON_INITIAL = 'nonInitial';
 const INITIALED = 'initialed';
 
-const jsonFormInitialOptions = {
+const proFormInitialOptions = {
   attrs: {
     labelSuffix: '：',
     labelPosition: 'left',
     labelWidth: 'auto'
+  },
+  props: {
+    type: 'queryFilter',
+    expand: true,
+    positionErrorField: false
   }
 };
 
 export default {
-  name: 'ElConditionFilter',
+  name: 'ElQueryFilter',
 
-  componentName: 'ElConditionFilter',
+  componentName: 'ElQueryFilter',
 
   components: {
     ElButton,
@@ -38,7 +43,7 @@ export default {
     ElTagSelect,
     ElTagSelectItem,
     ElTooltip,
-    ElJsonForm
+    ElProForm
   },
 
   props: {
@@ -63,10 +68,6 @@ export default {
       type: Boolean,
       default: true
     },
-    showControlButton: {
-      type: Boolean,
-      default: true
-    },
     columns: {
       type: Number,
       default: 3
@@ -82,16 +83,17 @@ export default {
         return {
         };
       }
-    }
+    },
+    afterSubmit: Function
   },
 
   data() {
     return {
       conditionValue: {},
       conditionValidateMessage: {},
-      innerExpand: false,
+      innerExpand: true,
       conditionResultItemKey: NON_INITIAL,
-      advanceConditionFormKey: NON_INITIAL
+      conditionFormKey: NON_INITIAL
     };
   },
 
@@ -113,17 +115,22 @@ export default {
 
   mounted() {
     // 初始化时，需要等自组件渲染完才能从子组件取得当前选择值
-    // 刷新当前搜索条件值的显示
-    this.conditionResultItemKey = INITIALED;
+    this.$nextTick(() => {
+      // 刷新当前搜索条件值的显示
+      this.conditionResultItemKey = INITIALED;
+      this.innerExpand = false;
+    });
   },
 
   methods: {
     handleExpand() {
       this.innerExpand = !this.innerExpand;
       this.$emit('update:expand', this.innerExpand);
-      if (this.advanceConditionFormKey === NON_INITIAL) {
-        this.advanceConditionFormKey = INITIALED;
+      if (this.conditionFormKey === NON_INITIAL) {
+        // this.conditionFormKey = INITIALED;
       }
+      // this.$refs.normalConditionForm.refresh();
+      // this.$refs.advanceConditionForm.refresh();
     },
     handleClear() {
       const seniorConditionKeys = [];
@@ -175,12 +182,18 @@ export default {
       this.handleSearch();
     },
     handleSearch() {
-      const { conditionValue } = this;
-      this.validate().then(() => {
-        this.quickConditionValue = '';
-        // 在emit-value后触发事件，便于在对应触发的事件函数中可以取到最新的v-model值
-        this.$nextTick(() => {
-          this.$emit('senior-search', conditionValue);
+      return new window.Promise((resolve, reject) => {
+        const { afterSubmit, conditionValue } = this;
+        this.validate().then((isValid) => {
+          if (!isValid) {
+            reject();
+            return;
+          }
+          if (typeof afterSubmit === 'function') {
+            resolve(afterSubmit(conditionValue));
+            return;
+          }
+          resolve();
         });
       });
     },
@@ -193,38 +206,9 @@ export default {
     },
     validate() {
       return new window.Promise((resolve, reject) => {
-        let ret = true;
-        const { seniorCondition = {} } = this.data;
-        const { multipleCondition } = seniorCondition;
-        if (multipleCondition) {
-          const { conditionValidateMessage } = this;
-          Object.keys(multipleCondition).forEach(conditionKey => {
-            if (multipleCondition[conditionKey].required) {
-              const conditionValue = this.conditionValue[conditionKey];
-              if (conditionValue === undefined ||
-                  conditionValue === null ||
-                  conditionValue === '' ||
-                  (conditionValue && conditionValue.length === 0)) {
-                conditionValidateMessage[conditionKey] = `请选择${multipleCondition[conditionKey].label}`;
-                ret = false;
-              } else {
-                conditionValidateMessage[conditionKey] = null;
-              }
-            }
-          });
-          this.conditionValidateMessage = {};
-          this.conditionValidateMessage = conditionValidateMessage;
-        }
-
-        if (!ret) {
-          reject();
-        }
         this.$refs.advanceConditionForm.validate((valid) => {
-          if (valid) {
-            resolve();
-          } else {
-            reject();
-          }
+          console.log('callbackFunc');
+          resolve(valid);
         });
       });
     },
@@ -393,21 +377,20 @@ export default {
      * @param {*} uiSchema uiSchema
      * @param {*} value 值
      */
-    renderNormalCondition(schema, uiSchema, advanceConditionFormKey, value) {
+    renderNormalCondition(schema, uiSchema, handleSearch, value) {
       if (schema) {
         return (
-          <ElJsonForm
-            {...jsonFormInitialOptions}
+          <ElProForm
+            {...proFormInitialOptions}
             model={value}
-            key={advanceConditionFormKey}
             ref="normalConditionForm"
             class="normal-condition-form"
-            positionErrorField={false}
             // nativeOnKeyup={this.handleFormKeyUp}
             schema={schema}
             uiSchema={uiSchema}
+            after-submit={handleSearch}
             columns={3}>
-          </ElJsonForm>
+          </ElProForm>
         );
       }
       return null;
@@ -431,35 +414,35 @@ export default {
       $slots,
       innerExpand,
       conditionValue = {},
-      showControlButton,
       normalSchema,
       normalUiSchema,
       advanceSchema,
       advanceUiSchema,
       conditionResultItemKey,
-      advanceConditionFormKey,
+      conditionFormKey,
+      handleSearch,
       renderConditionResultList,
       renderNormalCondition
     } = this;
     // 普通搜索
     let normalConditionNode = $slots.normalCondition
       ? $slots.normalCondition
-      : renderNormalCondition(normalSchema, normalUiSchema, advanceConditionFormKey, conditionValue);
+      : renderNormalCondition(normalSchema, normalUiSchema, handleSearch, conditionValue);
     // 高级搜索表单
     let advanceConditionForm = null;
     if (advanceSchema) {
-      advanceConditionForm = (<ElJsonForm
-        {...jsonFormInitialOptions}
+      advanceConditionForm = (<ElProForm
+        {...proFormInitialOptions}
         model={conditionValue}
-        key={advanceConditionFormKey}
+        key={conditionFormKey}
         ref="advanceConditionForm"
         class="advance-condition-form"
-        positionErrorField={false}
         nativeOnKeyup={this.handleFormKeyUp}
+        afterSubmit={handleSearch}
         schema={advanceSchema}
         uiSchema={advanceUiSchema}
         columns={columns}>
-      </ElJsonForm>);
+      </ElProForm>);
     } else {
       advanceConditionForm = (<ElForm
         label-position="left"
@@ -474,9 +457,13 @@ export default {
       </ElForm>);
     }
     return (
-      <div class="el-condition-filter">
+      <div
+        class={[
+          'el-query-filter',
+          innerExpand ? 'is-expand' : ''
+        ]}>
         { normalConditionNode ? (
-          <div class="el-condition-filter__normal">
+          <div class="el-query-filter__normal">
             { normalConditionNode }
             <div class="normal__toolbar">
               <ElButton
@@ -487,7 +474,7 @@ export default {
             </div>
           </div>
         ) : null }
-        <div class="el-condition-filter__senior">
+        <div class="el-query-filter__advance">
           <div class="query-result">
             <div class="query-result__icon">
               <i class="el-icon-search"></i>
@@ -497,12 +484,8 @@ export default {
             </div>
           </div>
           <ElCollapseTransition>
-            <div v-show={innerExpand} class="el-condition-filter__senior-expand-container">
+            <div v-show={innerExpand} class="el-query-filter__advance-expand-container">
               { advanceConditionForm }
-              <div class="el-condition-filter__button" v-show={showControlButton}>
-                <ElButton onClick={this.handleClear} icon="el-icon-refresh-left">重置</ElButton>
-                <ElButton onClick={this.handleSearch} type="primary" icon="el-icon-search">搜索</ElButton>
-              </div>
             </div>
           </ElCollapseTransition>
         </div>

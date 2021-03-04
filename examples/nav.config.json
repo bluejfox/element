@@ -158,8 +158,8 @@
               "title": "[特色]QueryCriteriaForm 标准查询表单"
             },
             {
-              "path": "/condition-filter",
-              "title": "[特色]ConditionFilter 高级筛选器"
+              "path": "/query-filter",
+              "title": "[特色]QueryFilter 高级筛选器"
             }
           ]
         },

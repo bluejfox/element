@@ -6,4 +6,7 @@
   .pro-form-control-button-container {
     text-align: center;
   }
+  @include e(control) {
+    text-align: right;
+  }
 }

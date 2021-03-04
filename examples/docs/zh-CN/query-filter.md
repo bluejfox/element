@@ -10,13 +10,14 @@
 ::: demo
 ```html
 <div>
-  <el-condition-filter v-model="value"
+  <el-query-filter v-model="value"
                        class="filter"
                        :normal-schema="normalSchema"
                        :normal-ui-schema="normalUiSchema"
                        :advance-schema="advanceSchema"
-                       :advance-ui-schema="advanceUiSchema">
-  </el-condition-filter>
+                       :advance-ui-schema="advanceUiSchema"
+                       :after-submit="afterSubmit">
+  </el-query-filter>
 </div>
 <script>
   export default {
@@ -90,6 +91,15 @@
     mounted() {
     },
     methods: {
+      afterSubmit(val) {
+        console.log('afterSubmit');
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            this.$message.success('查询执行成功');
+            resolve();
+          }, 1000);
+        });
+      }
     }
   }
 </script>

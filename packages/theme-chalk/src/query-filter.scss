@@ -1,6 +1,6 @@
 @import "mixins/mixins";
 
-@include b(condition-filter) {
+@include b(query-filter) {
   font-size: $--condition-filter-small-font-size;
   
   @include e(normal) {
@@ -49,7 +49,7 @@
     margin-bottom: 7px;
   }
   
-  @include e(senior) {
+  @include e(advance) {
     .query-result {
       line-height: 32px;
       padding-left: 20px;
@@ -98,77 +98,6 @@
           }
         }
       }
-      
-      .senior-expander {
-        float: right;
-        cursor: pointer;
-        width: $--condition-filter-expander-width;
-        margin-top: 6px;
-        color: $--color-primary;
-        text-decoration: none;
-        .el-icon-arrow-up {
-          margin-left: 5px;
-        }
-      }
-    }
-    .senior-multiple-condition {
-      display: inline-block;
-      width: 100%;
-      
-      @include when(required) {
-        @include pseudo('not(.is-no-asterisk)') {
-          & > .senior-multiple-condition__label:before {
-            content: '*';
-            color: $--color-danger;
-            margin-right: 4px;
-          }
-        }
-      }
-      
-      .senior-multiple-condition__label {
-        vertical-align: middle;
-        line-height: $--condition-filter-advanced-multiple-condition-line-height;
-        width: 100px;
-        text-align: right;
-        display: inline-block;
-      }
-      .senior-multiple-condition__item {
-        position: relative;
-        line-height: 27px;
-        display: inline-block;
-        margin-left: 2px;
-
-        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-          min-height: 28px;
-        }
-        
-        .el-tag-select {
-          display: flex;
-          max-height: initial;
-          line-height: inherit;
-          @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-            min-height: 28px;
-            // max-height: 28px;
-          }
-          
-          .el-tag-select-item__all {
-            position: relative;
-            top: -0.45px;
-          }
-          .select-item-group{
-            flex: 1;
-          }
-        }
-        
-        .item-error {
-          color: $--color-danger;
-          font-size: $--condition-filter-small-font-size;
-          line-height: 1;
-          padding-top: 4px;
-          top: 100%;
-          left: 0;
-        }
-      }
     }
 
     @include e(senior-expand-container) {
@@ -181,6 +110,11 @@
     
     .advance-condition-form {
       margin-top: 5px;
+      .el-pro-form__control {
+        .control__expand-button {
+          display: none;
+        }
+      }
       .el-row {
         .el-form-item {
           width: 100%;
@@ -191,6 +125,9 @@
           height: 30px;
         }
       }
+    }
+    .el-pro-form__control {
+      display: none;
     }
   }
 
@@ -229,6 +166,19 @@
             line-height: inherit;
           }
         }
+      }
+    }
+  }
+
+  @include when(expand) {
+    .el-query-filter__normal {
+      .el-pro-form__control {
+        display: none;
+      }
+    }
+    .el-query-filter__advance {
+      .el-pro-form__control {
+        display: inherit;
       }
     }
   }

@@ -93,7 +93,7 @@ import CascaderPanel from '../packages/cascader-panel/index.js';
 import Drawer from '../packages/drawer/index.js';
 import Popconfirm from '../packages/popconfirm/index.js';
 import Ellipsis from '../packages/ellipsis/index.js';
-import ConditionFilter from '../packages/condition-filter/index.js';
+import QueryFilter from '../packages/query-filter/index.js';
 import Description from '../packages/description/index.js';
 import TagSelect from '../packages/tag-select/index.js';
 import TagSelectItem from '../packages/tag-select-item/index.js';
@@ -194,7 +194,7 @@ const components = [
   Drawer,
   Popconfirm,
   Ellipsis,
-  ConditionFilter,
+  QueryFilter,
   Description,
   TagSelect,
   TagSelectItem,
@@ -337,7 +337,7 @@ export default {
   Drawer,
   Popconfirm,
   Ellipsis,
-  ConditionFilter,
+  QueryFilter,
   Description,
   TagSelect,
   TagSelectItem,

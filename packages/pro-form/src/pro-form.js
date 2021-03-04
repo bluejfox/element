@@ -4,6 +4,9 @@ import ElJsonForm from 'setaria-ui/packages/json-form/src/json-form';
 import { getStyle } from 'setaria-ui/src/utils/dom';
 import { arrayFind, isEmpty } from 'setaria-ui/src/utils/util';
 
+const NON_INITIAL = 'nonInitial';
+// const INITIALED = 'initialed';
+
 /** 配置表单列变化的容器宽度断点 */
 const BREAKPOINTS = {
   vertical: [
@@ -61,7 +64,8 @@ export default {
       width: null,
       currentDisplayTotalColSpan: 0,
       totalColSpan: 0,
-      isShowModalForm: false
+      isShowModalForm: false,
+      formRenderKey: NON_INITIAL
     };
   },
   watch: {
@@ -95,7 +99,7 @@ export default {
       const { direction, widthNumber } = this;
       const breakPoints = BREAKPOINTS[direction];
       const breakPoint = arrayFind(breakPoints, item => widthNumber < item[0]);
-      return breakPoint[1];
+      return breakPoint ? breakPoint[1] : 0;
     },
     widthNumber() {
       const { width } = this;
@@ -167,6 +171,12 @@ export default {
       const leaveSpan = currentColumns - currentDisplayTotalColSpan % currentColumns - 1;
       ret.offset = leaveSpan * currentColspan;
       return ret;
+    },
+    fields() {
+      if (this.$refs.proForm) {
+        return this.$refs.proForm.fields;
+      }
+      return [];
     }
   },
   created() {
@@ -175,11 +185,20 @@ export default {
     this.handleResize();
     this.isMounted = true;
     window.addEventListener('resize', this.handleResize);
+    // 初始化时，需要等自组件渲染完才能从子组件取得当前选择值
+    this.$nextTick(() => {
+      // this.formRenderKey = INITIALED;
+    });
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
+    refresh() {
+      // if (this.formRenderKey === NON_INITIAL) {
+      //   this.formRenderKey = INITIALED;
+      // }
+    },
     handleResize() {
       this.width = getStyle(this.$el, 'width');
     },
@@ -217,6 +236,9 @@ export default {
       // evt.preventDefault();
       // evt.stopPropagation();
       this.isShowModalForm = !this.isShowModalForm;
+    },
+    validate(callbackFunc) {
+      this.$refs.proForm.validate(callbackFunc);
     }
   },
   render(h) {
@@ -235,6 +257,7 @@ export default {
       schema,
       totalColSpan,
       type,
+      // formRenderKey,
       headerTitle,
       handleExpand,
       handleModalButtonClick
@@ -273,10 +296,23 @@ export default {
     const getQueryFillterControlContainer = () => {
       const { handleSubmit, handleReset } = this;
       return (
-        <el-col span={queryFilterColumnConfig.span} offset={queryFilterColumnConfig.offset} slot="formItems" style="text-align: right;">
-          <el-button type="primary" onClick={handleSubmit} loading={isSubmiting}>查询</el-button>
-          <el-button onClick={handleReset}>重置</el-button>
-          <el-button type="text" onClick={handleExpand}>{totalColSpan >= currentColumns ? getExpandTextLabel() : null}</el-button>
+        <el-col
+          span={queryFilterColumnConfig.span}
+          offset={queryFilterColumnConfig.offset}
+          slot="formItems"
+          class="el-pro-form__control">
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            onClick={handleSubmit}
+            loading={isSubmiting}>搜索</el-button>
+          <el-button onClick={handleReset} icon="el-icon-refresh-left">重置</el-button>
+          <el-button
+            type="text"
+            onClick={handleExpand}
+            class="control__expand-button">
+            {totalColSpan >= currentColumns ? getExpandTextLabel() : null}
+          </el-button>
         </el-col>
       );
     };

@@ -4,6 +4,9 @@ import ElSelect from 'setaria-ui/packages/select';
 import ElInput from 'setaria-ui/packages/input';
 import { isEmpty } from 'setaria-ui/src/utils/util';
 
+const NON_INITIAL = 'nonInitial';
+// const INITIALED = 'initialed';
+
 const CLASSNAME = 'className';
 // UI Property
 const UI_WIDGET = 'ui:widget';
@@ -55,6 +58,7 @@ export default {
   },
   data() {
     return {
+      formRenderKey: NON_INITIAL
     };
   },
   computed: {
@@ -204,7 +208,18 @@ export default {
   },
   created() {
   },
+  mounted() {
+    // 初始化时，需要等自组件渲染完才能从子组件取得当前选择值
+    this.$nextTick(() => {
+      // this.formRenderKey = INITIALED;
+    });
+  },
   methods: {
+    refresh() {
+      // if (this.formRenderKey === NON_INITIAL) {
+      //   this.formRenderKey = INITIALED;
+      // }
+    },
     onSubmit() {
       this.$emit('submit', this.model);
     },
@@ -554,7 +569,6 @@ export default {
       });
     }
     const { $attrs } = this;
-    console.log($attrs);
     const formProps = {
       ...$attrs,
       model: self.model,
