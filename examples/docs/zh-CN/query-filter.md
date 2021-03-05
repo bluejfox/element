@@ -13,7 +13,9 @@
   <el-query-filter v-model="value"
                        class="filter"
                        :normal-schema="normalSchema"
+                       :normal-ui-schema="normalUiSchema"
                        :advance-schema="advanceSchema"
+                       :advance-ui-schema="advanceUiSchema"
                        :after-submit="afterSubmit">
   </el-query-filter>
 </div>
