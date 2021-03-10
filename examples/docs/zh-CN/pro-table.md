@@ -62,7 +62,7 @@
             "ui:options": {
               "width": "100px",
               formatter(row, column, value) {
-                return value.replace(/\-/g, '/');
+                return value && value.replace && value.replace(/\-/g, '/');
               }
             }
           },

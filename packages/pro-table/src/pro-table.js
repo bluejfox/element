@@ -144,18 +144,29 @@ export default {
         if (isEmpty(val)) {
           return;
         }
-        if (this.columnSettingKeys.length === 0) {
+        const { columnSettingKeys, indexTitle, showIndex } = this;
+        if (columnSettingKeys.length === 0) {
           this.columnSettingKeys = Object.keys(val.properties).map((key) => {
             return {
               key,
-              ...val.properties[key]
+              title: val.properties[key].title
             };
           });
+          if (showIndex) {
+            this.columnSettingKeys.unshift({
+              key: PRO_TABLE_INDEX,
+              title: indexTitle
+            });
+          }
         }
         if (this.columnSettingCheckedKeys.length === 0) {
           // 初始化，默认显示全部列
           this.columnSettingCheckedKeys = this.getAllColumnKeys();
         }
+        // !FIXME 如果不定义$nextTick，在某些情况下列设置的checkbox状态没有正常渲染
+        this.$nextTick(() => {
+          this.reactColumnSettingTree();
+        });
       }
     },
     total: {
@@ -192,7 +203,7 @@ export default {
   computed: {
     columns() {
       const ret = [];
-      const { showIndex, indexTitle, rowKey, schema, uiSchema } = this;
+      const { indexTitle, rowKey, schema, uiSchema } = this;
       const { properties } = schema;
       // rowKey存在的场合，开启multiple支持
       if (!isEmpty(rowKey)) {
@@ -202,26 +213,24 @@ export default {
           type: 'selection'
         });
       }
-      if (showIndex) {
-        ret.push({
-          title: indexTitle,
-          width: '55px',
-          key: PRO_TABLE_INDEX
-        });
-      }
       this.columnSettingCheckedKeys.forEach((key) => {
         const property = properties[key];
         const render = getValueByPath(uiSchema, `${key}.${UI_RENDER}`);
         const options = getValueByPath(uiSchema, `${key}.${UI_OPTIONS}`) || {};
         // formatter
         let { formatter, sortable } = options;
-        if (typeof formatter !== 'function') {
+        if (typeof formatter !== 'function' && property) {
           // 根据oneOf或anyOf结构取得值对应的label
           formatter = createFormatter(property);
         }
         if (arrayFind(this.columnSettingCheckedKeys, checkedKey => key === checkedKey)) {
+          let title = property ? property.title : null;
+          if (key === PRO_TABLE_INDEX) {
+            title = indexTitle;
+            options.width = '55px';
+          }
           ret.push({
-            title: property.title,
+            title,
             ...options,
             key,
             formatter,
@@ -274,12 +283,15 @@ export default {
     }
   },
   mounted() {
-    if (this.$refs.columnSettingTree) {
-      // 默认显示全部列
-      this.$refs.columnSettingTree.setCheckedKeys(this.columnSettingCheckedKeys);
-    }
+    this.reactColumnSettingTree();
   },
   methods: {
+    reactColumnSettingTree() {
+      if (this.$refs.columnSettingTree) {
+        // 默认显示全部列
+        this.$refs.columnSettingTree.setCheckedKeys(this.columnSettingCheckedKeys);
+      }
+    },
     getAllColumnKeys() {
       return this.columnSettingKeys.map(item => item.key);
     },
