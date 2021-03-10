@@ -139,7 +139,11 @@ export default {
   watch: {
     schema: {
       immediate: true,
+      deep: true,
       handler(val) {
+        if (isEmpty(val)) {
+          return;
+        }
         if (this.columnSettingKeys.length === 0) {
           this.columnSettingKeys = Object.keys(val.properties).map((key) => {
             return {
@@ -270,8 +274,10 @@ export default {
     }
   },
   mounted() {
-    // 默认显示全部列
-    this.$refs.columnSettingTree.setCheckedKeys(this.columnSettingCheckedKeys);
+    if (this.$refs.columnSettingTree) {
+      // 默认显示全部列
+      this.$refs.columnSettingTree.setCheckedKeys(this.columnSettingCheckedKeys);
+    }
   },
   methods: {
     getAllColumnKeys() {

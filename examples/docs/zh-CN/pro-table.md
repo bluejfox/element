@@ -46,56 +46,7 @@
       return {
         tableData: [],
         multipleSelection: [],
-        schema: {
-          "properties": {
-            "id": {
-              "description": "用户ID",
-              "type": "string",
-              "title": "用户ID",
-              "minLength": 3,
-              "maxLength": 6
-            },
-            "age": {
-              "type": "integer",
-              "title": "年龄"
-            },
-            "gender": {
-              "type": "integer",
-              "title": "性别",
-              "oneOf": [
-                {"const": 1, "title": "男"},
-                {"const": 2, "title": "女"}
-              ]
-            },
-            "birth": {
-              "type": "string",
-              "title": "出生年月日",
-              "format": "date"
-            },
-            "time": {
-              "type": "array",
-              "title": "时间",
-              "format": "time"
-            },
-            "dateTime": {
-              "type": "string",
-              "title": "日期时间",
-              "format": "date-time"
-            },
-            "interest": {
-              "type": "array",
-              "title": "兴趣",
-              "anyOf": [
-                {"const": "1", "title": "游戏"},
-                {"const": "2", "title": "音乐"},
-                {"const": "3", "title": "运动"}
-              ]
-            },
-            "control": {
-              "title": "操作"
-            }
-          }
-        },
+        schema: {},
         uiSchema: {
           "id": {
             "ui:options": {
@@ -135,7 +86,56 @@
       }
     },
     mounted() {
-      // this.$refs.proTable.fetch();
+      this.schema = {
+        "properties": {
+          "id": {
+            "description": "用户ID",
+            "type": "string",
+            "title": "用户ID",
+            "minLength": 3,
+            "maxLength": 6
+          },
+          "age": {
+            "type": "integer",
+            "title": "年龄"
+          },
+          "gender": {
+            "type": "integer",
+            "title": "性别",
+            "oneOf": [
+              {"const": 1, "title": "男"},
+              {"const": 2, "title": "女"}
+            ]
+          },
+          "birth": {
+            "type": "string",
+            "title": "出生年月日",
+            "format": "date"
+          },
+          "time": {
+            "type": "array",
+            "title": "时间",
+            "format": "time"
+          },
+          "dateTime": {
+            "type": "string",
+            "title": "日期时间",
+            "format": "date-time"
+          },
+          "interest": {
+            "type": "array",
+            "title": "兴趣",
+            "anyOf": [
+              {"const": "1", "title": "游戏"},
+              {"const": "2", "title": "音乐"},
+              {"const": "3", "title": "运动"}
+            ]
+          },
+          "control": {
+            "title": "操作"
+          }
+        }
+      };
       const tableData = [];
       for (let i = 0; i < total; i++) {
         tableData.push({
