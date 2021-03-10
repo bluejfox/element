@@ -179,7 +179,7 @@
 ```
 :::
 
-### ConditionFilter Attributes
+### QueryFilter Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -190,21 +190,21 @@
 | show-control-button | 是否显示清空和查询按钮 | Boolean | — | true |
 | rules    | 表单验证规则 | object | — | — |
 
-### ConditionFilter Value Structure
+### QueryFilter Value Structure
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | quickCondition | 快捷筛选值 | * | — | — |
 | seniorCondition | 条件筛选值 | Object | — | — |
 
-### ConditionFilter Data Structure
+### QueryFilter Data Structure
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | quickCondition | 快捷筛选项目定义 | Array | [{ label:'显示值', value: '存储值' }] | — |
 | seniorCondition.multipleCondition | 条件筛选多选项目定义 | Object | { '多选项目Key': { label: '多选项目Label(名称)', data: [{ label: '显示值', value: '存储值', tooltip: '文字提示' }] } } | — |
 
-### ConditionFilter Events
+### QueryFilter Events
 
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
@@ -213,7 +213,7 @@
 | change  | 筛选条件变化时被触发 | 当前条件筛选值 |
 | clear  | 条件筛选项目值被清空（点击条件筛选Label右侧筛选项目的 `X` 图标或点击清空按钮） | 被清空的筛选项目key数组 |
 
-### ConditionFilter Methods
+### QueryFilter Methods
 
 | 方法名      | 说明          | 参数
 |---------- |-------------- | --------------
