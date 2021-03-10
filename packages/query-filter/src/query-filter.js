@@ -424,6 +424,10 @@ export default {
     let normalConditionNode = $slots.normalCondition
       ? $slots.normalCondition
       : renderNormalCondition(normalSchema, normalUiSchema, handleSearch, conditionValue);
+    // 不存在普通搜索的场合，高级搜索默认展开
+    if (normalConditionNode === undefined || normalConditionNode === null) {
+      this.innerExpand = true;
+    }
     // 高级搜索表单
     let advanceConditionForm = null;
     if (advanceSchema) {

@@ -105,6 +105,80 @@
 </script>
 ```
 :::
+
+
+### 没有定义普通搜索的场合
+
+::: demo
+```html
+<div>
+  <el-query-filter v-model="value"
+                       class="filter"
+                       :advance-schema="advanceSchema"
+                       :advance-ui-schema="advanceUiSchema"
+                       :after-submit="afterSubmit">
+  </el-query-filter>
+</div>
+<script>
+  export default {
+    data() {
+      return {
+        value: {
+          procurementType: '1',
+          createDate: [],
+          publishFlag: '',
+          procurementApplyType: '2',
+          projectName: '',
+          location: [],
+          dateRange: null,
+          amount: undefined,
+          createBy: ''
+        },
+        advanceSchema: {
+          "properties": {
+            "createBy": {
+              "type": "string",
+              "title": "创建人"
+            },
+            "createDate": {
+              "type": "array",
+              "title": "创建期间",
+              "format": "date"
+            },
+            "procurementApplyType": {
+              "type": "string",
+              "title": "采购申请类型",
+              "oneOf": [
+                {"const": "1", "title": "成本类"},
+                {"const": "2", "title": "资本类"}
+              ]
+            }
+          }
+        },
+        advanceUiSchema: {
+          "createDate": {
+            "ui:colspan": 2
+          }
+        }
+      };
+    },
+    mounted() {
+    },
+    methods: {
+      afterSubmit(val) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            this.$message.success('查询执行成功');
+            resolve();
+          }, 1000);
+        });
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### ConditionFilter Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
