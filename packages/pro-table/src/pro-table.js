@@ -152,7 +152,7 @@ export default {
               title: val.properties[key].title
             };
           });
-          if (showIndex) {
+          if (showIndex && this.columnSettingKeys.length > 0) {
             this.columnSettingKeys.unshift({
               key: PRO_TABLE_INDEX,
               title: indexTitle
