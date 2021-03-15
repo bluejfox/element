@@ -21,6 +21,7 @@
     :schema="schema"
     :ui-schema="uiSchema"
     row-key="id"
+    multiple-selection
     :total="totalDataLength"
     :table-data="data"
     @current-change="handleCurrentChange"

@@ -90,8 +90,10 @@ export default {
       type: Number,
       default: 10
     },
-    // 存在rowKey的场合，即自动开启行多选
+    // rowKey，用于展开和树形结构显示
     rowKey: null,
+    // 是否开启多选，与type="selection"相同
+    multipleSelection: Boolean,
     rowClassName: null,
     // 获取表格数据
     request: Function,
@@ -203,10 +205,10 @@ export default {
   computed: {
     columns() {
       const ret = [];
-      const { indexTitle, rowKey, schema, uiSchema } = this;
+      const { indexTitle, multipleSelection, schema, uiSchema } = this;
       const { properties } = schema;
       // rowKey存在的场合，开启multiple支持
-      if (!isEmpty(rowKey)) {
+      if (multipleSelection) {
         ret.push({
           title: '',
           width: '45px',
