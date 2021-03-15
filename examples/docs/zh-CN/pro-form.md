@@ -21,6 +21,9 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
     :ui-schema="uiSchema"
     label-width="100px"
     :after-submit="onSubmit">
+    <template slot="comment" slot-scope="scope">
+      <el-input v-model="scope.data.comment" suffix-icon="el-icon-search"/>
+    </template>
   </el-pro-form>
   <p>result:</p>
   <div>
@@ -103,12 +106,6 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
         },
         uiSchema: {
           "interest": {
-            "ui:colspan": 2
-          },
-          "comment": {
-            "ui:options": {
-              type: 'textarea'
-            },
             "ui:colspan": 2
           }
         }

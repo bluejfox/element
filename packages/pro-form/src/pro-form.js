@@ -248,6 +248,7 @@ export default {
       $attrs,
       $listeners,
       $slots,
+      $scopedSlots,
       currentColumns,
       innerExpand,
       model,
@@ -346,6 +347,7 @@ export default {
         schema={schema}
         uiSchema={innerUiSchema}
         columns={currentColumns}
+        scopedSlots={$scopedSlots}
         {...attributes}>
         { getControlButton() }
       </ElJsonForm>
