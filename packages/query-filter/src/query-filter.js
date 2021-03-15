@@ -373,7 +373,7 @@ export default {
      * @param {*} uiSchema uiSchema
      * @param {*} value 值
      */
-    renderNormalCondition(schema, uiSchema, handleSearch, value) {
+    renderNormalCondition(schema, uiSchema, $scopedSlots, handleSearch, value) {
       if (schema) {
         return (
           <ElProForm
@@ -385,7 +385,8 @@ export default {
             schema={schema}
             uiSchema={uiSchema}
             after-submit={handleSearch}
-            columns={3}>
+            columns={3}
+            scopedSlots={$scopedSlots}>
           </ElProForm>
         );
       }
@@ -408,6 +409,7 @@ export default {
     const {
       columns,
       $slots,
+      $scopedSlots,
       innerExpand,
       conditionValue = {},
       normalSchema,
@@ -423,7 +425,7 @@ export default {
     // 普通搜索
     let normalConditionNode = $slots.normalCondition
       ? $slots.normalCondition
-      : renderNormalCondition(normalSchema, normalUiSchema, handleSearch, conditionValue);
+      : renderNormalCondition(normalSchema, normalUiSchema, $scopedSlots, handleSearch, conditionValue);
     // 不存在普通搜索的场合，高级搜索默认展开
     if (normalConditionNode === undefined || normalConditionNode === null) {
       this.innerExpand = true;
@@ -441,7 +443,8 @@ export default {
         afterSubmit={handleSearch}
         schema={advanceSchema}
         uiSchema={advanceUiSchema}
-        columns={columns}>
+        columns={columns}
+        scopedSlots={$scopedSlots}>
       </ElProForm>);
     } else {
       advanceConditionForm = (<ElForm
@@ -452,7 +455,8 @@ export default {
         rules={this.rules}
         positionErrorField={false}
         nativeOnKeyup={this.handleFormKeyUp}
-        labelWidth="auto">
+        labelWidth="auto"
+        scopedSlots={$scopedSlots}>
         { this.$slots.default }
       </ElForm>);
     }

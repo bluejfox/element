@@ -17,6 +17,9 @@
                        :advance-schema="advanceSchema"
                        :advance-ui-schema="advanceUiSchema"
                        :after-submit="afterSubmit">
+    <template slot="projectName" slot-scope="scope">
+      <el-input v-model="scope.data.projectName" suffix-icon="el-icon-search"/>
+    </template>
   </el-query-filter>
 </div>
 <script>
@@ -44,6 +47,10 @@
                 {"const": "2", "title": "工程类"},
                 {"const": "3", "title": "营销类"}
               ]
+            },
+            "projectName": {
+              "type": "string",
+              "title": "项目名称"
             }
           }
         },
