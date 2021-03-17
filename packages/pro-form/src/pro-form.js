@@ -56,7 +56,8 @@ export default {
     headerTitle: {
       type: String,
       default: '搜索条件'
-    }
+    },
+    rules: Object
   },
   data() {
     return {
@@ -234,7 +235,6 @@ export default {
       this.isShowModalForm = false;
     },
     handleModalButtonClick(evt) {
-      console.log('handleModalButtonClick', evt);
       // evt.preventDefault();
       // evt.stopPropagation();
       this.isShowModalForm = !this.isShowModalForm;
@@ -263,6 +263,7 @@ export default {
       // formRenderKey,
       headerTitle,
       handleExpand,
+      rules,
       handleModalButtonClick
     } = this;
     if (!isMounted) {
@@ -348,6 +349,7 @@ export default {
         uiSchema={innerUiSchema}
         columns={currentColumns}
         scopedSlots={$scopedSlots}
+        rules={rules}
         {...attributes}>
         { getControlButton() }
       </ElJsonForm>

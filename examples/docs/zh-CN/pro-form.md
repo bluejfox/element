@@ -19,6 +19,7 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
     :model="form1"
     :schema="schema"
     :ui-schema="uiSchema"
+    :rules="rules"
     label-width="100px"
     :after-submit="onSubmit">
     <template slot="comment" slot-scope="scope">
@@ -45,6 +46,19 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
           profession: '',
           dateTime: '',
           time: '',
+        },
+        rules: {
+          id: [
+            {
+              validator: (rule, value, callback) => {
+                console.log('validator');
+                if (value !== 'abc') {
+                  callback(new Error('必须输入abc'));
+                }
+              },
+              trigger: 'blur'
+            }
+          ]
         },
         schema: {
           "required": [

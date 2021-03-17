@@ -54,7 +54,8 @@ export default {
       type: String,
       default: 'el'
     },
-    columnMaxLabelLength: Number
+    columnMaxLabelLength: Number,
+    rules: Object
   },
   data() {
     return {
@@ -62,26 +63,10 @@ export default {
     };
   },
   computed: {
-    rules() {
+    innerRules() {
       const ret = {};
+      const { rules = {} } = this;
       const { required = [], properties = {} } = this.schema;
-      // 必须输入
-      // required.forEach(key => {
-      //   const item = properties[key];
-      //   let itemName = '';
-      //   if (item) {
-      //     itemName = item.title;
-      //   }
-      //   if (!ret[key]) {
-      //     ret[key] = [];
-      //   }
-      //   // 生成必须输入校验规则
-      //   ret[key].push({
-      //     required: true,
-      //     message: `请输入${itemName}`,
-      //     trigger: 'blur'
-      //   });
-      // });
       // 优化当实时change schema.required时errorMessage未刷新的问题
       Object.keys(properties).forEach(key => {
         const item = properties[key];
@@ -89,20 +74,12 @@ export default {
         if (item) {
           itemName = item.title;
         }
-        if (!ret[key]) {
-          ret[key] = [];
-        }
+        ret[key] = rules[key] || [];
         if (required.includes(key)) {
           ret[key].push({
             required: true,
             message: `请输入${itemName}`,
             trigger: 'blur'
-          });
-        } else {
-          ret[key].push({
-            required: false,
-            message: '',
-            trigger: 'change'
           });
         }
       });
@@ -116,9 +93,11 @@ export default {
         }
         const uiSchemaItemObj = uiSchema[key];
         const customRules = uiSchemaItemObj && uiSchemaItemObj[UI_RULE];
+        // 自定义rule
         if (customRules) {
           const originRule = ret[key];
           ret[key] = originRule.concat(customRules);
+        // 根据schema生成的rule
         } else {
           if (!isEmpty(item.pattern)) {
             const rule = {
@@ -579,7 +558,7 @@ export default {
     const formProps = {
       ...$attrs,
       model: self.model,
-      rules: self.rules,
+      rules: self.innerRules,
       isPrevent: self.isPrevent
     };
     let formComponents = formItemArray;

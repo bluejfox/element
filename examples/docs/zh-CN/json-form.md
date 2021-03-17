@@ -18,6 +18,7 @@
     :schema="schema"
     label-width="100px"
     :columns="2"
+    :rules="rules"
     @change="onChange"
   >
     <div slot="button">
@@ -45,6 +46,17 @@
           profession: '',
           dateTime: '',
           time: '',
+        },
+        rules: {
+          comment: [
+            {
+              validator: (rule, value, callback) => {
+                if (value !== 'abc') {
+                  callback(new Error('必须输入abc'));
+                }
+              }
+            }
+          ]
         },
         schema: {
           required: ['firstName', 'lastName', 'age'],
