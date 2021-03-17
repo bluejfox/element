@@ -34,19 +34,7 @@
   export default {
     data() {
       return {
-        form1: {
-          firstName: 'first',
-          lastName: 'last',
-          password: '',
-          age: null,
-          gender: 2,
-          birth: '',
-          interest: [],
-          comment: '',
-          profession: '',
-          dateTime: '',
-          time: '',
-        },
+        form1: null,
         rules: {
           comment: [
             {
@@ -127,6 +115,21 @@
           },
         },
       }
+    },
+    mounted() {
+      this.form1 = {
+        firstName: 'first',
+        lastName: 'last',
+        password: '',
+        age: null,
+        gender: 2,
+        birth: '',
+        interest: [],
+        comment: '',
+        profession: '',
+        dateTime: '',
+        time: '',
+      };
     },
     methods: {
       onChange(key, value, object) {

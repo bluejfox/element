@@ -30,6 +30,8 @@ export default {
   componentName: 'ElJsonForm',
   props: {
     model: Object,
+    // !FIXME 使用jsx的某些情况下，无法取得model值，问题原因待查
+    modelData: Object,
     // 表单提交是否重载页面
     isPrevent: {
       type: Boolean,
@@ -200,7 +202,7 @@ export default {
       // }
     },
     onSubmit() {
-      this.$emit('submit', this.model);
+      this.$emit('submit', this.model || this.modelData);
     },
     validate(callback) {
       this.$refs.form.validate(callback);
@@ -303,6 +305,7 @@ export default {
     formEvents.on.submit = () => {
       this.onSubmit();
     };
+    const model = this.model || this.modelData;
     if (this.schema && this.schema.properties) {
       Object.keys(this.schema.properties).forEach(key => {
         const ui = this.uiSchema[key] || {};
@@ -319,7 +322,7 @@ export default {
             };
             const componentChildren = [];
             const props = {
-              value: self.model[key],
+              value: model[key],
               disabled: ui[UI_DISABLED] === true
             };
             // DOM 属性
@@ -332,8 +335,8 @@ export default {
             };
             // 因render 函数中没有与 v-model 相应的 api, 实现v-model逻辑。
             events.on.input = (val) => {
-              this.model[key] = val;
-              this.$emit('change', key, val, self.model);
+              model[key] = val;
+              this.$emit('change', key, val, model);
             };
             if (property.enum || property.oneOf || property.anyOf) {
               if (property.oneOf && ui[UI_WIDGET] === 'radio') {
@@ -406,11 +409,11 @@ export default {
               property.format === 'date-time') {
               componentTagName = `${componentPrefix}-date-picker`;
               events.on.input = (val) => {
-                this.model[key] = val;
+                model[key] = val;
               };
               events.on.change = (val) => {
-                this.model[key] = val;
-                this.$emit('change', key, val, self.model);
+                model[key] = val;
+                this.$emit('change', key, val, model);
               };
               if (property.type === 'string') {
                 props.type = property.format.replace(/-/g, '');
@@ -427,11 +430,11 @@ export default {
             } else if (property.format === 'time') {
               componentTagName = `${componentPrefix}-time-picker`;
               events.on.input = (val) => {
-                this.model[key] = val;
+                model[key] = val;
               };
               events.on.change = (val) => {
-                this.model[key] = val;
-                this.$emit('change', key, val, self.model);
+                model[key] = val;
+                this.$emit('change', key, val, model);
               };
               if (property.type === 'array') {
                 props['is-range'] = true;
@@ -471,8 +474,8 @@ export default {
                     ret = null;
                   }
                 }
-                this.model[key] = ret;
-                this.$emit('change', key, ret, self.model);
+                model[key] = ret;
+                this.$emit('change', key, ret, model);
               };
               componentTagName = `${componentPrefix}-input-number`;
             }
@@ -521,7 +524,7 @@ export default {
             componentProps.props = mergedProps;
             formItemChildren.push(h(componentTagName, componentProps, componentChildren));
           } else {
-            const childrenCustomRender = $scopedSlots[key]({data: self.model});
+            const childrenCustomRender = $scopedSlots[key]({data: model});
             formItemChildren.push(childrenCustomRender);
           }
           const labelSlot = self.getFormLabelSlot(h, property, self.columnMaxLabelLength, colSpan);
@@ -544,7 +547,7 @@ export default {
             [formItemChildren]
           );
         } else if (typeof ui[UI_RENDER] === 'function') {
-          formItem = ui[UI_RENDER](h, { data: self.model });
+          formItem = ui[UI_RENDER](h, { data: model });
         }
         if (!isEmpty(formItem)) {
           formItemArray.push({
@@ -557,7 +560,7 @@ export default {
     const { $attrs } = this;
     const formProps = {
       ...$attrs,
-      model: self.model,
+      model: model,
       rules: self.innerRules,
       isPrevent: self.isPrevent
     };
