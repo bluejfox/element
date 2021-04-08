@@ -16,7 +16,6 @@
     ref="form1"
     :model="form1"
     :schema="schema"
-    label-width="100px"
     :columns="2"
     :rules="rules"
     @change="onChange"
@@ -301,6 +300,7 @@
             'ui:options': {
               rows: 5,
             },
+            'ui:placeholder': '111',
             'ui:colspan': 3,
           },
           gender: {
@@ -386,7 +386,6 @@
     :model="form2"
     :schema="schema"
     :ui-schema="uiSchema"
-    label-width="100px"
     :columns="3"
     :column-max-label-length="10"
     size="small"
@@ -455,6 +454,7 @@
             interest: {
               type: 'array',
               title: 'interest',
+              description: '兴趣选择',
               anyOf: [
                 { const: '1', title: 'Game' },
                 { const: '2', title: 'Music' },
@@ -467,8 +467,8 @@
             },
             comment: {
               type: 'string',
-              title: '1234567890一二三四五六七八九十abcde',
-              description: 'des',
+              title: '1234567890一二三四五六七八九十abcdefg',
+              description: '自定义辅助提示',
             },
             profession: {
               type: 'string',

@@ -12,6 +12,7 @@ const CLASSNAME = 'className';
 const UI_WIDGET = 'ui:widget';
 const UI_OPTIONS = 'ui:options';
 const UI_DISABLED = 'ui:disabled';
+const UI_PLACEHOLDER = 'ui:placeholder';
 const UI_HIDDEN = 'ui:hidden';
 const UI_FORMAT = 'ui:format';
 const UI_COLSPAN = 'ui:colspan';
@@ -255,7 +256,7 @@ export default {
           `${componentPrefix}-icon`,
           {
             props: {
-              name: 'no',
+              name: 'warning-outline',
               tooltip: false
             },
             style: {
@@ -484,6 +485,14 @@ export default {
             componentProps.nativeOn = events.nativeOn;
             if (Object.keys(domProps).length > 0) {
               componentProps.domProps = domProps;
+            }
+            // placeholder处理
+            if (isEmpty(attrs.placeholder)) {
+              let placeholder = ui[UI_PLACEHOLDER];
+              if (isEmpty(placeholder)) {
+                placeholder = `请输入${property.title}`;
+              }
+              attrs.placeholder = placeholder;
             }
             if (Object.keys(attrs).length > 0) {
               componentProps.attrs = attrs;
