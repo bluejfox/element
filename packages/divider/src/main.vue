@@ -32,7 +32,9 @@ export default {
       }
     },
     customClass: {
-      default: []
+      default() {
+        return [];
+      }
     }
   },
   computed: {

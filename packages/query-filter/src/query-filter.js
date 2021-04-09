@@ -68,7 +68,12 @@ export default {
     normalSchema: Object,
     normalUiSchema: Object,
     advanceSchema: Object,
-    advanceUiSchema: Object,
+    advanceUiSchema: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     afterSubmit: Function
   },
 
