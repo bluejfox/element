@@ -197,10 +197,8 @@ export default {
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
-    refresh() {
-      // if (this.formRenderKey === NON_INITIAL) {
-      //   this.formRenderKey = INITIALED;
-      // }
+    resetFields() {
+      this.$refs.proForm.resetFields();
     },
     handleResize() {
       this.width = getStyle(this.$el, 'width');
@@ -208,6 +206,10 @@ export default {
     handleExpand() {
       this.innerExpand = !this.innerExpand;
     },
+    /**
+     * 表单提交事件处理
+     * @public
+     */
     handleSubmit() {
       const { afterSubmit, model, type } = this;
       this.$refs.proForm.validate((isValid) => {
@@ -229,7 +231,8 @@ export default {
       });
     },
     handleReset() {
-      this.$refs.proForm.resetFields();
+      this.resetFields();
+      this.$emit('clear');
     },
     handleCancel() {
       this.isShowModalForm = false;

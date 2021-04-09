@@ -54,19 +54,12 @@ export default {
         return {};
       }
     },
-    expand: {
-      type: Boolean,
-      default: true
-    },
+    expand: Boolean,
     rules: {
       type: Object,
       default() {
         return null;
       }
-    },
-    showSeniorConditionResult: {
-      type: Boolean,
-      default: true
     },
     columns: {
       type: Number,
@@ -74,16 +67,8 @@ export default {
     },
     normalSchema: Object,
     normalUiSchema: Object,
-    advanceSchema: {
-      type: Object
-    },
-    advanceUiSchema: {
-      type: Object,
-      default() {
-        return {
-        };
-      }
-    },
+    advanceSchema: Object,
+    advanceUiSchema: Object,
     afterSubmit: Function
   },
 
@@ -98,6 +83,11 @@ export default {
   },
 
   watch: {
+    expand: {
+      handler(val) {
+        this.innerExpand = val;
+      }
+    },
     value: {
       immediate: true,
       deep: true,
@@ -118,7 +108,11 @@ export default {
     this.$nextTick(() => {
       // 刷新当前搜索条件值的显示
       this.conditionResultItemKey = INITIALED;
-      this.innerExpand = false;
+      if (typeof this.expand === 'boolean') {
+        this.innerExpand = this.expand;
+      } else {
+        this.innerExpand = false;
+      }
     });
   },
 
@@ -126,53 +120,17 @@ export default {
     handleExpand() {
       this.innerExpand = !this.innerExpand;
       this.$emit('update:expand', this.innerExpand);
-      if (this.conditionFormKey === NON_INITIAL) {
-        // this.conditionFormKey = INITIALED;
-      }
-      // this.$refs.normalConditionForm.refresh();
-      // this.$refs.advanceConditionForm.refresh();
     },
-    handleClear() {
-      const seniorConditionKeys = [];
-      // 必须输入的查询项目key-value数组
-      const requiredConditionValueObjects = [];
-      // 保存必须输入项目的值不变且取得需要清除的项目key数组
-      this.$refs.advanceConditionForm.fields.forEach(field => {
-        if (field.isRequired) {
-          requiredConditionValueObjects.push({
-            key: field.prop,
-            value: this.conditionValue[field.prop]
-          });
-        } else {
-          seniorConditionKeys.push(field.prop);
-        }
-      });
-      // 清空条件筛选中表单项目的值
-      this.$refs.advanceConditionForm.resetFields();
-      this.$nextTick(() => {
-        // 必须输入的查询项目值不允许被清空
-        if (requiredConditionValueObjects.length > 0) {
-          requiredConditionValueObjects.forEach(item => {
-            this.conditionValue[item.key] = item.value;
-          });
-        }
-      });
-      // 清空多选条件的值
-      Object.keys(this.conditionValue).forEach(key => {
-        const { seniorCondition = {} } = this.data;
-        const { multipleCondition = {} } = seniorCondition;
-        const index = arrayFindIndex(Object.keys(multipleCondition), conditionKey => {
-          return conditionKey === key;
-        });
-        // 必须输入的多选条件不允许被清空
-        if (index !== -1 && multipleCondition[key].required !== true) {
-          seniorConditionKeys.push(key);
-          this.conditionValue[key] = [];
-        }
-      });
+    handleClear(refKey) {
+      if (refKey === 'normalConditionForm') {
+        this.$refs.advanceConditionForm.resetFields();
+      } else {
+        this.$refs.normalConditionForm.resetFields();
+      }
       // 触发clear事件
       this.$nextTick(() => {
-        this.$emit('clear', seniorConditionKeys);
+        console.log(Object.keys(this.normalSchema));
+        this.$emit('clear');
       });
     },
     /**
@@ -190,7 +148,14 @@ export default {
             return;
           }
           if (typeof afterSubmit === 'function') {
-            resolve(afterSubmit(conditionValue));
+            const promise = afterSubmit(conditionValue);
+            if (promise && promise.then) {
+              promise.then(() => {
+                resolve();
+              }).catch((err) => {
+                reject(err);
+              });
+            }
             return;
           }
           resolve();
@@ -205,11 +170,32 @@ export default {
       }
     },
     validate() {
+      const validateAdvanceForm = (callback) => {
+        const { advanceConditionForm } = this.$refs;
+        if (advanceConditionForm) {
+          advanceConditionForm.validate(callback);
+        } else {
+          callback(true);
+        }
+      };
       return new window.Promise((resolve, reject) => {
-        this.$refs.advanceConditionForm.validate((valid) => {
-          console.log('callbackFunc');
-          resolve(valid);
-        });
+        if (this.$refs.normalConditionForm) {
+          this.$refs.normalConditionForm.validate((valid) => {
+            if (valid) {
+              validateAdvanceForm((valid) => {
+                if (valid) {
+                  resolve(valid);
+                }
+              });
+            }
+          });
+        } else {
+          validateAdvanceForm((valid) => {
+            if (valid) {
+              resolve(valid);
+            }
+          });
+        }
       });
     },
     /**
@@ -247,7 +233,12 @@ export default {
           }
         }
         this.$nextTick(() => {
-          this.$emit('clear', [ key ]);
+          this.$emit('clear', key);
+          if (this.innerExpand) {
+            this.$refs.advanceConditionForm.handleSubmit();
+          } else {
+            this.$refs.normalConditionForm.handleSubmit();
+          }
         });
       };
     },
@@ -373,7 +364,7 @@ export default {
      * @param {*} uiSchema uiSchema
      * @param {*} value 值
      */
-    renderNormalCondition(schema, uiSchema, $scopedSlots, handleSearch, value) {
+    renderNormalCondition(schema, uiSchema, $scopedSlots, handleSearch, handleClear, handleFormKeyUp, value) {
       if (schema) {
         return (
           <ElProForm
@@ -381,12 +372,13 @@ export default {
             model={value}
             ref="normalConditionForm"
             class="normal-condition-form"
-            // nativeOnKeyup={this.handleFormKeyUp}
+            nativeOnKeyup={handleFormKeyUp}
             schema={schema}
             uiSchema={uiSchema}
             after-submit={handleSearch}
             columns={3}
-            scopedSlots={$scopedSlots}>
+            scopedSlots={$scopedSlots}
+            on-clear={() => { handleClear('normalConditionForm'); }}>
           </ElProForm>
         );
       }
@@ -415,17 +407,19 @@ export default {
       normalSchema,
       normalUiSchema,
       advanceSchema,
-      advanceUiSchema,
+      advanceUiSchema = {},
       conditionResultItemKey,
       conditionFormKey,
       handleSearch,
+      handleClear,
+      handleFormKeyUp,
       renderConditionResultList,
       renderNormalCondition
     } = this;
     // 普通搜索
     let normalConditionNode = $slots.normalCondition
       ? $slots.normalCondition
-      : renderNormalCondition(normalSchema, normalUiSchema, $scopedSlots, handleSearch, conditionValue);
+      : renderNormalCondition(normalSchema, normalUiSchema, $scopedSlots, handleSearch, handleClear, handleFormKeyUp, conditionValue);
     // 不存在普通搜索的场合，高级搜索默认展开
     if (normalConditionNode === undefined || normalConditionNode === null) {
       this.innerExpand = true;
@@ -439,12 +433,13 @@ export default {
         key={conditionFormKey}
         ref="advanceConditionForm"
         class="advance-condition-form"
-        nativeOnKeyup={this.handleFormKeyUp}
+        nativeOnKeyup={handleFormKeyUp}
         afterSubmit={handleSearch}
         schema={advanceSchema}
         uiSchema={advanceUiSchema}
         columns={columns}
-        scopedSlots={$scopedSlots}>
+        scopedSlots={$scopedSlots}
+        on-clear={() => { handleClear('advanceConditionForm'); }}>
       </ElProForm>);
     } else {
       advanceConditionForm = (<ElForm
@@ -454,9 +449,10 @@ export default {
         class="advance-condition-form"
         rules={this.rules}
         positionErrorField={false}
-        nativeOnKeyup={this.handleFormKeyUp}
+        nativeOnKeyup={handleFormKeyUp}
         labelWidth="auto"
-        scopedSlots={$scopedSlots}>
+        scopedSlots={$scopedSlots}
+        on-clear={() => { handleClear('advanceConditionForm'); }}>
         { this.$slots.default }
       </ElForm>);
     }
