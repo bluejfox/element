@@ -167,13 +167,6 @@ export default {
         });
       });
     },
-    handleFormKeyUp(event) {
-      if (event.key && event.key.toLowerCase() === 'enter') {
-        this.handleSearch();
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    },
     validate() {
       const validateAdvanceForm = (callback) => {
         const { advanceConditionForm } = this.$refs;
@@ -369,7 +362,7 @@ export default {
      * @param {*} uiSchema uiSchema
      * @param {*} value 值
      */
-    renderNormalCondition(schema, uiSchema, $scopedSlots, handleSearch, handleClear, handleFormKeyUp, value) {
+    renderNormalCondition(schema, uiSchema, $scopedSlots, handleSearch, handleClear, value) {
       if (schema) {
         return (
           <ElProForm
@@ -377,7 +370,6 @@ export default {
             model={value}
             ref="normalConditionForm"
             class="normal-condition-form"
-            nativeOnKeyup={handleFormKeyUp}
             schema={schema}
             uiSchema={uiSchema}
             after-submit={handleSearch}
@@ -417,14 +409,13 @@ export default {
       conditionFormKey,
       handleSearch,
       handleClear,
-      handleFormKeyUp,
       renderConditionResultList,
       renderNormalCondition
     } = this;
     // 普通搜索
     let normalConditionNode = $slots.normalCondition
       ? $slots.normalCondition
-      : renderNormalCondition(normalSchema, normalUiSchema, $scopedSlots, handleSearch, handleClear, handleFormKeyUp, conditionValue);
+      : renderNormalCondition(normalSchema, normalUiSchema, $scopedSlots, handleSearch, handleClear, conditionValue);
     // 不存在普通搜索的场合，高级搜索默认展开
     if (normalConditionNode === undefined || normalConditionNode === null) {
       this.innerExpand = true;
@@ -438,7 +429,6 @@ export default {
         key={conditionFormKey}
         ref="advanceConditionForm"
         class="advance-condition-form"
-        nativeOnKeyup={handleFormKeyUp}
         afterSubmit={handleSearch}
         schema={advanceSchema}
         uiSchema={advanceUiSchema}
@@ -454,7 +444,6 @@ export default {
         class="advance-condition-form"
         rules={this.rules}
         positionErrorField={false}
-        nativeOnKeyup={handleFormKeyUp}
         labelWidth="auto"
         scopedSlots={$scopedSlots}
         on-clear={() => { handleClear('advanceConditionForm'); }}>

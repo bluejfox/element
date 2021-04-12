@@ -18,10 +18,11 @@
     :schema="schema"
     :columns="2"
     :rules="rules"
+    @submit="onSubmit"
     @change="onChange"
   >
     <div slot="button">
-      <el-button type="primary" @click="onSubmitForm1">提交</el-button>
+      <el-button type="primary" @click="onSubmit">提交</el-button>
     </div>
   </el-json-form>
   <p>result:</p>
@@ -38,15 +39,16 @@
           comment: [
             {
               validator: (rule, value, callback) => {
-                if (value !== 'abc') {
-                  callback(new Error('必须输入abc'));
+                if (value === 'abc') {
+                  callback(new Error('不能输入abc'));
                 }
+                callback();
               }
             }
           ]
         },
         schema: {
-          required: ['firstName', 'lastName', 'age'],
+          required: ['firstName', 'lastName', 'age', 'comment'],
           properties: {
             firstName: {
               description: 'First Name(名)',
@@ -121,7 +123,7 @@
         lastName: 'last',
         password: '',
         age: null,
-        gender: 2,
+        gender: 1,
         birth: '',
         interest: [],
         comment: '',
@@ -132,24 +134,24 @@
     },
     methods: {
       onChange(key, value, object) {
-        console.log(key, value, object)
-        // if(object.profession === 2){
-        //   this.schema.required=[
-        //     "firstName",
-        //     "lastName",
-        //     "age","interest"
-        //   ]
-        // }else{
-        //     this.schema.required=[
-        //     "firstName",
-        //     "lastName",
-        //     "age","comment"
-        //   ]
-        // }
+        const schema = this.schema;
+        if (key === 'gender') {
+          if (value === 2) {
+            const index = schema.required.findIndex(item => item === 'comment');
+            if (index > 0) {
+              schema.required.splice(index, 1);
+            }
+          } else {
+            const index = schema.required.findIndex(item => item === 'comment');
+            if (index === -1) {
+              schema.required.push('comment');
+            }
+          }
+        }
       },
-      onSubmitForm1() {
+      onSubmit() {
         this.$refs.form1.validate((isValid) => {
-          if (isValid) {
+          if (isValid !== false) {
             this.$message.success('表单提交成功')
           }
         })
@@ -177,6 +179,7 @@
     :schema="schema"
     :ui-schema="uiSchema"
     label-width="auto"
+    @submit="onSubmitForm2"
     :columns="3"
   >
     <template slot="scopeSlotCustomRender" slot-scope="scope">

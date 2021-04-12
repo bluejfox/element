@@ -237,6 +237,9 @@ export default {
     handleCancel() {
       this.isShowModalForm = false;
     },
+    handleChange(key, value, object) {
+      this.$emit('change', key, value, object);
+    },
     handleModalButtonClick(evt) {
       // evt.preventDefault();
       // evt.stopPropagation();
@@ -263,9 +266,10 @@ export default {
       schema,
       totalColSpan,
       type,
-      // formRenderKey,
       headerTitle,
       handleExpand,
+      handleSubmit,
+      handleChange,
       rules,
       handleModalButtonClick
     } = this;
@@ -353,6 +357,8 @@ export default {
         columns={currentColumns}
         scopedSlots={$scopedSlots}
         rules={rules}
+        on-submit={handleSubmit}
+        on-change={handleChange}
         {...attributes}>
         { getControlButton() }
       </ElJsonForm>

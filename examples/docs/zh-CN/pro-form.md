@@ -21,6 +21,7 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
     :ui-schema="uiSchema"
     :rules="rules"
     label-width="100px"
+    @change="handleChange"
     :after-submit="onSubmit">
     <template slot="comment" slot-scope="scope">
       <el-input v-model="scope.data.comment" suffix-icon="el-icon-search"/>
@@ -51,10 +52,10 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
           id: [
             {
               validator: (rule, value, callback) => {
-                console.log('validator');
                 if (value !== 'abc') {
                   callback(new Error('必须输入abc'));
                 }
+                callback();
               },
               trigger: 'blur'
             }
@@ -126,6 +127,9 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
       }
     },
     methods: {
+      handleChange(key, value, model) {
+        console.log('change', key, value, model);
+      },
       onSubmit() {
         return new Promise((resolve) => {
           setTimeout(() => {

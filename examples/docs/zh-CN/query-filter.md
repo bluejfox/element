@@ -89,7 +89,6 @@
     },
     methods: {
       afterSubmit(val) {
-        console.log('afterSubmit', val);
         return new Promise((resolve) => {
           setTimeout(() => {
             this.$message.success('查询执行成功');

@@ -77,7 +77,14 @@ export default {
         if (item) {
           itemName = item.title;
         }
-        ret[key] = rules[key] || [];
+        ret[key] = [];
+        if (rules[key] && rules[key].length > 0) {
+          rules[key].forEach(rule => {
+            ret[key].push({
+              ...rule
+            });
+          });
+        }
         if (required.includes(key)) {
           ret[key].push({
             required: true,
@@ -202,8 +209,8 @@ export default {
       //   this.formRenderKey = INITIALED;
       // }
     },
-    onSubmit() {
-      this.$emit('submit', this.model || this.modelData);
+    handleSubmit() {
+      this.$emit('submit');
     },
     validate(callback) {
       this.$refs.form.validate(callback);
@@ -304,7 +311,7 @@ export default {
       on: {}
     };
     formEvents.on.submit = () => {
-      this.onSubmit();
+      this.handleSubmit();
     };
     const model = this.model || this.modelData;
     if (this.schema && this.schema.properties) {
@@ -625,18 +632,6 @@ export default {
           [formItem.component]
         );
         colArray.push(column);
-        // totalSpanCount += span;
-        // if (totalSpanCount <= 24) {
-        //   colArray.push(column);
-        // }
-        // // 已超过最大栅格数的场合，暂不处理当前元素
-        // if (totalSpanCount > 24) {
-        //   index -= 1;
-        // }
-        // if (totalSpanCount >= 24 || index === formItemArray.length - 1) {
-        //   // colArray = [];
-        //   totalSpanCount = 0;
-        // }
       }
       if (this.$slots.formItems) {
         colArray.push(this.$slots.formItems);
