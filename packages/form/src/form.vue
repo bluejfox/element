@@ -182,8 +182,8 @@
       getLabelWidthIndex(width) {
         const index = this.potentialLabelWidthArr.indexOf(width);
         // it's impossible
-        if (this.potentialLabelWidthArr.length > 0 && index === -1) {
-          throw new Error('[ElementForm]unpected width ', width);
+        if (index === -1) {
+          console.error('[ElementForm]unpected width ', width);
         }
         return index;
       },
