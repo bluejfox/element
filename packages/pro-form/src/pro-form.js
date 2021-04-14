@@ -14,14 +14,14 @@ const BREAKPOINTS = {
     [513, 1, 'vertical'],
     [785, 2, 'vertical'],
     [1057, 3, 'vertical'],
-    [Infinity, 4, 'vertical']
+    [Infinity, 3, 'vertical']
   ],
   default: [
     [513, 1, 'vertical'],
     [701, 2, 'vertical'],
     [1062, 3, 'horizontal'],
     [1352, 3, 'horizontal'],
-    [Infinity, 4, 'horizontal']
+    [Infinity, 3, 'horizontal']
   ]
 };
 
