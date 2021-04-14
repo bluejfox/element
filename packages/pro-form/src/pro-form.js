@@ -14,6 +14,7 @@ const BREAKPOINTS = {
     [513, 1, 'vertical'],
     [785, 2, 'vertical'],
     [1057, 3, 'vertical'],
+    // ! FIXME 4列情况下有错误，需要修正
     [Infinity, 3, 'vertical']
   ],
   default: [
@@ -21,6 +22,7 @@ const BREAKPOINTS = {
     [701, 2, 'vertical'],
     [1062, 3, 'horizontal'],
     [1352, 3, 'horizontal'],
+    // ! FIXME 4列情况下有错误，需要修正
     [Infinity, 3, 'horizontal']
   ]
 };
