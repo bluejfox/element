@@ -12,10 +12,15 @@
 
 ```html
 <div>
+  <div style="margin-bottom: 10px;">
+    <el-button @click="onChangeUiSchema">change ui schema</el-button>
+  </div>
   <el-json-form
     ref="form1"
     :model="form1"
     :schema="schema"
+    :ui-schema="uiSchema"
+    :validate-on-rule-change="false"
     :columns="2"
     :rules="rules"
     @submit="onSubmit"
@@ -115,6 +120,14 @@
             },
           },
         },
+        uiSchema: {
+          lastName: {
+            'ui:disabled': false
+          },
+          gender: {
+            'ui:widget': 'select'
+          }
+        },
       }
     },
     mounted() {
@@ -155,6 +168,15 @@
             this.$message.success('表单提交成功')
           }
         })
+      },
+      onChangeUiSchema() {
+        // this.uiSchema = {};
+        this.uiSchema.lastName['ui:disabled'] = !this.uiSchema.lastName['ui:disabled'];
+        if (this.uiSchema.gender['ui:widget'] === 'select') {
+          this.uiSchema.gender['ui:widget'] = 'radio';
+        } else {
+          this.uiSchema.gender['ui:widget'] = 'select';
+        }
       },
     },
   }
