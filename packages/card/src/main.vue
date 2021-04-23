@@ -131,10 +131,6 @@
               triggerExpand = true;
             }
           }
-          // 自定义header slot插槽的场合
-          if (!triggerExpand && parentNodeList.length > 1 && (parentNodeList[1] === this.$refs.headerContainer)) {
-            triggerExpand = true;
-          }
           if (triggerExpand) {
             // 触发卡片内容折叠事件
             this.handleExpandIconClick();
