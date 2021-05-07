@@ -2,40 +2,115 @@
 @import "common/var";
 
 @include b(page-header) {
-  display: flex;
-  line-height: 24px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.65);
+  
+  &.el-card {
+    border: none;
+  }
 
-  @include e(left) {
+  .el-breadcrumb {
+    margin-bottom: 16px;
+  }
+
+  .detail {
     display: flex;
-    cursor: pointer;
-    margin-right: 40px;
-    position: relative;
 
-    &::after {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 16px;
-      right: -20px;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: $--border-color-base;
+    .logo,
+    .el-page-header__content,
+    .extra-content {
+      margin-bottom: 16px;
     }
 
-    .el-icon-back {
-      font-size: 18px;
-      margin-right: 6px;
-      align-self: center;
+    .logo {
+      flex: 0 1 auto;
+      margin-right: 16px;
+      padding-top: 13px;
     }
 
-    @include e(title) {
-      font-size: 14px;
-      font-weight: 500;
+    .main,
+    .action,
+    .extra-content {
+      flex: 0 1 auto;
+    }
+
+    .main {
+      width: 100%;
+
+      .row {
+        display: flex;
+        width: 100%;
+        & + .row {
+          margin-top: 12px;
+        }
+
+        .title {
+          margin-block-start: 0;
+          font-weight: 600;
+          margin-bottom: 0;
+          font-size: 20px;
+          font-weight: 600;
+          color: rgba(0, 0, 0, 0.85);
+        }
+
+        .action {
+          margin-bottom: 16px;
+        }
+
+        .title,
+        .el-page-header__content {
+          flex: auto;
+        }
+
+        .action,
+        .extra-content {
+          text-align: right;
+        }
+
+        .action {
+          margin-left: 56px;
+          min-width: 266px;
+        }
+
+        .extra-content {
+          margin-left: 88px;
+          min-width: 242px;
+        }
+
+        @media screen and (max-width: $--lg) {
+          .extra-content {
+            margin-left: 44px;
+          }
+        }
+
+        @media screen and (max-width: $--md) {
+          .extra-content {
+            margin-left: 20px;
+          }
+        }
+      }
+
+      @media screen and (max-width: $--sm) {
+        .row {
+          display: block;
+
+          .action,
+          .extra-content {
+            margin-left: 0;
+            text-align: left;
+          }
+        }
+      }
     }
   }
 
-  @include e(content) {
-    font-size: 18px;
-    color: $--color-text-primary;
+  @media screen and (max-width: '576px') {
+    .detail {
+      display: block;
+    }
+  }
+
+  .tabs {
+    margin-bottom: -15px;
   }
 }

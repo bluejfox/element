@@ -150,6 +150,29 @@ button, input, select, textarea {
 .demo {
   margin: 20px 0;
 }
+
+@media (max-width: 1920px) {
+  .container,
+  .page-container {
+    width: 100%;
+  }
+  #app.is-component .headerWrapper .container,
+  #app.is-component .page-component.page-container {
+    padding: 0 10%;
+  }
+}
+
+@media (max-width: 1440px) {
+  .container,
+  .page-container {
+    width: 100%;
+  }
+  #app.is-component .headerWrapper .container,
+  #app.is-component .page-component.page-container {
+    padding: 0 10%;
+  }
+}
+
 @media (max-width: 1140px) {
   .container,
   .page-container {
