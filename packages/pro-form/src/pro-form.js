@@ -55,11 +55,11 @@ export default {
       type: Boolean,
       default: false
     },
-    headerTitle: {
-      type: String,
-      default: '搜索条件'
-    },
-    rules: Object
+    title: String,
+    // type为card时的props
+    cardAttrs: Object,
+    // type为modalForm时的props
+    dialogAttrs: Object
   },
   data() {
     return {
@@ -243,8 +243,6 @@ export default {
       this.$emit('change', key, value, object);
     },
     handleModalButtonClick(evt) {
-      // evt.preventDefault();
-      // evt.stopPropagation();
       this.isShowModalForm = !this.isShowModalForm;
     },
     validate(callbackFunc) {
@@ -257,7 +255,9 @@ export default {
       $listeners,
       $slots,
       $scopedSlots,
+      cardAttrs,
       currentColumns,
+      dialogAttrs,
       innerExpand,
       model,
       isMounted,
@@ -268,11 +268,10 @@ export default {
       schema,
       totalColSpan,
       type,
-      headerTitle,
+      title,
       handleExpand,
       handleSubmit,
       handleChange,
-      rules,
       handleModalButtonClick
     } = this;
     if (!isMounted) {
@@ -358,15 +357,17 @@ export default {
         uiSchema={innerUiSchema}
         columns={currentColumns}
         scopedSlots={$scopedSlots}
-        rules={rules}
         on-submit={handleSubmit}
         on-change={handleChange}
         {...attributes}>
         { getControlButton() }
       </ElJsonForm>
     );
+    const cardFormAttrs = {
+      attrs: cardAttrs
+    };
     const cardForm = (
-      <ElCard header={headerTitle}>
+      <ElCard header={title} {...cardFormAttrs}>
         {formRender}
       </ElCard>
     );
@@ -375,10 +376,14 @@ export default {
         this.isShowModalForm = val;
       }
     };
+    const modalFormAttrs = {
+      attrs: dialogAttrs
+    };
     const modalDialog = (
       <ElDialog
         visible={isShowModalForm}
-        {...attributes}
+        title={title}
+        {...modalFormAttrs}
         {...{on: onListener }}>
         {formRender}
         <span slot="footer" class="dialog-footer">

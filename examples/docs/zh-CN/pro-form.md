@@ -275,7 +275,9 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
     :schema="schema"
     :ui-schema="uiSchema"
     label-width="100px"
-    :after-submit="onSubmit">
+    :after-submit="onSubmit"
+    title="Card表单"
+    :card-attrs="{shadow: 'hover'}">
   </el-pro-form>
   <p>result:</p>
   <div>
@@ -396,7 +398,8 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
     :ui-schema="uiSchema"
     label-width="100px"
     :after-submit="onSubmit"
-    title="新建表单">
+    title="表单"
+    :dialog-attrs="{width: '80%'}">
     <el-button type="primary">新建表单</el-button>
   </el-pro-form>
   <p>result:</p>
@@ -508,41 +511,26 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
 
 ### ProForm Attributes
 
+**此处只列出ElProForm独有属性，其他属性请参考ElJsonForm**
+
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | model   | 表单数据对象 | object      |                  —                |  — |
 | rules    | 表单验证规则 | object | — | — |
-| inline    | 行内表单模式 | boolean | — | false |
-| disabled | 是否禁用该表单内的所有组件。若设置为 true，则表单内组件上的 disabled 属性不再生效 | boolean | — | false |
-| label-position | 表单域标签的位置 | string |  right/left/top            | top |
-| label-width | 表单域标签的宽度，作为 Form 直接子元素的 form-item 会继承该值 | string | — | — |
-| label-suffix | 表单域标签的后缀 | string | — | — |
-| show-message  | 是否显示校验错误信息 | boolean | — | true |
-| schema | JSON Schema对象 | Object | — | - |
-| ui-schema | 用于设置各个表单字段的组件类型(ui:widget)、是否可用(ui:disabled)等属性 (请参照下表) | Object | — | - |
-| columns | 表单的列数。分辨率在768像素以下时表单列数固定为1 | Number | — | 5 |
-| column-max-label-length | 以col为单位的form-label的最大长度，超过的部分则截取省略。此时Label外增加 `el-TOOLTIP` 可查看全部Label | Number | - | - |
+| type    | 高级表单的类型 | string | queryFilter/modalForm/cardForm | — |
+| schema | JSON Schema对象 | object | — | - |
+| ui-schema | 用于设置各个表单字段的组件类型(ui:widget)、是否可用(ui:disabled)等属性 (请参照下表) | Object | — | — |
+| after-submit | 表单提交时回调，需要返回Promise | Function | — | — |
+| expand | `type` 为 `queryFilter` 时有效，是否显示全部查询条件。 | Boolean | false | - |
+| title | `type` 为 `cardForm` 或 `modalForm` 时有效，优先级比 `card-attrs` 或 `modal-attrs` 内定义对应的标题属性低 | string | — | — |
+| card-attrs | `type` 为 `cardForm` 时有效，值为ElCard的Props | object | — | — |
+| modal-attrs | `type` 为 `modalForm` 时有效，值为ElDialog的Props | object | — | — |
 
-### UI-Schema Attributes
-
-| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
-|---------- |-------------- |---------- |--------------------------------  |-------- |
-| ui:widget | 表单字段的组件类型 | string | password, textarea, select, checkbox, radio  |  — |
-| ui:disabled | 表单字段的组件是否可用 | boolean | - | false |
-| ui:hidden | 表单字段的组件是否可见 | boolean | - | false |
-| ui:options | 表单字段的组件独有属性 | object | UI组件独有属性 | - |
-| ui:colspan | 跨越的列数 | number | - | - |
-
-### Form Events
+### ProForm Events
 
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
-| change  | 表单字段值变更时回调 | key 表单字段的Key, val 表单字段的值 |
+| visibleChange  | `type` 为 `modalForm` 时有效，对话框显示/隐藏状态变更时触发 | key 表单字段的Key, val 表单字段的值 |
+| clear  | 表单重置按钮点击后触发 | — |
+| change   | 表单字段值变更时回调 | key 表单字段的 Key, val 表单字段的值 |
 
-### Form Methods
-
-| 方法名      | 说明          | 参数
-|---------- |-------------- | --------------
-| validate | 对整个表单进行校验的方法 | Function(callback: Function(boolean))
-| validateField | 对部分表单字段进行校验的方法 | Function(prop: string, callback: Function(errorMessage: string))
-| resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | -
