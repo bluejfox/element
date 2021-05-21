@@ -97,7 +97,7 @@
         });
       },
       handleClear(key) {
-        this.$message.success(`搜索条件${key}重置成功`);
+        this.$message.success(`搜索条件${key ? key : ''}重置成功`);
       }
     }
   }

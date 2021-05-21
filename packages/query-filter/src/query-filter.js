@@ -128,13 +128,16 @@ export default {
     },
     handleClear(refKey) {
       if (refKey === 'normalConditionForm') {
-        this.$refs.advanceConditionForm.resetFields();
+        if (this.$refs.advanceConditionForm) {
+          this.$refs.advanceConditionForm.resetFields();
+        }
       } else {
-        this.$refs.normalConditionForm.resetFields();
+        if (this.$refs.normalConditionForm) {
+          this.$refs.normalConditionForm.resetFields();
+        }
       }
       // 触发clear事件
       this.$nextTick(() => {
-        console.log(Object.keys(this.normalSchema));
         this.$emit('clear');
       });
     },
