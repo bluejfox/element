@@ -56,6 +56,8 @@ export default {
       default: false
     },
     title: String,
+    // 提交按钮相关配置
+    submitter: Boolean | Object,
     // type为card时的props
     cardAttrs: Object,
     // type为modalForm时的props
@@ -269,6 +271,7 @@ export default {
       totalColSpan,
       type,
       title,
+      submitter,
       handleExpand,
       handleSubmit,
       handleChange,
@@ -341,6 +344,9 @@ export default {
       );
     };
     const getControlButton = () => {
+      if (submitter === false) {
+        return null;
+      }
       if (isEmpty(type)) {
         return getNormalFormControlContainer();
       } else if (type === 'queryFilter') {

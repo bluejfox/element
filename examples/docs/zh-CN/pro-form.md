@@ -523,6 +523,7 @@ ProForm 在原来的 Form 的基础上增加一些语法糖和更多的布局设
 | after-submit | 表单提交时回调，需要返回Promise | Function | — | — |
 | expand | `type` 为 `queryFilter` 时有效，是否显示全部查询条件。 | Boolean | false | - |
 | title | `type` 为 `cardForm` 或 `modalForm` 时有效，优先级比 `card-attrs` 或 `modal-attrs` 内定义对应的标题属性低 | string | — | — |
+| submitter | 提交按钮相关配置 | Boolean | — | true |
 | card-attrs | `type` 为 `cardForm` 时有效，值为ElCard的Props | object | — | — |
 | modal-attrs | `type` 为 `modalForm` 时有效，值为ElDialog的Props | object | — | — |
 
