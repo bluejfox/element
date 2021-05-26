@@ -275,14 +275,22 @@ export default {
           `${componentPrefix}-tooltip`,
           {
             props: {
-              content: property.description,
               placement: 'top'
             },
             style: {
               marginLeft: '5px'
             }
           },
-          [icon]
+          [icon, h('span', {
+            domProps: {
+              innerHTML: property.description
+            },
+            slot: 'content',
+            style: {
+              display: 'inline-block',
+              maxWidth: '400px'
+            }
+          })]
         );
       }
       if (textSpan) {

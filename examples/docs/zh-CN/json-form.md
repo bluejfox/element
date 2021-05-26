@@ -56,7 +56,7 @@
           required: ['firstName', 'lastName', 'age', 'comment'],
           properties: {
             firstName: {
-              description: 'First Name(名)',
+              description: 'First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)First Name(名)',
               type: 'string',
               title: 'First name',
               minLength: 3,
