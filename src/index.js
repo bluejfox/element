@@ -239,7 +239,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '1.5.31',
+  version: '1.5.32',
   locale: locale.use,
   i18n: locale.i18n,
   install,
