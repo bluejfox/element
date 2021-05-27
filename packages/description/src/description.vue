@@ -43,7 +43,6 @@
         if (field) {
           this.fields.push(field);
         }
-        console.log(this.fields);
       });
       /* istanbul ignore next */
       this.$on('el.description.removeField', (field) => {
@@ -96,9 +95,9 @@
 
             // Always set last span to align the end of Descriptions
             const lastItem = index === targetChildren.length - 1;
-            let lastSpanSame = true;
+            // let lastSpanSame = true;
             if (lastItem) {
-              lastSpanSame = !itemProps.span || itemProps.span === leftSpans;
+              // lastSpanSame = !itemProps.span || itemProps.span === leftSpans;
               // itemNode = React.cloneElement(itemNode, {
               //   span: leftSpans
               // });
@@ -114,12 +113,11 @@
 
             if (leftSpans <= 0) {
               columns = null;
-
-              console.warn(
-                leftSpans === 0 && lastSpanSame,
-                'Descriptions',
-                'Sum of columns `span` in a line exceeds `columns` of Descriptions.'
-              );
+              // console.warn(
+              //   leftSpans === 0 && lastSpanSame,
+              //   'Descriptions',
+              //   'Sum of columns `span` in a line exceeds `columns` of Descriptions.'
+              // );
             }
           }
         });
@@ -140,7 +138,6 @@
             retChildren.push((
               renderCol(colItem, 'label', index)
             ));
-            console.log(child, node);
             colItem = {
               child: node.text ? node.text : node,
               span: child.innerSpan,
