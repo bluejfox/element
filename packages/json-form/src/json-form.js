@@ -626,6 +626,10 @@ export default {
         } else {
           spanProp = span;
         }
+        let isDisplay = itemUISchema[UI_HIDDEN];
+        if (typeof itemUISchema[UI_HIDDEN] === 'function') {
+          isDisplay = itemUISchema[UI_HIDDEN](model);
+        }
         let column = h(
           `${componentPrefix}-col`,
           {
@@ -634,7 +638,7 @@ export default {
               xs: 24
             },
             style: {
-              display: itemUISchema[UI_HIDDEN] === true ? 'none' : ''
+              display: isDisplay ? 'none' : ''
             }
           },
           [formItem.component]
