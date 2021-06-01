@@ -160,7 +160,7 @@
         }
       }
       & > .el-form-item__label:before,
-      & .el-form-item__label-wrap > .el-form-item__label:before {
+      & > .el-form-item__label-wrap > .el-form-item__label:before {
         content: '*';
         color: $--color-danger;
         margin-right: 4px;
