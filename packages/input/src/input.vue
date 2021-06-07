@@ -189,7 +189,8 @@
         type: Boolean,
         default: false
       },
-      tabindex: String
+      tabindex: String,
+      alwaysShowClear: Boolean
     },
 
     computed: {
@@ -222,11 +223,11 @@
         return this.value === null || this.value === undefined ? '' : String(this.value);
       },
       showClear() {
-        return this.clearable &&
+        return (this.clearable &&
           !this.inputDisabled &&
-          !this.readonly &&
+          (!this.readonly || this.alwaysShowClear) &&
           this.nativeInputValue &&
-          (this.focused || this.hovering);
+          (this.focused || this.hovering));
       },
       showPwdVisible() {
         return this.showPassword &&
@@ -396,10 +397,10 @@
         this.calcIconOffset('prefix');
         this.calcIconOffset('suffix');
       },
-      clear() {
-        this.$emit('input', '');
-        this.$emit('change', '');
-        this.$emit('clear');
+      clear(evt) {
+        this.$emit('input', '', evt);
+        this.$emit('change', '', evt);
+        this.$emit('clear', evt);
       },
       handlePasswordVisible() {
         this.passwordVisible = !this.passwordVisible;
