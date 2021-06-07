@@ -145,6 +145,7 @@
     v-for="(item, index) in editableTabs"
     :label="item.title"
     :name="item.name"
+    :force-render="false"
   >
     {{item.content}}
   </el-tab-pane>
@@ -332,3 +333,4 @@
 | name      | 与选项卡绑定值 value 对应的标识符，表示选项卡别名 | string | — | 该选项卡在选项卡列表中的顺序值，如第一个选项卡则为'1' |
 | closable  | 标签是否可关闭   | boolean   | — |  false  |
 | lazy  | 标签是否延迟渲染   | boolean   | — |  false  |
+| force-render  | 被隐藏时是否渲染 DOM 结构  | boolean   | — |  true  |
