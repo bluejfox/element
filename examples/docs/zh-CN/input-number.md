@@ -106,7 +106,6 @@
   };
 </script>
 ```
-
 :::
 
 :::tip
@@ -165,7 +164,40 @@
 ```
 :::
 
+### 格式化展示
+
+:::demo 通过 `formatter` 格式化数字，以展示具有具体含义的数据，往往需要配合 `parser` 一起使用。。
+
+```html
+<template>
+  <el-input-number v-model="num"
+                   :precision="2"
+                   :formatter="formatter"
+                   :parser="parser"></el-input-number>
+  当前值：{{ num }}
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        num: 1
+      }
+    },
+    methods: {
+      formatter(val) {
+        return val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+      parser(val) {
+        return val.replace(/(,*)/g, '');
+      }
+    }
+  };
+</script>
+```
+:::
+
 ### Attributes
+
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |----------|-------------- |----------|--------------------------------  |-------- |
 | value / v-model    | 绑定值         | number | — | 0 |
@@ -181,8 +213,11 @@
 | name | 原生属性 | string | — | — |
 | label | 输入框关联的label文字 | string | — | — |
 | placeholder | 输入框默认 placeholder | string | - | - |
+| formatter | 指定输入框展示值的格式，需要与 `parser` 一起使用 | function(value) | - | - |
+| parser | 指定从 formatter 里转换回数字的方式，和 formatter 搭配使用 | function(value) | - | - |
 
 ### Events
+
 | 事件名称 | 说明 | 回调参数 |
 |---------|--------|---------|
 | change | 绑定值被改变时触发 | currentValue, oldValue |
@@ -190,6 +225,7 @@
 | focus | 在组件 Input 获得焦点时触发 | (event: Event) |
 
 ### Methods
+
 | 方法名 | 说明 | 参数 |
 | ---- | ---- | ---- |
 | focus | 使 input 获取焦点 | - |

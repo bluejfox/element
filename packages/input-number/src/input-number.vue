@@ -104,7 +104,9 @@
         validator(val) {
           return val >= 0 && val === parseInt(val, 10);
         }
-      }
+      },
+      formatter: Function,
+      parser: Function
     },
     data() {
       return {
@@ -188,6 +190,10 @@
           if (this.precision !== undefined) {
             currentValue = currentValue.toFixed(this.precision);
           }
+
+          if (typeof this.formatter === 'function') {
+            currentValue = this.formatter(currentValue);
+          }
         }
 
         return currentValue;
@@ -254,10 +260,19 @@
         this.currentValue = newVal;
       },
       handleInput(value) {
-        this.userInput = value;
+        let userInput = value;
+        if (typeof this.formatter === 'function' && typeof this.parser === 'function') {
+          userInput = this.formatter(this.parser(value));
+        }
+        this.userInput = userInput;
       },
       handleInputChange(value) {
-        const newVal = value === '' ? undefined : Number(value);
+        let newVal;
+        if (typeof this.parser === 'function') {
+          newVal = Number(this.parser(value));
+        } else {
+          newVal = Number(value);
+        }
         if (!isNaN(newVal) || value === '') {
           this.setCurrentValue(newVal);
         }
