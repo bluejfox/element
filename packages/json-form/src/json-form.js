@@ -352,6 +352,9 @@ export default {
             // 因render 函数中没有与 v-model 相应的 api, 实现v-model逻辑。
             events.on.input = (val) => {
               model[key] = val;
+              this.$emit('input', key, val, model);
+            };
+            events.on.change = (val) => {
               this.$emit('change', key, val, model);
             };
             if (property.enum || property.oneOf || property.anyOf) {
@@ -424,13 +427,6 @@ export default {
             } else if (property.format === 'date' ||
               property.format === 'date-time') {
               componentTagName = `${componentPrefix}-date-picker`;
-              events.on.input = (val) => {
-                model[key] = val;
-              };
-              events.on.change = (val) => {
-                model[key] = val;
-                this.$emit('change', key, val, model);
-              };
               if (property.type === 'string') {
                 props.type = property.format.replace(/-/g, '');
               } else if (property.type === 'array') {
@@ -445,13 +441,6 @@ export default {
               }
             } else if (property.format === 'time') {
               componentTagName = `${componentPrefix}-time-picker`;
-              events.on.input = (val) => {
-                model[key] = val;
-              };
-              events.on.change = (val) => {
-                model[key] = val;
-                this.$emit('change', key, val, model);
-              };
               if (property.type === 'array') {
                 props['is-range'] = true;
               }
@@ -491,8 +480,9 @@ export default {
                   }
                 }
                 model[key] = ret;
-                this.$emit('change', key, ret, model);
+                this.$emit('input', key, ret, model);
               };
+              // TODO 小数位设置
               componentTagName = `${componentPrefix}-input-number`;
             }
             componentProps.props = props;

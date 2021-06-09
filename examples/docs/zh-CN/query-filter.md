@@ -11,16 +11,15 @@
 ```html
 <div>
   <el-query-filter v-model="value"
-                       class="filter"
-                       :normal-schema="normalSchema"
-                       :normal-ui-schema="normalUiSchema"
-                       :advance-schema="advanceSchema"
-                       :advance-ui-schema="advanceUiSchema"
-                       :after-submit="afterSubmit"
-                       @clear="handleClear">
-    <template slot="projectName" slot-scope="scope">
-      <el-input v-model="scope.data.projectName" suffix-icon="el-icon-search"/>
-    </template>
+                   class="filter"
+                   :normal-schema="normalSchema"
+                   :normal-ui-schema="normalUiSchema"
+                   :advance-schema="advanceSchema"
+                   :advance-ui-schema="advanceUiSchema"
+                   :after-submit="afterSubmit"
+                   @normal-condition-change="handleNormalConditionChange"
+                   @advance-condition-change="handleAdvanceConditionChange"
+                   @clear="handleClear">
   </el-query-filter>
 </div>
 <script>
@@ -50,7 +49,7 @@
               ]
             },
             "projectName": {
-              "type": "string",
+              "type": "number",
               "title": "项目名称"
             }
           }
@@ -95,6 +94,12 @@
             resolve();
           }, 1000);
         });
+      },
+      handleNormalConditionChange(key, value) {
+        this.$message.info(`普通搜索条件项目 ${key} 值变化为 ${value} `);
+      },
+      handleAdvanceConditionChange(key, value) {
+        this.$message.info(`高级搜索条件项目 ${key} 值变化为 ${value} `);
       },
       handleClear(key) {
         this.$message.success(`搜索条件${key ? key : ''}重置成功`);
@@ -195,7 +200,8 @@
 
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
-| change  | 筛选条件变化时被触发 | 当前条件筛选值 |
+| normal-condition-change  | 普通搜索条件值变化时被触发 | 搜索条件的key, 搜索条件的值, 当前普通搜索条件的值 |
+| advance-condition-change  | 高级搜索条件值变化时被触发 | 搜索条件的key, 搜索条件的值, 当前普通搜索条件的值 |
 | clear  | 条件筛选项目值被清空（点击条件筛选Label右侧筛选项目的 `X` 图标或点击清空按钮） | 被清空的筛选项目key |
 
 ### QueryFilter Methods

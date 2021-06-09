@@ -102,6 +102,7 @@ export default {
       }
     },
     conditionValue: {
+      deep: true,
       handler(val) {
         this.emitValue();
       }
@@ -365,7 +366,7 @@ export default {
      * @param {*} uiSchema uiSchema
      * @param {*} value 值
      */
-    renderNormalCondition(schema, uiSchema, $scopedSlots, handleSearch, handleClear, value) {
+    renderNormalCondition(schema, uiSchema, $scopedSlots, handleSearch, handleClear, handleFormChange, value) {
       if (schema) {
         return (
           <ElProForm
@@ -378,6 +379,7 @@ export default {
             after-submit={handleSearch}
             columns={3}
             scopedSlots={$scopedSlots}
+            on-change={(key, value, model) => { handleFormChange('normal-condition-change', key, value, model); }}
             on-clear={() => { handleClear('normalConditionForm'); }}>
           </ElProForm>
         );
@@ -394,6 +396,10 @@ export default {
       return Object.keys(conditionValue).map(key => {
         return this.renderConditionResultItem(h, key, conditionValue[key]);
       });
+    },
+
+    handleFormChange(eventKey, key, value, model) {
+      this.$emit(eventKey, key, value, model);
     }
   },
 
@@ -412,13 +418,21 @@ export default {
       conditionFormKey,
       handleSearch,
       handleClear,
+      handleFormChange,
       renderConditionResultList,
       renderNormalCondition
     } = this;
     // 普通搜索
     let normalConditionNode = $slots.normalCondition
       ? $slots.normalCondition
-      : renderNormalCondition(normalSchema, normalUiSchema, $scopedSlots, handleSearch, handleClear, conditionValue);
+      : renderNormalCondition(
+        normalSchema,
+        normalUiSchema,
+        $scopedSlots,
+        handleSearch,
+        handleClear,
+        handleFormChange,
+        conditionValue);
     // 不存在普通搜索的场合，高级搜索默认展开
     if (normalConditionNode === undefined || normalConditionNode === null) {
       this.innerExpand = true;
@@ -437,6 +451,7 @@ export default {
         uiSchema={advanceUiSchema}
         columns={columns}
         scopedSlots={$scopedSlots}
+        on-change={(key, value, model) => { handleFormChange('advance-condition-change', key, value, model); }}
         on-clear={() => { handleClear('advanceConditionForm'); }}>
       </ElProForm>);
     } else {
@@ -449,6 +464,7 @@ export default {
         positionErrorField={false}
         labelWidth="auto"
         scopedSlots={$scopedSlots}
+        on-change={(key, value, model) => { handleFormChange('advance-condition-change', key, value, model); }}
         on-clear={() => { handleClear('advanceConditionForm'); }}>
         { this.$slots.default }
       </ElForm>);
