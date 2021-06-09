@@ -281,13 +281,13 @@ export default {
       let item = null;
       let fields = [];
       if (this.$refs.normalConditionForm) {
-        fields = fields.concat(this.$refs.normalConditionForm.fields);
+        fields = fields.concat(this.$refs.normalConditionForm.getFields());
       }
       if (this.$refs.advanceConditionForm) {
-        fields = fields.concat(this.$refs.advanceConditionForm.fields);
+        fields = fields.concat(this.$refs.advanceConditionForm.getFields());
       }
       // FormItem组件
-      item = arrayFind(coerceTruthyValueToArray(fields), component => component.prop === key);
+      item = arrayFind(coerceTruthyValueToArray(fields), component => component && component.prop === key);
       if (item) {
         if (Array.isArray(value) && value.length === 0) {
           return null;

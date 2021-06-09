@@ -31,11 +31,11 @@
           createDate: [],
           publishFlag: '',
           procurementApplyType: '2',
-          projectName: '',
+          projectName: null,
           location: [],
           dateRange: null,
           amount: undefined,
-          createBy: ''
+          createBy: '12'
         },
         normalSchema: {
           "properties": {

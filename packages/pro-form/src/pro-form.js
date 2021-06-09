@@ -201,6 +201,9 @@ export default {
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
+    getFields() {
+      return this.$refs.proForm && this.$refs.proForm.fields;
+    },
     resetFields() {
       this.$refs.proForm.resetFields();
     },
