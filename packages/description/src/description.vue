@@ -21,7 +21,11 @@
           return ['horizontal', 'vertical'].indexOf(val) !== -1;
         }
       },
-      size: String
+      size: String,
+      labelSuffix: {
+        type: String,
+        default: ''
+      }
     },
     provide() {
       return {
@@ -73,67 +77,116 @@
           </thead>
         ) : null;
       },
-      generateChildrenRows(children, spanColumns) {
+      // getFilledItem(
+      //   node,
+      //   span,
+      //   rowRestCol) {
+      //   let clone = node;
+
+      //   if (span === undefined || span > rowRestCol) {
+      //     clone = cloneElement(node, {
+      //       span: rowRestCol
+      //     });
+      //   }
+
+      //   return clone;
+      // },
+      getRows(children, column) {
         const rows = [];
-        let columns = null;
-        let leftSpans = null;
-        const targetChildren =
-          children.filter(child => child.tag && child.tag.indexOf('el-description-item') !== -1);
-        targetChildren.forEach((child, index) => {
-          let itemNode = child;
+        let tmpRow = [];
+        let rowRestCol = column;
+        let colNodes = this.fields;
+        if (colNodes.length === 0) {
+          colNodes = children.filter(child => child.tag && child.tag.indexOf('el-description-item') !== -1);
+        }
+        colNodes.forEach((col, index) => {
+          let itemNode = col;
           let itemProps = itemNode && itemNode.componentOptions &&
             itemNode.componentOptions.propsData;
           if (isEmpty(itemProps)) {
             itemProps = itemNode.data.attrs;
           }
           if (itemProps) {
-            if (!columns) {
-              leftSpans = spanColumns;
-              columns = [];
-              rows.push(columns);
+            const { span } = itemProps;
+            const mergedSpan = span || 1;
+            // Additional handle last one
+            if (index === colNodes.length - 1) {
+              tmpRow.push(itemNode);
+              // tmpRow.push(getFilledItem(itemNode, span, rowRestCol));
+              itemNode.innerSpan = rowRestCol;
+              rows.push(tmpRow);
+              return;
             }
-
-            // Always set last span to align the end of Descriptions
-            const lastItem = index === targetChildren.length - 1;
-            // let lastSpanSame = true;
-            if (lastItem) {
-              // lastSpanSame = !itemProps.span || itemProps.span === leftSpans;
-              // itemNode = React.cloneElement(itemNode, {
-              //   span: leftSpans
-              // });
-              itemNode.innerSpan = leftSpans;
+            itemNode.innerSpan = mergedSpan;
+            if (mergedSpan < rowRestCol) {
+              rowRestCol -= mergedSpan;
+              tmpRow.push(itemNode);
             } else {
-              itemNode.innerSpan = itemProps.span;
-            }
-
-            // Calculate left fill span
-            const { span = 1 } = itemProps;
-            columns.push(itemNode);
-            leftSpans -= span;
-
-            if (leftSpans <= 0) {
-              columns = null;
-              // console.warn(
-              //   leftSpans === 0 && lastSpanSame,
-              //   'Descriptions',
-              //   'Sum of columns `span` in a line exceeds `columns` of Descriptions.'
-              // );
+              if (rowRestCol - mergedSpan === 0) {
+                tmpRow.push(itemNode);
+                // tmpRow.push(getFilledItem(itemNode, mergedSpan, rowRestCol));
+                rows.push(tmpRow);
+                rowRestCol = column;
+                tmpRow = [];
+              } else {
+                tmpRow[tmpRow.length - 1].innerSpan += rowRestCol;
+                // tmpRow.push(getFilledItem(itemNode, mergedSpan, rowRestCol));
+                rows.push(tmpRow);
+                rowRestCol = column;
+                tmpRow = [];
+                // new row
+                tmpRow.push(itemNode);
+                rowRestCol -= mergedSpan;
+                if (rowRestCol <= 0) {
+                  itemNode.innerSpan = mergedSpan;
+                  rows.push(tmpRow);
+                  rowRestCol = column;
+                  tmpRow = [];
+                }
+              }
             }
           }
         });
         return rows;
       },
-      renderRow(children, index, prefixCls, bordered, layout, colon) {
-        const { renderCol } = this;
+      renderRow(children, index, prefixCls, bordered, layout, colon, createElement) {
+        const { labelSuffix, renderCol } = this;
         const retChildren = [];
         const trClass = [];
         children.forEach((child, index) => {
-          let node = child.children ? child.children[0] : (child.componentOptions && child.componentOptions.children.length > 0 ? child.componentOptions.children[0] : null);
+          // 获取label数据
           let propsData = child.data ? child.data.attrs : (child.componentOptions ? child.componentOptions.propsData : null);
-          if (node && propsData) {
+          let label = `${propsData.label}${labelSuffix}`;
+          // 取得插槽
+          const childNodes = child.children;
+          if (childNodes) {
+            let labelNode = childNodes.filter(c => c.data && c.data.slot === 'label');
+            if (labelNode && labelNode.length > 0) {
+              label = labelNode[0];
+              if (label.children) {
+                label.children.push(createElement('span', [labelSuffix]));
+              }
+            }
+          }
+          // 获取内容数据
+          let node = null;
+          let children = child.children;
+          if (!children) {
+            children = (child.componentOptions && child.componentOptions.children.length > 0) ? child.componentOptions.children : null;
+          }
+          let contentNodes = children.filter(c => (c.data === undefined || c.data === null || (c.data && (c.data.slot === undefined || c.data.slot !== 'label'))));
+          if (contentNodes && contentNodes.length > 0) {
+            if (contentNodes.length === 1) {
+              node = contentNodes[0];
+            } else {
+              contentNodes = contentNodes.filter(c => c.children);
+            }
+            node = contentNodes[0];
+          }
+          if (label && node) {
             // Label
             let colItem = {
-              child: propsData.label
+              child: label
             };
             retChildren.push((
               renderCol(colItem, 'label', index)
@@ -147,7 +200,6 @@
             retChildren.push((
               renderCol(colItem, 'content', index)
             ));
-            // trClass.push(child.data.class || child.data.staticClass);
           }
         });
         return (
@@ -181,15 +233,16 @@
         bordered,
         colon,
         getColumn,
-        generateChildrenRows,
+        getRows,
         layout,
         renderRow,
         renderTitle,
         sizeClass,
-        title
+        title,
+        $slots
       } = this;
       const columns = getColumn();
-      const rowArray = generateChildrenRows(this.$slots.default, columns);
+      const rowArray = getRows($slots.default, columns);
       const rootClassArray = [
         sizeClass ? 'el-description--' + sizeClass : '',
         'el-description',
@@ -214,7 +267,7 @@
             <tbody>
               {
                 rowArray.map((row, index) =>
-                  renderRow(row, index, {}, bordered, layout, colon))
+                  renderRow(row, index, {}, bordered, layout, colon, h))
               }
             </tbody>
           </table>
