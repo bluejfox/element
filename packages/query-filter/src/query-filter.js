@@ -259,7 +259,6 @@ export default {
     emitValue() {
       const { conditionValue } = this;
       this.$emit('input', conditionValue);
-      this.$emit('change', conditionValue);
     },
     /**
      * 渲染允许多选值的条件筛选Label
@@ -379,7 +378,7 @@ export default {
             after-submit={handleSearch}
             columns={3}
             scopedSlots={$scopedSlots}
-            on-change={(key, value, model) => { handleFormChange('normal-condition-change', key, value, model); }}
+            on-change={handleFormChange}
             on-clear={() => { handleClear('normalConditionForm'); }}>
           </ElProForm>
         );
@@ -398,8 +397,9 @@ export default {
       });
     },
 
-    handleFormChange(eventKey, key, value, model) {
-      this.$emit(eventKey, key, value, model);
+    handleFormChange(key, value, model) {
+      console.log(key, value, model);
+      this.$emit('change', key, value, model);
     }
   },
 
@@ -451,7 +451,7 @@ export default {
         uiSchema={advanceUiSchema}
         columns={columns}
         scopedSlots={$scopedSlots}
-        on-change={(key, value, model) => { handleFormChange('advance-condition-change', key, value, model); }}
+        on-change={handleFormChange}
         on-clear={() => { handleClear('advanceConditionForm'); }}>
       </ElProForm>);
     } else {
@@ -464,7 +464,7 @@ export default {
         positionErrorField={false}
         labelWidth="auto"
         scopedSlots={$scopedSlots}
-        on-change={(key, value, model) => { handleFormChange('advance-condition-change', key, value, model); }}
+        on-change={handleFormChange}
         on-clear={() => { handleClear('advanceConditionForm'); }}>
         { this.$slots.default }
       </ElForm>);

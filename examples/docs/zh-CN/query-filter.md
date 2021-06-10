@@ -17,8 +17,7 @@
                    :advance-schema="advanceSchema"
                    :advance-ui-schema="advanceUiSchema"
                    :after-submit="afterSubmit"
-                   @normal-condition-change="handleNormalConditionChange"
-                   @advance-condition-change="handleAdvanceConditionChange"
+                   @change="handleChange"
                    @clear="handleClear">
   </el-query-filter>
 </div>
@@ -95,11 +94,9 @@
           }, 1000);
         });
       },
-      handleNormalConditionChange(key, value) {
-        this.$message.info(`普通搜索条件项目 ${key} 值变化为 ${value} `);
-      },
-      handleAdvanceConditionChange(key, value) {
-        this.$message.info(`高级搜索条件项目 ${key} 值变化为 ${value} `);
+      handleChange(key, value) {
+        console.log(key, value);
+        this.$message.info(`搜索条件项目 ${key} 值变化为 ${value} `);
       },
       handleClear(key) {
         this.$message.success(`搜索条件${key ? key : ''}重置成功`);
@@ -200,8 +197,7 @@
 
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
-| normal-condition-change  | 普通搜索条件值变化时被触发 | 搜索条件的key, 搜索条件的值, 当前普通搜索条件的值 |
-| advance-condition-change  | 高级搜索条件值变化时被触发 | 搜索条件的key, 搜索条件的值, 当前普通搜索条件的值 |
+| change  | 搜索条件值变化时被触发 | 搜索条件的key, 搜索条件的值, 当前普通搜索条件的值 |
 | clear  | 条件筛选项目值被清空（点击条件筛选Label右侧筛选项目的 `X` 图标或点击清空按钮） | 被清空的筛选项目key |
 
 ### QueryFilter Methods
