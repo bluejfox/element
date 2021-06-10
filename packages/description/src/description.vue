@@ -129,11 +129,13 @@
                 rowRestCol = column;
                 tmpRow = [];
               } else {
-                tmpRow[tmpRow.length - 1].innerSpan += rowRestCol;
-                // tmpRow.push(getFilledItem(itemNode, mergedSpan, rowRestCol));
-                rows.push(tmpRow);
-                rowRestCol = column;
-                tmpRow = [];
+                if (tmpRow[tmpRow.length - 1]) {
+                  tmpRow[tmpRow.length - 1].innerSpan += rowRestCol;
+                  // tmpRow.push(getFilledItem(itemNode, mergedSpan, rowRestCol));
+                  rows.push(tmpRow);
+                  rowRestCol = column;
+                  tmpRow = [];
+                }
                 // new row
                 tmpRow.push(itemNode);
                 rowRestCol -= mergedSpan;
