@@ -398,7 +398,6 @@ export default {
     },
 
     handleFormChange(key, value, model) {
-      console.log(key, value, model);
       this.$emit('change', key, value, model);
     }
   },
