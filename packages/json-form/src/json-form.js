@@ -484,6 +484,8 @@ export default {
               };
               // TODO 小数位设置
               componentTagName = `${componentPrefix}-input-number`;
+            } else if (property.type === 'boolean' && ui[UI_WIDGET] === undefined) {
+              componentTagName = `${componentPrefix}Checkbox`;
             }
             componentProps.props = props;
             componentProps.on = events.on;

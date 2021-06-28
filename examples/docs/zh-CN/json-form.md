@@ -118,6 +118,10 @@
                 { const: 2, title: 'doctor' },
               ],
             },
+            agree: {
+              type: 'boolean',
+              title: 'agree'
+            }
           },
         },
         uiSchema: {
@@ -143,6 +147,7 @@
         profession: '',
         dateTime: '',
         time: '',
+        agree: true
       };
     },
     methods: {
