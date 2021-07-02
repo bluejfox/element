@@ -124,7 +124,7 @@
       destroyOnClose: Boolean,
       browserFullscreen: {
         type: Boolean,
-        default: true
+        default: false
       }
     },
 
