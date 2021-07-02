@@ -19,11 +19,19 @@
         :style="style">
         <button
           type="button"
-          class="el-dialog__headerbtn"
-          aria-label="Close"
-          v-if="showClose"
-          @click="handleClose">
-          <i class="el-dialog__close el-icon el-icon-close"></i>
+          class="el-dialog__headerbtn">
+          <i class="el-dialog__fullscreen el-icon"
+             :class="{
+               'el-icon-full-screen': !dialogFullscreen,
+               'el-icon-copy-document': dialogFullscreen,
+             }"
+             aria-label="Fullscreen"
+             v-if="isShowBrowserFullscreenIcon"
+             @click="handleFullscreen"></i>
+          <i class="el-dialog__close el-icon el-icon-close" 
+             aria-label="Close"
+             v-if="showClose"
+             @click="handleClose"></i>
         </button>
         <div class="el-dialog__header" v-if="$slots.title || title !== ''">
           <slot name="title">
@@ -113,13 +121,18 @@
         type: Boolean,
         default: true
       },
-      destroyOnClose: Boolean
+      destroyOnClose: Boolean,
+      browserFullscreen: {
+        type: Boolean,
+        default: true
+      }
     },
 
     data() {
       return {
         closed: false,
-        key: 0
+        key: 0,
+        dialogFullscreen: false
       };
     },
 
@@ -136,6 +149,7 @@
             document.body.appendChild(this.$el);
           }
         } else {
+          this.exitFullscreen();
           this.$el.removeEventListener('scroll', this.updatePopper);
           if (!this.closed) this.$emit('close');
           if (this.destroyOnClose) {
@@ -168,6 +182,9 @@
           }
         }
         return style;
+      },
+      isShowBrowserFullscreenIcon() {
+        return this.browserFullscreen && document.exitFullscreen;
       }
     },
 
@@ -206,14 +223,35 @@
         this.handleClose();
       },
       handleClose() {
+        // 全屏显示的场合，需要先退出全屏模式
         if (typeof this.beforeClose === 'function') {
+          this.exitFullscreen();
           this.beforeClose(this.hide);
         } else {
           this.hide();
         }
       },
+      exitFullscreen() {
+        if (this.dialogFullscreen) {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+            this.dialogFullscreen = !this.dialogFullscreen;
+          }
+        }
+      },
+      handleFullscreen() {
+        if (!this.dialogFullscreen) {
+          if (this.$refs.dialog.requestFullscreen) {
+            this.$refs.dialog.requestFullscreen();
+            this.dialogFullscreen = !this.dialogFullscreen;
+          }
+          return;
+        }
+        this.exitFullscreen();
+      },
       hide(cancel) {
         if (cancel !== false) {
+          this.exitFullscreen();
           this.$emit('update:visible', false);
           this.$emit('close');
           this.closed = true;

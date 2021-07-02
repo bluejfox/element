@@ -38,7 +38,7 @@
   @include e(headerbtn) {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10px;
     padding: 0;
     background: transparent;
     border: none;
@@ -46,21 +46,31 @@
     cursor: pointer;
     font-size: $--message-close-size;
     z-index: 10;
+    padding: 0 10px;
+    
+    *.el-icon {
+      & + .el-icon {
+        margin-left: 10px;
+      }
+    }
+    
+    .el-dialog__fullscreen {
+      font-size: 22px;
+    }
 
-    .el-dialog__close {
+    .el-dialog__close,
+    .el-dialog__fullscreen {
       color: $--color-info;
-      width: 54px;
       height: 54px;
       line-height: 62px;
       vertical-align: baseline;
       font-size: 24px;
-    }
-
-    &:focus, &:hover {
-      .el-dialog__close {
+      
+      &:focus, &:hover {
         color: $--color-primary;
       }
     }
+
   }
 
   @include e(title) {

@@ -15,9 +15,11 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
   :visible.sync="dialogVisible"
   :cache="true"
   width="30%"
+  :fullscreen="fullscreen"
   :dragable="false"
   :before-close="handleClose">
   <span>这是一段信息</span>
+  <el-button @click="fullscreen = !fullscreen">切换</el-button>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -28,7 +30,8 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
   export default {
     data() {
       return {
-        dialogVisible: false
+        dialogVisible: false,
+        fullscreen: false
       };
     },
     methods: {
@@ -265,6 +268,7 @@ Dialog 的内容是懒渲染的，即在第一次被打开之前，传入的默�
 | center | 是否对头部和底部采用居中布局 | boolean | — | false |
 | dragable | 是否开启拖拽功能 | boolean    | — | true |
 | destroy-on-close | 关闭时销毁 Dialog 中的元素 | boolean | — | false |
+| browser-fullscreen | 是否显示浏览器全屏功能，当且仅当此属性为true并且浏览器支持exitFullscreen时有效 | boolean | — | true |
 
 ### Slot
 | name | 说明 |
