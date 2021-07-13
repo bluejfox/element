@@ -108,7 +108,74 @@
 :::
 
 
-### 没有定义普通搜索的场合
+### 只定义普通搜索
+
+::: demo
+```html
+<div>
+  <el-query-filter v-model="value"
+                       class="filter"
+                       :normal-schema="schema"
+                       :normal-ui-schema="uiSchema"
+                       :after-submit="afterSubmit">
+  </el-query-filter>
+</div>
+<script>
+  export default {
+    data() {
+      return {
+        value: {
+          procurementType: '1',
+          createDate: [],
+          publishFlag: '',
+          procurementApplyType: '2',
+          projectName: '',
+          location: [],
+          dateRange: null,
+          amount: undefined,
+          createBy: ''
+        },
+        schema: {
+          "properties": {
+            "createBy": {
+              "type": "string",
+              "title": "创建人"
+            },
+            "procurementApplyType": {
+              "type": "string",
+              "title": "采购申请类型",
+              "oneOf": [
+                {"const": "1", "title": "成本类"},
+                {"const": "2", "title": "资本类"}
+              ]
+            }
+          }
+        },
+        uiSchema: {
+          "createDate": {
+            "ui:colspan": 2
+          }
+        }
+      };
+    },
+    mounted() {
+    },
+    methods: {
+      afterSubmit(val) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            this.$message.success('查询执行成功');
+            resolve();
+          }, 2000);
+        });
+      }
+    }
+  }
+</script>
+```
+:::
+
+### 只定义高级搜索
 
 ::: demo
 ```html

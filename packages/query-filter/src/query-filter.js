@@ -237,7 +237,9 @@ export default {
         this.$nextTick(() => {
           this.$emit('clear', key);
           if (this.innerExpand) {
-            this.$refs.advanceConditionForm.handleSubmit();
+            if (this.$refs.advanceConditionForm) {
+              this.$refs.advanceConditionForm.handleSubmit();
+            }
           } else {
             this.$refs.normalConditionForm.handleSubmit();
           }
@@ -245,13 +247,15 @@ export default {
       };
     },
     getSeniorConditionFormItemComponentName(key) {
-      const fields = this.$refs.advanceConditionForm.fields;
-      if (fields) {
-        // FormItem组件
-        const item = arrayFind(coerceTruthyValueToArray(fields), component => component.prop === key);
-        if (item && item.$children && item.$children[0].$options) {
-          // 子组件名称
-          return item.$children[0].$options.componentName;
+      if (this.$refs.advanceConditionForm) {
+        const fields = this.$refs.advanceConditionForm.fields;
+        if (fields) {
+          // FormItem组件
+          const item = arrayFind(coerceTruthyValueToArray(fields), component => component.prop === key);
+          if (item && item.$children && item.$children[0].$options) {
+            // 子组件名称
+            return item.$children[0].$options.componentName;
+          }
         }
       }
       return null;
@@ -436,9 +440,10 @@ export default {
     if (normalConditionNode === undefined || normalConditionNode === null) {
       this.innerExpand = true;
     }
+    const isExistAdvanceSchema = advanceSchema && advanceSchema.properties && Object.keys(advanceSchema.properties).length > 0;
     // 高级搜索表单
     let advanceConditionForm = null;
-    if (advanceSchema) {
+    if (isExistAdvanceSchema) {
       advanceConditionForm = (<ElProForm
         {...proFormInitialOptions}
         model={conditionValue}
@@ -453,20 +458,6 @@ export default {
         on-change={handleFormChange}
         on-clear={() => { handleClear('advanceConditionForm'); }}>
       </ElProForm>);
-    } else {
-      advanceConditionForm = (<ElForm
-        label-position="left"
-        model={conditionValue}
-        ref="advanceConditionForm"
-        class="advance-condition-form"
-        rules={this.rules}
-        positionErrorField={false}
-        labelWidth="auto"
-        scopedSlots={$scopedSlots}
-        on-change={handleFormChange}
-        on-clear={() => { handleClear('advanceConditionForm'); }}>
-        { this.$slots.default }
-      </ElForm>);
     }
     return (
       <div
@@ -477,13 +468,17 @@ export default {
         { normalConditionNode ? (
           <div class="el-query-filter__normal">
             { normalConditionNode }
-            <div class="normal__toolbar">
-              <ElButton
-                type="text"
-                onClick={this.handleExpand}
-                class="toolbar__expand-button">{ innerExpand ? '普通搜索' : '高级搜索' }</ElButton>
-              <i class="el-icon-setting toolbar-icon" style="font-size: 18px;"></i>
-            </div>
+            {
+              isExistAdvanceSchema ? (
+                <div class="normal__toolbar">
+                  <ElButton
+                    type="text"
+                    onClick={this.handleExpand}
+                    class="toolbar__expand-button">{ innerExpand ? '普通搜索' : '高级搜索' }</ElButton>
+                  <i class="el-icon-setting toolbar-icon" style="font-size: 18px;"></i>
+                </div>
+              ) : null
+            }
           </div>
         ) : null }
         <div class="el-query-filter__advance">
